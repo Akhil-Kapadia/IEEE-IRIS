@@ -13,10 +13,10 @@ sequelize.authenticate().then(() => {
     console.error('Unable to connect to database', error);
 });
 
-const User = require('./database/models/userModel')(sequelize);  // table name = users
-const Ieee = require('./database/models/ieeeModel')(sequelize);  // table name = ieee
-const ProPoint = require('./database/models/propointModel')(sequelize);  //tbl name = propoints
-const Event = require('./database/models/eventModel')(sequelize);    //tbl name = events
+const User = require('../models/userModel')(sequelize);  // table name = users
+const Ieee = require('../models/ieeeModel')(sequelize);  // table name = ieee
+const ProPoint = require('../models/propointModel')(sequelize);  //tbl name = propoints
+const Event = require('../models/eventModel')(sequelize);    //tbl name = events
 
 // Apply relations between tables
 User.hasOne(Ieee);

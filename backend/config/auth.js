@@ -1,6 +1,6 @@
 const passport = require('passport');
 const passportJWT = require('passport-jwt');
-const { User } = require('../database/db');
+const { User } = require('./db');
 const JWTstrategy = passportJWT.Strategy;
 
 
@@ -30,7 +30,6 @@ module.exports = (passport) => {
                 return done('Unauthorized', false);
             }
 
-            const user = await User.findByPk(sub);
             if (user === null) {
                 return done('Unauthorized', false);
             }

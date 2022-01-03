@@ -1,5 +1,5 @@
 const express = require('express');
-const {User} = require('sequelize').models;
+const {User} = require('../config/db');
 const bcrypt = require('bcryptjs');
 
 // Handle any routes related to users -> /users
