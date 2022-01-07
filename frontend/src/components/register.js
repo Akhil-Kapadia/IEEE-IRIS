@@ -7,7 +7,6 @@ import Select from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -17,13 +16,13 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { FormControlLabel, MenuItem } from '@mui/material';
 import axios from 'axios';
 import qs from 'qs';
-import {BrowserRouter as Route, Outlet, useNavigate} from 'react-router-dom';
+import {Link ,Outlet, useNavigate} from 'react-router-dom';
 
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://www.ieee.org/">
+      <Link to="/">
         TTU ECE IEEE student branch
       </Link>{' '}
       {new Date().getFullYear()}
@@ -37,8 +36,8 @@ const theme = createTheme();
 export default function Register() {
   // Select and box state
   const [classification, setClassification] = React.useState('');
-  const [checked, setChecked] = React.useState(null);
-  const [isValid, setValid] = React.useState([false, false]);
+  const [checked, setChecked] = React.useState(false);
+  const [isValid, setValid] = React.useState([false, false, false]);
   const [errMsg, setMsg] = React.useState('');
   const handleBox = (event) =>{
     setChecked(event.target.checked);
@@ -66,7 +65,8 @@ export default function Register() {
       .catch(function (err){
         setMsg(err.response.data.msg);
         if(err.response.status === 400){
-          setValid([err.response.data.isEmail, err.response.data.isRnum]);
+          console.log([err.response.data.isEmail, err.response.data.isRnum]);
+          setValid([err.response.data.Email, err.response.data.Rnum, err.response.data.password]);
         }
       });
   };
@@ -140,6 +140,7 @@ export default function Register() {
                 <TextField
                   required
                   fullWidth
+                  error = {isValid[2]}
                   name="password"
                   label="Password"
                   type="password"
@@ -195,9 +196,11 @@ export default function Register() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Box>
+                <Link to='/login'>
                   Already have an account? Sign in
                 </Link>
+                </Box>
               </Grid>
             </Grid>
           </Box>

@@ -55,13 +55,15 @@ export default function MenuTabs() {
     setValue(index);
   };
   return (
-    <Container>
-      <Box sx={{ width: "100%" }}>
-        <Tabs value={value} onChange={handleChange} centered>
-          <Tab label="About Us" {...allyProps(0)} />
-          <Tab label="Announcements" {...allyProps(1)} />
-          <Tab label="Pro Points" {...allyProps(2)} />
-        </Tabs>
+    <Container sx = {{width:1}}>
+      <Box sx={{ width: 1 }}>
+        <Box sx = {{borderBottom : 1, borderColor : 'grey.500', width : 1}}>
+          <Tabs value={value} onChange={handleChange} centered>
+            <Tab label="About Us" {...allyProps(0)} />
+            <Tab label="Announcements" {...allyProps(1)} />
+            <Tab label="Pro Points" {...allyProps(2)} />
+          </Tabs>
+        </Box>
         <SwipeableViews
           axis={ThemeContext.direction === "rtl" ? "x-reverse" : "x"}
           index={value}
