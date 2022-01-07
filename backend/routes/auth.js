@@ -3,6 +3,7 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const {User} = require('../config/db')
 const bcrypt = require('bcryptjs');
+const validator = require('validator');
 
 // login route
 router.post('/login', async(req, res) => {
@@ -11,7 +12,7 @@ router.post('/login', async(req, res) => {
             .catch( (err) => {
                 console.error(err);
             });
-        
+
         if(user) {
             bcrypt.compare(req.body.password, user.password, function(err, ver) {
                 if(ver){
@@ -23,24 +24,24 @@ router.post('/login', async(req, res) => {
                     }
                     console.log(payload);
 
-                    jwt.sign(payload, process.env.JWT_SECRET, {expiresIn : "7d"}, async function(err, token){
+                    jwt.sign(payload, process.env.JWT_SECRET, {expiresIn : "1d"}, async function(err, token){
                         if(err){
                             res.status(500).json(err);
                         }else {
                             res.cookie('jwt', token, {
                                 httpOnly : true,
                                 secure : true
-                            }).status(200).json({message : 'Login successful!'});
+                            }).status(200).json({msg : 'Login successful!'});
                         }
                     });
 
                 }else{
-                    res.status(409).json({message : "R-Number or password is incorrect", user : user});
+                    res.status(409).json({msg : "R-Number or password is incorrect", user : user});
                 }
             });
         } else {
             return res.status(404).json({
-                message : "User not found. Have you Registered yet?"});
+                msg : "User not found. Have you Registered yet?"});
         }
      }catch(err){
         res.status(500).json(err);
@@ -59,8 +60,15 @@ router.post('/register', async(req, res, next) => {
         });
 
         if (existingUser) {
-            return res.status(409).json({success : false ,msg : 'User already exists!'});
-        } 
+            return res.status(409).json({success : false ,msg : 'User already exists. Please log-in!'});
+        }
+        
+        const isEmail = validator.isEmail(req.body.email);
+        const isRnum = validator.isInt(req.body.id, {gt:10000000, lt:99999999});
+        if (!(isEmail && isRnum)) {
+            return res.status(400).json({success :  false, msg : 'Please enter your email and R-Number correctly', isEmail : isEmail, isRnum : isRnum});
+        }
+
         bcrypt.hash(req.body.password, 10, async function(err, hash) {
             if(err){
                 res.status(500).json({success : false, msg : err});

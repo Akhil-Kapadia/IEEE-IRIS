@@ -24,7 +24,6 @@ app.use(cookieParser());
 app.use(passport.initialize());
 
 
-
 // Https stuff
 const key = fs.readFileSync('./server.key');
 const cert = fs.readFileSync('./server.cert');
@@ -37,7 +36,7 @@ const authRouter = require('./routes/auth');
 
 // API calls
 app.use('/api/user', userRoute);
-app.use('/', authRouter);
+app.use('/api/', authRouter);
 
 
 app.get('/', (req, res) => {
