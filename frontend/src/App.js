@@ -1,14 +1,16 @@
 import {Routes, Route} from 'react-router-dom';
 import * as React from 'react';
 import Register from './components/register';
-import MenuTabs from './components/menu';
+
 import SignIn from './components/SignIn';
+import Layout from './components/layout';
 
 function App() {
+
   return (
     <main>   
     <Routes>
-        <Route index element = {<MenuTabs />}/>
+        <Route index element = {<Layout />}/>
         <Route path = '/register' element = {<Register />} />
         <Route path = '/login' element = {<SignIn />} />
     </Routes> 

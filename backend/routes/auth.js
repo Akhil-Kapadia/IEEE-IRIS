@@ -42,10 +42,12 @@ router.post("/login", async (req, res) => {
               if (err) {
                 res.status(500).json(err);
               } else {
+                res.cookie('auth', payload.officer || 'user', {maxAge : 86400000});
                 res
                   .cookie("jwt", token, {
                     httpOnly: true,
                     secure: true,
+                    maxAge : 86400000
                   })
                   .status(200)
                   .json({ msg: "Login successful!" });
@@ -119,6 +121,14 @@ router.post("/register", async (req, res, next) => {
     });
   } catch (err) {
     res.status(500).json(err);
+  }
+});
+
+router.get('/authorized', passport.authenticate('jwt', {session : false}), async(req, res, next) => {
+  try{
+    res.status(200).json({role : req.user.role});
+  } catch(err) {
+    next(err);
   }
 });
 

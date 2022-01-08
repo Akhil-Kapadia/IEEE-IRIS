@@ -45,7 +45,7 @@ function allyProps(index) {
 
 export default function MenuTabs() {
   const theme = useTheme();
-  const [value, setValue] = React.useState("0");
+  const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -55,32 +55,30 @@ export default function MenuTabs() {
     setValue(index);
   };
   return (
-    <Container sx = {{width:1}}>
-      <Box sx={{ width: 1 }}>
-        <Box sx = {{borderBottom : 1, borderColor : 'grey.500', width : 1}}>
-          <Tabs value={value} onChange={handleChange} centered>
-            <Tab label="About Us" {...allyProps(0)} />
-            <Tab label="Announcements" {...allyProps(1)} />
-            <Tab label="Pro Points" {...allyProps(2)} />
-          </Tabs>
-        </Box>
-        <SwipeableViews
-          axis={ThemeContext.direction === "rtl" ? "x-reverse" : "x"}
-          index={value}
-          onChangeIndex={handleChangeIndex}
-        >
-          <TabPanel value={value} index={0} dir={theme.direction}>
-            {"Stuffs about me" /* Insert a route to a component */}
-          </TabPanel>
-          <TabPanel value={value} index={1} dir={theme.direction}>
-            {"Events and stuff" /* Insert a route to a component */}
-          </TabPanel>
-          <TabPanel value={value} index={2} dir={theme.direction}>
-            {"Pro points stuff" /* Insert a route to a component */}
-          </TabPanel>
-        </SwipeableViews>
+    <Box sx={{ flexGrow: 1 }}>
+      <Box sx={{ borderBottom: 1, borderColor: "grey.500", flexGrow: 1 }}>
+        <Tabs value={value} onChange={handleChange} centered>
+          <Tab label="About Us" {...allyProps(0)} />
+          <Tab label="Announcements" {...allyProps(1)} />
+          <Tab label="Pro Points" {...allyProps(2)} />
+        </Tabs>
       </Box>
+      <SwipeableViews
+        axis={ThemeContext.direction === "rtl" ? "x-reverse" : "x"}
+        index={value}
+        onChangeIndex={handleChangeIndex}
+      >
+        <TabPanel value={value} index={0} dir={theme.direction}>
+          {"Stuffs about me" /* Insert a route to a component */}
+        </TabPanel>
+        <TabPanel value={value} index={1} dir={theme.direction}>
+          {"Events and stuff" /* Insert a route to a component */}
+        </TabPanel>
+        <TabPanel value={value} index={2} dir={theme.direction}>
+          {"Pro points stuff" /* Insert a route to a component */}
+        </TabPanel>
+      </SwipeableViews>
       <Outlet />
-    </Container>
+    </Box>
   );
 }
