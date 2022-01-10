@@ -26,13 +26,25 @@ ProPoint.belongsTo(User);   //fk = userRId
 Event.hasMany(ProPoint);
 ProPoint.belongsTo(Event);  //fk = eventsId
 
-sequelize.sync({force : true}).then( () => {
-    //     bcrypt.hash('password', 10, function(err, hash) {
-    //     Ieee.create({
-    //         officer : 'WebMaster',
-    //         userId : 10000001
-    //     });
-    // });
+sequelize.sync({force : true})
+    .then( () => {
+        bcrypt.hash('password', 10, function(err, hash) {
+        User.create({
+            id:12345678,
+            password : hash,
+            firstname:'Test',
+            lastname:'user',
+            email:'test@abc.def',
+            classification : 'EE',
+            alumni : true
+        }).then(async function (user){
+            await user.setIeee(await Ieee.create({
+                memberId : 123,
+                officer : 'Admin',
+                ferpa : true
+            }));
+        });
+    });
 });
 
 

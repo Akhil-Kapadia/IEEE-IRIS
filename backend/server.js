@@ -33,10 +33,16 @@ const port = process.env.PORT || 3001;
 // Routes
 const userRoute = require('./routes/users');
 const authRouter = require('./routes/auth');
+const ieeeRouter = require('./routes/ieee');
+const eventRouter = require('./routes/event');
+const propointRouter = require('./routes/propoint');
 
 // API calls
 app.use('/api/user', userRoute);
 app.use('/api/', authRouter);
+app.use('/api/ieee', ieeeRouter);
+app.use('/api/event', eventRouter);
+app.use('/api/propoint', propointRouter);
 
 
 app.get('/', (req, res) => {

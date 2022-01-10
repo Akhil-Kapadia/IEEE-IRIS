@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
-const { User } = require("../config/db");
+const { User, Ieee } = require("../config/db");
 const bcrypt = require("bcryptjs");
 const validator = require("validator");
 
@@ -25,9 +25,9 @@ router.post("/login", async (req, res) => {
     });
 
     if (user) {
-      bcrypt.compare(req.body.password, user.password, function (err, ver) {
+      bcrypt.compare(req.body.password, user.password, async function (err, ver) {
         if (ver) {
-          const ieee = user.getIeee();
+          const ieee = await user.getIeee();
 
           const payload = {
             sub: user.id,
@@ -42,7 +42,6 @@ router.post("/login", async (req, res) => {
               if (err) {
                 res.status(500).json(err);
               } else {
-                res.cookie('auth', payload.officer || 'user', {maxAge : 86400000});
                 res
                   .cookie("jwt", token, {
                     httpOnly: true,
@@ -107,16 +106,23 @@ router.post("/register", async (req, res, next) => {
       } else {
         req.body.password = hash;
         await User.create(req.body)
-          .then (function () {
+          .then (async function (user) {
+
+            await user.createIeee();  // Create an empty Ieee association to ref later in profile
+
             res.status(200).json({
               success: true,
               msg: "Registration Successfull, please login!",
+              user : user
             });
+
           })
           .catch((err) => {
             console.log(err);
             return res.status(500).json({ sucesss: false, msg: err });
           });
+
+
       }
     });
   } catch (err) {

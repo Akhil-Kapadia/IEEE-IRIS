@@ -27,9 +27,8 @@ module.exports = (passport) => {
                 return done(err, false);
             });
 
-            user.role = officer; 
             if (user === null) {
-                return done({msg : 'Unauthorized'}, false);
+                return done({msg : 'Unauthorized. Please Login'}, false);
             }
 
             return done(null, user);
