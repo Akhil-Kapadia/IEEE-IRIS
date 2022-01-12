@@ -36,7 +36,8 @@ module.exports = (sequelize) => {
             get() {
                 return `${this.firstname} ${this.lastname}`;
             }
-        }
+        },
+        role : DataTypes.VIRTUAL
     });
     return User;
 }

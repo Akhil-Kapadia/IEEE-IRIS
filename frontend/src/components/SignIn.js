@@ -40,12 +40,14 @@ export default function SignIn() {
     // eslint-disable-next-line no-console
     axios.post('/api/login', qs.stringify(data))
       .then(function (res) {
+        localStorage.setItem('user', JSON.stringify(res.data.user));
         navigate('/');
       })
       .catch( (err) => {
         setMsg(err.response.data.msg);
       });
   };
+
 
   return (
     <ThemeProvider theme={theme}>

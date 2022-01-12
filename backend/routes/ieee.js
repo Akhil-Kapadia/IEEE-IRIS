@@ -5,9 +5,8 @@ const passport = require("passport");
 //get all IEEE members
 router.get("/all", passport.authenticate("jwt", { session: false }), async (req, res, next) => {
     try {
-      let role = await req.user.getIeee();
       // If its an officer, print out all users, else print own user.
-      if (role.officer) {
+      if (req.user.role) {
         let members = await Ieee.findAll().catch((err) => {
           console.error(err);
         });
@@ -24,10 +23,10 @@ router.get("/all", passport.authenticate("jwt", { session: false }), async (req,
 //get users ieee member
 router.get("/:id", passport.authenticate("jwt", { session: false }), async (req, res, next) => {
     try {
-      let member = await req.user.getIeee().catch(next);
       if (req.user.id == req.params.id) {
+        let member = await req.user.getIeee().catch(next);
         return res.status(200).json(member);
-      } else if (member.officer) {
+      } else if (req.user.role) {
         await Ieee.findOne({ where: { userId: req.params.id } })
           .then(function (ieee) {
             if (ieee) {
@@ -47,12 +46,12 @@ router.get("/:id", passport.authenticate("jwt", { session: false }), async (req,
 // update a users ieee info
 router.put("/:id", passport.authenticate("jwt", { session: false }), async (req, res, next) => {
     try {
-      let member = await req.user.getIeee().catch(next);
       if (req.user.id == req.params.id) {
+        let member = await req.user.getIeee().catch(next);
         member.set({memberId : req.body.memberId})
         await member.save().catch(next);
-      } else if (member.officer) {
-        member = await Ieee.findOne({ where: { userId: req.params.id } }).catch(next);
+      } else if (req.user.role) {
+        let member = await Ieee.findOne({ where: { userId: req.params.id } }).catch(next);
         if (member) {
           member.set(req.body);
           await member.save().catch(next);

@@ -10,9 +10,8 @@ const router = express.Router();
 // Get all users.
 router.get('/all', passport.authenticate('jwt', {session : false}),async(req, res) => {
     try {
-        let role = await req.user.getIeee();
         // If its an officer, print out all users, else print own user.
-        if(role.officer){
+        if(req.user.role){
             let users = await User.findAll()
                 .catch( (err) => {
                     console.error(err);
@@ -29,8 +28,7 @@ router.get('/all', passport.authenticate('jwt', {session : false}),async(req, re
 // Find specific user by id
 router.get('/:id', passport.authenticate('jwt', {session : false}), async(req, res, next) => {
     try {
-        const ieee = await req.user.getIeee();
-        if(ieee.officer){
+        if(req.user.role){
             const user = await User.findByPk(req.params.id);
             res.status(200).json(user);
         }else {
@@ -44,10 +42,9 @@ router.get('/:id', passport.authenticate('jwt', {session : false}), async(req, r
 // Update user profile
 router.put('/:id', passport.authenticate('jwt', {session : false}),async(req, res, next) => {
     try{
-        let member = await req.user.getIeee().catch(next);
         if (req.user.id == req.params.id) {
           return res.status(200).json(member);
-        } else if (member.officer) {
+        } else if (req.user.role) {
           Ieee.findOne({ where: { userId: req.params.id } })
             .then(function (ieee) {
               if (ieee) {
@@ -69,10 +66,9 @@ router.put('/:id', passport.authenticate('jwt', {session : false}),async(req, re
 // delete a user by Id
 router.delete('/:id', passport.authenticate('jwt', {session : false}), async (req, res) => {
     try {
-        let member = await req.user.getIeee().catch(next);
         if (req.user.id == req.params.id) {
           return res.status(401).json('Unauthorized');
-        } else if (member.officer) {
+        } else if (req.user.role) {
           await req.user.destroy();
           res.status(200).end();
         }else{

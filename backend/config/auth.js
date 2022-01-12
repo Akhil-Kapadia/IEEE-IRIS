@@ -21,15 +21,17 @@ module.exports = (passport) => {
             secretOrKey : process.env.JWT_SECRET,
             jsonWebTokenOptions : {maxAge : '7d'}   // Auth ends after 7 days
         }, async function(jwtPayload, done) {
-            const {sub, officer} = jwtPayload;
+            const {id, officer} = jwtPayload;
 
-            const user = await User.findByPk(sub).catch(err => {
+            const user = await User.findByPk(id).catch(err => {
                 return done(err, false);
             });
 
             if (user === null) {
                 return done({msg : 'Unauthorized. Please Login'}, false);
             }
+
+            user.role = officer || null;
 
             return done(null, user);
         }));

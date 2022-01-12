@@ -1,10 +1,6 @@
 import * as React from "react";
-import PropTypes from "prop-types";
-import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-import { useTheme } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import { ThemeContext } from "@emotion/react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
@@ -17,27 +13,35 @@ import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Logout from "@mui/icons-material/Logout";
 
-export default function Bar(props) {
+export default function Bar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const navigate = useNavigate();
 
-  const handleMenu = (event) => {
-    if (props.auth === "user") {
-      // navigate('/login');
+  const authorized = () => {
+    let data = localStorage.getItem("user");
+    if (data) {
+      return JSON.parse(data);
+    } else {
+      return { id: "", officer: "" };
     }
-    setAnchorEl(event.currentTarget);
   };
 
-  const handleMenuItem = (event) => {
-    console.log("clicked");
+  const handleMenu = (event) => {
+    if (!authorized().id) {
+      navigate("/login");
+    }
+    setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
   };
   const handleLogout = () => {
+    localStorage.clear();
+    axios.get("/api/logout").catch((err) => {
+      console.error(err);
+    });
     setAnchorEl(null);
   };
 
@@ -51,7 +55,7 @@ export default function Bar(props) {
           <div>
             <Button color="inherit" onClick={handleMenu}>
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                {props.auth === "user" ? "Login" : "My Account"}
+                {!authorized().id ? "Login" : "My Account"}
               </Typography>
             </Button>
             <Menu
@@ -73,9 +77,9 @@ export default function Bar(props) {
                 <ListItemIcon>
                   <AccountBoxIcon />
                 </ListItemIcon>
-                <ListItemText>My Account</ListItemText>
+                <ListItemText>Profile</ListItemText>
               </MenuItem>
-              {props.auth != "user" && (
+              {authorized().officer && (
                 <div>
                   <MenuItem
                     onClick={() => {

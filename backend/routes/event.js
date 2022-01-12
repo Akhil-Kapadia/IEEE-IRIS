@@ -37,8 +37,7 @@ router.get("/", passport.authenticate("jwt", { session: false }), async (req, re
 // create an event.
 router.post('/', passport.authenticate("jwt", { session: false }), async (req, res, next) => {
   try {   
-    let member = await req.user.getIeee();
-    if(member.officer){
+    if(req.user.role){
       // TODO: Add picture functionality.
       const event = await Event.create(req.body);
       
@@ -55,7 +54,7 @@ router.post('/', passport.authenticate("jwt", { session: false }), async (req, r
 router.put("/:id", passport.authenticate("jwt", { session: false }), async (req, res, next) => {
     try {
       let member = await req.user.getIeee();
-      if (member.officer) {
+      if (req.user.role) {
         let event = await Event.findByPk(req.params.id);
         event.set(req.body);
         await event.save();

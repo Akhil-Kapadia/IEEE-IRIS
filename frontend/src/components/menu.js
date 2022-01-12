@@ -10,6 +10,9 @@ import { Outlet } from "react-router";
 import SwipeableViews from "react-swipeable-views";
 import { ThemeContext } from "@emotion/react";
 
+import ProPoints from "./propoint";
+
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -56,8 +59,14 @@ export default function MenuTabs() {
   };
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <Box sx={{ borderBottom: 1, borderColor: "grey.500", flexGrow: 1 }}>
-        <Tabs value={value} onChange={handleChange} centered>
+      <Box sx={{ borderBottom: 1, borderColor: "grey.500", flexGrow: 1}}>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          centered
+          textColor="primary"
+          indicatorColor = 'secondary'
+        >
           <Tab label="About Us" {...allyProps(0)} />
           <Tab label="Announcements" {...allyProps(1)} />
           <Tab label="Pro Points" {...allyProps(2)} />
@@ -75,7 +84,7 @@ export default function MenuTabs() {
           {"Events and stuff" /* Insert a route to a component */}
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
-          {"Pro points stuff" /* Insert a route to a component */}
+          <ProPoints />
         </TabPanel>
       </SwipeableViews>
       <Outlet />
