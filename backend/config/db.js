@@ -5,12 +5,12 @@ const bcrypt = require('bcryptjs');
 
 // db connection USER: iris PWRD: password PORT: 5432 DB: iris
 const sequelize = new Sequelize(
-    process.env.DB_NAME,
-    process.env.DB_USER,
-    process.env.DB_PASS,
+    process.env.PG_DBNAME,
+    process.env.PG_DBUSER,
+    process.env.PG_DBPASS,
     {
-        host : process.env.DB_HOST,
-        port : process.env.DB_PORT,
+        host : process.env.PG_DBHOST,
+        port : process.env.PG_DBPORT,
         dialect : 'postgres'
     } );
 
