@@ -7,11 +7,10 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import { Outlet } from "react-router";
-import SwipeableViews from "react-swipeable-views";
-import { ThemeContext } from "@emotion/react";
+import Slide from "@mui/material/Slide";
+import SwipableViews from "react-swipeable-views";
 
 import ProPoints from "./propoint";
-
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -24,11 +23,7 @@ function TabPanel(props) {
       aria-labelledby={`full-width-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
     </div>
   );
 }
@@ -54,39 +49,36 @@ export default function MenuTabs() {
     setValue(newValue);
   };
 
-  const handleChangeIndex = (index) => {
+  const handleChangeIndex = (event, index) => {
     setValue(index);
   };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <Box sx={{ borderBottom: 1, borderColor: "grey.500", flexGrow: 1}}>
+      <Box sx={{ borderBottom: 1, borderColor: "grey.500", flexGrow: 1 }}>
         <Tabs
           value={value}
           onChange={handleChange}
           centered
           textColor="primary"
-          indicatorColor = 'secondary'
+          indicatorColor="secondary"
         >
           <Tab label="About Us" {...allyProps(0)} />
           <Tab label="Announcements" {...allyProps(1)} />
           <Tab label="Pro Points" {...allyProps(2)} />
         </Tabs>
       </Box>
-      <SwipeableViews
-        axis={ThemeContext.direction === "rtl" ? "x-reverse" : "x"}
-        index={value}
-        onChangeIndex={handleChangeIndex}
-      >
-        <TabPanel value={value} index={0} dir={theme.direction}>
-          {"Stuffs about me" /* Insert a route to a component */}
+      <SwipableViews axis='x' index={value} onChangeIndex={handleChangeIndex}>
+        <TabPanel value={value} index={0}>
+          <Typography>Testing</Typography>
         </TabPanel>
-        <TabPanel value={value} index={1} dir={theme.direction}>
-          {"Events and stuff" /* Insert a route to a component */}
+        <TabPanel value={value} index={1}>
+          <Typography>Hello</Typography>
         </TabPanel>
-        <TabPanel value={value} index={2} dir={theme.direction}>
+        <TabPanel value={value} index={2}>
           <ProPoints />
         </TabPanel>
-      </SwipeableViews>
+      </SwipableViews>
       <Outlet />
     </Box>
   );

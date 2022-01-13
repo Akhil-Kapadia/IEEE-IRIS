@@ -2,6 +2,7 @@ const router = require("express").Router();
 const { User, Ieee, ProPoint, Event } = require("../config/db");
 const passport = require("passport");
 const { Op } = require('sequelize');
+const validator = require('validator');
 
 //get all propoints for a given user.
 router.get("/user/:id", passport.authenticate("jwt", { session: false }), async (req, res, next) => {
@@ -29,7 +30,8 @@ router.get("/", passport.authenticate("jwt", { session: false }), async (req, re
           createdAt : {[Op.between] : [req.body.fromDate, req.body.toDate]} || null,
           eventId : req.body.event || null,
           lab : req.body.lab || null,
-          confirmed : Boolean(req.body.confirmed)
+          confirmed : Boolean(req.body.confirmed),
+          description : req.body.description || null
         }    
       }});
       res.status(200).json(points);      
@@ -65,14 +67,18 @@ router.put("/:id", passport.authenticate("jwt", { session: false }), async (req,
 // Create a new propoint
 router.post('/', passport.authenticate("jwt", { session: false }), async (req, res, next) => {
   try {
+    if(validator.isEmpty(req.body.lab) || !validator.isInt(req.body.points) || !validator.isInt(req.body.eventId)){
+      res.status(404).json({msg : 'Please enter values for Event ID, course # and ProPoints'});
+    }
     let point = await ProPoint.create({
       points : req.body.points,
       confirmed : false,
-      lab : req.body.lab
+      lab : req.body.lab,
+      description :req.body.description
     });
-    await req.user.setPropoints(point);
+    await point.setUser(req.user);
     let event = await Event.findByPk(req.body.eventId);
-    await event.setPropoints(point);
+    await point.setEvent(event);
     res.status(200).json(point);
   } catch (err) {
     next(err);
