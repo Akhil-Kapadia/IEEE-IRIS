@@ -27,12 +27,13 @@ router.get("/", passport.authenticate("jwt", { session: false }), async (req, re
     try {
       let points = await ProPoint.findAll({where : {
         [Op.or] : {
-          createdAt : {[Op.between] : [req.body.fromDate, req.body.toDate]} || null,
-          eventId : req.body.event || null,
-          lab : req.body.lab || null,
+          createdAt : {[Op.between] : [req.body.fromDate, req.body.toDate]},
+          eventId : req.body.eventId,
+          lab : req.body.lab,
           confirmed : Boolean(req.body.confirmed),
-          description : req.body.description || null
-        }    
+          description : req.body.description
+        },
+        userId : req.user.id
       }});
       res.status(200).json(points);      
     } catch (err) {

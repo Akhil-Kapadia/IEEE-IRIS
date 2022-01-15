@@ -19,9 +19,10 @@ const authorized = () => {
 
 export default function ProPoints() {
   return (
-    <Paper elevation={3}>
+    <Paper elevation={3} sx={{p:2}}>
       <Typography>Add ProPoints here!</Typography>
       {authorized().id && <AddPoints />}
+      <Typography>See your points here!</Typography>
       <PointsTable/>
     </Paper>
   );

@@ -8,7 +8,6 @@ import Typography from "@mui/material/Typography";
 import axios from "axios";
 import qs from "qs";
 
-
 export default function AddPoints() {
   const [msg, setMsg] = React.useState("");
   const [event, setEvent] = React.useState("");
@@ -28,6 +27,7 @@ export default function AddPoints() {
       .post("/api/propoint", qs.stringify(data))
       .then(function (res) {
         setDisable(false);
+        eve.target.reset();
         setMsg(
           `Successfully added ProPoint : ${res.data.id} - ${res.data.description}`
         );
@@ -63,9 +63,12 @@ export default function AddPoints() {
         if (err.response.status === 304) {
           setEvent("No Matching event ID");
         }
+        if (err.response.status === 401) {
+          localStorage.clear();
+          setMsg("Unauthorized. Please refresh the page and login!");
+        }
       });
   };
-
 
   return (
     <Box
@@ -95,15 +98,15 @@ export default function AddPoints() {
             required
             fullWidth
             onChange={handleEvent}
-            error = {Boolean(event == "No Matching event ID")}
+            error={Boolean(event == "No Matching event ID")}
             id="id"
             label="Event ID"
             name="eventId"
             size="small"
-            autoFocus
+            autoFocus={true}
           />
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={3}>
           <TextField
             margin="normal"
             type="number"
@@ -113,11 +116,11 @@ export default function AddPoints() {
             label="Course ID"
             name="courseId"
             size="small"
-            defaultValue={"3331"}
+            placeholder="3331"
             autoFocus
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={5}>
           <TextField
             margin="normal"
             fullWidth
@@ -146,7 +149,9 @@ export default function AddPoints() {
           />
         </Grid>
         <Grid item xs={12} sm={3}>
-          <Typography variant="body1">{msg}</Typography>
+          <Typography variant="body1">
+            {msg}
+          </Typography>
           <LoadingButton
             type="submit"
             autoFocus
