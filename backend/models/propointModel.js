@@ -4,7 +4,7 @@ module.exports = (sequelize) => {
     const ProPoint = sequelize.define( 'propoint' , {
         points : DataTypes.INTEGER,
         confirmed : DataTypes.BOOLEAN,
-        lab : {
+        courseId : {
             type : DataTypes.INTEGER,
             allowNull : false
         },

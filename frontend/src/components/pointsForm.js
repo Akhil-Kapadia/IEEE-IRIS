@@ -18,7 +18,7 @@ export default function AddPoints() {
     let data = new FormData(eve.currentTarget);
     data = {
       points: data.get("propoint"),
-      lab: data.get("courseId"),
+      courseId : data.get("courseId"),
       description: data.get("description") || event,
       eventId: data.get("eventId"),
     };
