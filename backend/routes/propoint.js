@@ -25,14 +25,18 @@ router.get("/user/:id", passport.authenticate("jwt", { session: false }), async 
 //Finds all propoints with given querys
 router.get("/", passport.authenticate("jwt", { session: false }), async (req, res, next) => {
     try {
+      const member = await req.user.getIeee();
       let points = await ProPoint.findAll({where : {
         [Op.or] : {
-          createdAt : {[Op.between] : [req.body.fromDate, req.body.toDate]} || null,
-          eventId : req.body.event || null,
-          lab : req.body.lab || null,
-          confirmed : Boolean(req.body.confirmed),
-          description : req.body.description || null
-        }    
+          eventId : req.query.eventId || null,
+          courseId : req.query.courseId || null,
+          createdAt : {
+            [Op.lt] : req.query.toDate,
+            [Op.gt] : req.query.fromDate
+          }
+        },
+        confirmed : req.query.confirmed,
+        userId : (member.ferpa && member.officer) ? req.query.id || req.user.id : req.user.id
       }});
       res.status(200).json(points);      
     } catch (err) {
@@ -67,13 +71,13 @@ router.put("/:id", passport.authenticate("jwt", { session: false }), async (req,
 // Create a new propoint
 router.post('/', passport.authenticate("jwt", { session: false }), async (req, res, next) => {
   try {
-    if(validator.isEmpty(req.body.lab) || !validator.isInt(req.body.points) || !validator.isInt(req.body.eventId)){
-      res.status(404).json({msg : 'Please enter values for Event ID, course # and ProPoints'});
+    if(validator.isEmpty(req.body.courseId) || !validator.isInt(req.body.points) || !validator.isInt(req.body.eventId) || (req.body.description === "No Matching event ID")){
+      return res.status(404).json({msg : 'Please enter values for Event ID, course # and ProPoints'});
     }
     let point = await ProPoint.create({
       points : req.body.points,
       confirmed : false,
-      lab : req.body.lab,
+      courseId : req.body.courseId,
       description :req.body.description
     });
     await point.setUser(req.user);

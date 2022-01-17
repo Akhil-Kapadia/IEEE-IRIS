@@ -9,13 +9,13 @@ const validator = require("validator");
 router.post("/login", async (req, res) => {
   try {
     const isRnum = validator.isInt(req.body.id, {
-      gt: 10000000,
+      gt: 9999999,
       lt: 99999999,
     });
     if (!isRnum) {
       return res.status(400).json({
         success: false,
-        msg: "Please enter your email and R-Number correctly",
+        msg: "Please enter your password and R-Number correctly",
         isRnum: isRnum,
       });
     }
@@ -103,7 +103,7 @@ router.post("/register", async (req, res, next) => {
     }
 
     const isEmail = validator.isEmail(req.body.email);
-    const isRnum = validator.isInt(req.body.id, { gt: 10000000, lt: 99999999 });
+    const isRnum = validator.isInt(req.body.id, { gt: 9999999, lt: 99999999 });
     const isPwd = !validator.isEmpty(req.body.password);
     if (!(isEmail && isRnum && isPwd)) {
       return res.status(400).json({
