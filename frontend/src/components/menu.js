@@ -10,7 +10,7 @@ import { Outlet } from "react-router";
 import Slide from "@mui/material/Slide";
 import SwipableViews from "react-swipeable-views";
 
-import ProPoints from "./propoint";
+import ProPoints from "./ProPoints/propoint";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;

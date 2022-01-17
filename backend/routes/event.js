@@ -14,8 +14,24 @@ router.get("/all", passport.authenticate("jwt", { session: false }), async (req,
   }
 );
 
-//get a specific event
+//get an event based on ID
 router.get("/", passport.authenticate("jwt", { session: false }), async (req, res, next) => {
+  try {
+    let event = await Event.findOne({where : {
+        id : req.query.id || null,
+    }}).catch( err => {
+      console.log(err);
+    });
+    res.status(200).json(event);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+}
+);
+
+
+//get a specific event
+router.get("/search", passport.authenticate("jwt", { session: false }), async (req, res, next) => {
     try {
       let event = await Event.findAll({where : {
         [Op.or] : {

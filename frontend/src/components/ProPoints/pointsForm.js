@@ -53,6 +53,7 @@ export default function AddPoints() {
         },
       })
       .then(function (res) {
+        console.log(res.data);
         if (res.data[0]) {
           setEvent(res.data[0].event);
         } else {
