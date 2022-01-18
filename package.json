@@ -2,11 +2,10 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "Express backend",
-  "main": "backend/index.js",
+  "main": "index.js",
   "scripts": {
-    "test": "node backend/server.js",
-    "start": "node backend/server.js",
-    "dev": "nodemon backend/server.js"
+    "start": "node ./bin/www",
+    "dev": "nodemon ./bin/www"
   },
   "author": "",
   "license": "ISC",

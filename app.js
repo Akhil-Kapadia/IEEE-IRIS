@@ -16,7 +16,7 @@ require('./config/auth')(passport);
 
 // express middleware
 const app = express();
-app.use(express.static(path.join(__dirname, '../build')));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({extended : true}));
 app.use(cors());
@@ -25,11 +25,11 @@ app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(passport.initialize());
 
-// Https stuff
-const key = fs.readFileSync('server.key');
-const cert = fs.readFileSync('server.cert');
+// // Https stuff
+// const key = fs.readFileSync('server.key');
+// const cert = fs.readFileSync('server.cert');
 // const server = https.createServer({key :key, cert: cert}, app);
-const port = process.env.PORT || 3001;
+// const port = process.env.PORT || 3001;
 
 // Routes
 const userRoute = require('./routes/users');
@@ -46,9 +46,8 @@ app.use('/api/event', eventRouter);
 app.use('/api/propoint', propointRouter);
 
 app.use('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../build', 'index.html'));
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 })
 
-app.listen(port, () =>{
-    console.log(`listening on port: ${port}`);
-});
+
+module.exports = app;
