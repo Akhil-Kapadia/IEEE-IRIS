@@ -8,6 +8,7 @@ const fs = require('fs');
 const https = require('https');
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
+const path = require('path');
 
 //config
 require('./config/db');
@@ -15,6 +16,7 @@ require('./config/auth')(passport);
 
 // express middleware
 const app = express();
+app.use(express.static(path.join(__dirname, 'build')));
 app.use(express.json());
 app.use(express.urlencoded({extended : true}));
 app.use(cors());
@@ -23,10 +25,9 @@ app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(passport.initialize());
 
-
 // Https stuff
-const key = fs.readFileSync('./server.key');
-const cert = fs.readFileSync('./server.cert');
+const key = fs.readFileSync('server.key');
+const cert = fs.readFileSync('server.cert');
 const server = https.createServer({key :key, cert: cert}, app);
 const port = process.env.PORT || 3001;
 
@@ -44,11 +45,10 @@ app.use('/api/ieee', ieeeRouter);
 app.use('/api/event', eventRouter);
 app.use('/api/propoint', propointRouter);
 
+app.use('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+})
 
-app.get('/', (req, res) => {
-    res.send('<h1>Front Page</h1>');
-});
-
-server.listen(port, () =>{
+app.listen(port, () =>{
     console.log(`listening on port: ${port}`);
 });
