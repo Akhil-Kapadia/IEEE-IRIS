@@ -16,6 +16,7 @@ const cookieExtractor = req => {
 
 
 module.exports = (passport) => {
+    console.error(process.env.JWT_SECRET);
         passport.use('jwt', new JWTstrategy({
             jwtFromRequest: cookieExtractor,
             secretOrKey : process.env.JWT_SECRET,
