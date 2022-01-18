@@ -1,0 +1,8 @@
+{
+  "appService.zipIgnorePattern": [
+    "node_modules{,/**}",
+    ".vscode{,/**}"
+  ],
+  "appService.defaultWebAppToDeploy": "/subscriptions/7ca0dc16-5610-4e25-b36c-bed00f6872b9/resourceGroups/TTU/providers/Microsoft.Web/sites/TTU-IEEE",
+  "appService.deploySubpath": "."
+}

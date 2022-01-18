@@ -2,7 +2,7 @@ const passport = require('passport');
 const passportJWT = require('passport-jwt');
 const { User } = require('./db');
 const JWTstrategy = passportJWT.Strategy;
-
+const dotenv = require('dotenv').config();
 
 const cookieExtractor = req => {
     let token = null;
@@ -16,7 +16,7 @@ const cookieExtractor = req => {
 
 
 module.exports = (passport) => {
-    console.error('process.env.JWT_SECRET');
+    console.error(process.env);
         passport.use('jwt', new JWTstrategy({
             jwtFromRequest: cookieExtractor,
             secretOrKey : process.env.JWT_SECRET,
