@@ -52,6 +52,16 @@ export default function PointsTable() {
     setLoading(true);
     data.toDate = moment(data.toDate).format();
     data.fromDate = moment(data.fromDate).format();
+
+    // //remove empty querys
+    // Object.keys(data).forEach(
+    //   (k) => !data[k] && data[k] !== undefined && delete obj[k]
+    // );
+    // if(Object.keys(data).length > 2){
+    //   delete data[toDate];
+    //   delete data[fromDate];
+    // }
+    // console.log(data);
     axios
       .get("/api/propoint", {
         params: data,

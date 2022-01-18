@@ -45,7 +45,7 @@ app.use('/api/ieee', ieeeRouter);
 app.use('/api/event', eventRouter);
 app.use('/api/propoint', propointRouter);
 
-app.use('/*', (req, res) => {
+app.use('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../build', 'index.html'));
 })
 

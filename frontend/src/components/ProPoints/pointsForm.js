@@ -15,14 +15,15 @@ export default function AddPoints() {
 
   const handleSubmit = (eve) => {
     eve.preventDefault();
+    setDisable(true);
     let data = new FormData(eve.currentTarget);
     data = {
       points: data.get("propoint"),
-      courseId : data.get("courseId"),
+      courseId: data.get("courseId"),
       description: data.get("description") || event,
       eventId: data.get("eventId"),
     };
-    setDisable(true);
+
     axios
       .post("/api/propoint", qs.stringify(data))
       .then(function (res) {
@@ -38,7 +39,7 @@ export default function AddPoints() {
           localStorage.clear();
           setMsg("Unauthorized. Please refresh the page and login!");
         }
-        if (err.response.status === 404) {
+        if (err.response.status === 400) {
           setMsg("Please enter in the correct Event/Course ID!");
           setDisable(false);
         }
@@ -53,17 +54,13 @@ export default function AddPoints() {
         },
       })
       .then(function (res) {
-        console.log(res.data);
-        if (res.data[0]) {
-          setEvent(res.data[0].event);
+        if (res.data) {
+          setEvent(res.data.event);
         } else {
           setEvent("No Matching event ID");
         }
       })
       .catch(function (err) {
-        if (err.response.status === 304) {
-          setEvent("No Matching event ID");
-        }
         if (err.response.status === 401) {
           localStorage.clear();
           setMsg("Unauthorized. Please refresh the page and login!");
@@ -150,9 +147,7 @@ export default function AddPoints() {
           />
         </Grid>
         <Grid item xs={12} sm={3}>
-          <Typography variant="body1">
-            {msg}
-          </Typography>
+          <Typography variant="body1">{msg}</Typography>
           <LoadingButton
             type="submit"
             autoFocus

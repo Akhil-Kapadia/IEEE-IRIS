@@ -72,14 +72,14 @@ router.put("/:id", passport.authenticate("jwt", { session: false }), async (req,
 router.post('/', passport.authenticate("jwt", { session: false }), async (req, res, next) => {
   try {
     if(validator.isEmpty(req.body.courseId) || !validator.isInt(req.body.points) || !validator.isInt(req.body.eventId) || (req.body.description === "No Matching event ID")){
-      return res.status(404).json({msg : 'Please enter values for Event ID, course # and ProPoints'});
+      return res.status(400).json({msg : 'Please enter values for Event ID, course # and ProPoints'});
     }
     let point = await ProPoint.create({
       points : req.body.points,
       confirmed : false,
       courseId : req.body.courseId,
       description :req.body.description
-    });
+    }).catch( err => {res.status(500).json(err)});
     await point.setUser(req.user);
     let event = await Event.findByPk(req.body.eventId);
     await point.setEvent(event);

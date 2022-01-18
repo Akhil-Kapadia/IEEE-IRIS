@@ -48,7 +48,7 @@ router.post("/login", async (req, res) => {
                   res
                     .cookie("jwt", token, {
                       httpOnly: true,
-                      secure: true,
+                      // secure: true,
                       maxAge: 86400000,
                     })
                     .status(200)
