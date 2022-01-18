@@ -21,7 +21,7 @@ router.post("/login", async (req, res) => {
     }
 
     const user = await User.findByPk(req.body.id).catch((err) => {
-      console.error(err);
+      console.log(err);
     });
 
     if (user) {
@@ -64,7 +64,7 @@ router.post("/login", async (req, res) => {
         }
       );
     } else {
-      return res.status(404).json({
+      return res.status(400).json({
         msg: "User not found. Have you Registered yet?",
       });
     }
@@ -87,21 +87,6 @@ router.get("/logout", async (req, res, next) => {
 // register route
 router.post("/register", async (req, res, next) => {
   try {
-    const existingUser = await User.findOne({
-      where: {
-        id: req.body.id,
-        email: req.body.email,
-      },
-    }).catch((err) => {
-      console.log(err);
-    });
-
-    if (existingUser) {
-      return res
-        .status(409)
-        .json({ success: false, msg: "User already exists. Please log-in!" });
-    }
-
     const isEmail = validator.isEmail(req.body.email);
     const isRnum = validator.isInt(req.body.id, { gt: 9999999, lt: 99999999 });
     const isPwd = !validator.isEmpty(req.body.password);
@@ -131,13 +116,19 @@ router.post("/register", async (req, res, next) => {
             });
           })
           .catch((err) => {
-            console.log(err);
-            return res.status(500).json({ sucesss: false, msg: err });
+            if (err.name == "SequelizeUniqueConstraintError") {
+              return res.status(409)
+                .json({
+                  success: false,
+                  msg: "User already exists. Please log-in!",
+                });
+            }
+            return res.status(500).json({ sucesss: false, msg: err.name });
           });
       }
     });
   } catch (err) {
-    res.status(500).json(err);
+    next(err);
   }
 });
 
