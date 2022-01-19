@@ -6,7 +6,7 @@ const bcrypt = require("bcryptjs");
 const validator = require("validator");
 
 // login route
-router.post("/login", async (req, res) => {
+router.post("/login", async (req, res, next) => {
   try {
     const isRnum = validator.isInt(req.body.id, {
       gt: 9999999,
@@ -20,9 +20,7 @@ router.post("/login", async (req, res) => {
       });
     }
 
-    const user = await User.findByPk(req.body.id).catch((err) => {
-      console.log(err);
-    });
+    const user = await User.findByPk(req.body.id);
 
     if (user) {
       bcrypt.compare(
@@ -69,7 +67,7 @@ router.post("/login", async (req, res) => {
       });
     }
   } catch (err) {
-    res.status(500).json(err);
+    next(err);
   }
 });
 
@@ -77,7 +75,7 @@ router.get("/logout", async (req, res, next) => {
   res
     .cookie("jwt", "none", {
       httpOnly: true,
-      secure: true,
+      // secure: true,
       expires: new Date(Date.now() + 5 * 1000),
     })
     .status(200)
@@ -123,11 +121,10 @@ router.post("/register", async (req, res, next) => {
                   msg: "User already exists. Please log-in!",
                 });
             }
-            return res.status(500).json({ sucesss: false, msg: err.name });
           });
       }
     });
-  } catch (err) {
+  } catch (next) {
     next(err);
   }
 });

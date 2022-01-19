@@ -18,7 +18,7 @@ router.get("/user/:id", passport.authenticate("jwt", { session: false }), async 
       } 
       res.status(401).json({ msg: "Unauthorized. You need to be an admin." });
     } catch (err) {
-      res.status(500).json(err);
+      next(err);
     }
   });
 

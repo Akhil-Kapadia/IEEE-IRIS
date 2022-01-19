@@ -62,7 +62,7 @@ router.post('/', passport.authenticate("jwt", { session: false }), async (req, r
       res.status(401).json({msg : 'Unauthorized'});
     }
   }catch(err) {
-    res.status(500).json(err);
+    next(err);
   }
 });
 
@@ -79,7 +79,7 @@ router.put("/:id", passport.authenticate("jwt", { session: false }), async (req,
         res.status(401).json({msg : 'Unauthorized'});
       }
     } catch (err) {
-      res.status(500).json(err);
+      next(err);
     }
   }
 );

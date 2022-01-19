@@ -21,7 +21,7 @@ router.get('/all', passport.authenticate('jwt', {session : false}),async(req, re
             res.status(401).json({msg : 'Unauthorized. You need to be an admin.'});
         }
     }catch(err){
-        res.status(500).json(err);
+        next(err);
     }
 });
 
@@ -35,7 +35,7 @@ router.get('/:id', passport.authenticate('jwt', {session : false}), async(req, r
             res.status(401).send('Unauthorized');
         }
     }catch(err){
-        res.status(500).json(err);
+        next(err);
     }
 });
 
@@ -58,7 +58,7 @@ router.put('/:id', passport.authenticate('jwt', {session : false}),async(req, re
             res.status(401).send('Unauthorized');
         }
     }catch(err){
-        res.status(500).json(err);
+        next(err);
     }
 
 });
@@ -75,7 +75,7 @@ router.delete('/:id', passport.authenticate('jwt', {session : false}), async (re
             res.status(401).send('Unauthorized');
         }
     }catch(err){
-        res.status(500).json(err);
+        next(err);
     }
 });
 
