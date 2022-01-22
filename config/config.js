@@ -2,11 +2,8 @@ const fs = require('fs');
 
 module.exports = {
   "development": {
-    "username": "iris",
-    "password": "password",
-    "database": "iris",
-    "host": "127.0.0.1",
-    "dialect": "sqlite"
+    "dialect" : "sqlite",
+    "storage" : "./database.sqlite"
   },
   "test": {
     "username": "root",

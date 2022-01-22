@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { User, Ieee } = require("../config/db");
+const { User, Ieee } = require("../models/index");
 const passport = require("passport");
 
 //get all IEEE members

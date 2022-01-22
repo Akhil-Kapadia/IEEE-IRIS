@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { User, Ieee, ProPoint, Event } = require("../config/db");
+const { User, Ieee, ProPoint, Event } = require("../models/index");
 const passport = require("passport");
 const { Op } = require('sequelize');
 const validator = require('validator');
