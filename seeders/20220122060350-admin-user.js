@@ -21,16 +21,16 @@ module.exports = {
      password: await bcrypt.hash("zqP$sGf5", 10),
      classification: 'EE',
      alumni: true,
-     createdAt: Sequelize.DataTypes.NOW,
-     updatedAt: Sequelize.DataTypes.NOW
+     createdAt: Date.now(),
+     updatedAt: Date.now()
    }], {});
    await queryInterface.bulkInsert('ieee', [{
      memberId: 101,
      officer: "Admin",
      ferpa: '/public/ferpa/1',
      UserId: 10000000,
-     createdAt: new Date.now(),
-     updatedAt: Sequelize.DataTypes.NOW
+     createdAt: Date.now(),
+     updatedAt: Date.now()
    }], {})
   }catch(err){
     console.log(err);
