@@ -1,7 +1,9 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('events', {
+    const t = await queryInterface.sequelize.transaction();
+    try{
+    await queryInterface.createTable('Events', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -33,9 +35,15 @@ module.exports = {
         type: Sequelize.DATE
       },
       
-    });
+    }, {transaction:t});
+    await t.commit();
+  }catch(err){
+    await t.rollback();
+    throw err;
+  }
   },
+
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('events');
+    await queryInterface.dropTable('Events');
   }
 };

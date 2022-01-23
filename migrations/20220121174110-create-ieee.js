@@ -1,7 +1,9 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('ieee', {
+    const t = await queryInterface.sequelize.transaction();
+    try{
+    await queryInterface.createTable('Ieee', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -27,14 +29,21 @@ module.exports = {
       },
       UserId: {
         type: Sequelize.INTEGER,
-        references: {
-          model: 'users',
-          key: 'id'
-        }
       }
-    });
+    }, {transaction:t});
+    await t.commit();
+  }catch(err){
+    await t.rollback();
+    throw err;
+  }
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('ieee');
+    const t = await queryInterface.sequelize.transaction();
+    try{
+    await queryInterface.dropTable('Ieee', {t});
+    }catch(err){
+      await t.rollback();
+      throw err;
+    }
   }
 };

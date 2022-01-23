@@ -1,7 +1,9 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('propoints', {
+    const t = await queryInterface.sequelize.transaction();
+    try{
+    await queryInterface.createTable('ProPoints', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -31,23 +33,21 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      userId: {
+      UserId: {
         type: Sequelize.INTEGER,
-        references: {
-          model: 'users',
-          key: 'id'
-        }
       },
-      eventId: {
+      EventId: {
         type: Sequelize.INTEGER,
-        references: {
-          model: 'events',
-          key: 'id'
-        }
       }
-    });
+    }, {transaction:t});
+    await t.commit();
+  }catch(err){
+    await t.rollback();
+    throw err;
+  }
   },
+
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('propoints');
+    await queryInterface.dropTable('ProPoints');
   }
 };

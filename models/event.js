@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Event.hasMany(models.Propoint);
+      Event.hasMany(models.ProPoint);
     }
   }
   Event.init({

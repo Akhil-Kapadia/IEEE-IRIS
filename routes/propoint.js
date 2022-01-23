@@ -11,9 +11,9 @@ router.get("/user/:id", passport.authenticate("jwt", { session: false }), async 
       // If its an officer and has a ferpa cert, get all propoints.
       if (member.officer && member.ferpa) {
         member = await Ieee.findOne({
-          where : {userId : req.params.id}
+          where : {UserId : req.params.id}
         })
-        let points = await req.user.getPropoints();
+        let points = await req.user.getProPoints();
         return res.status(200).json(points);
       } 
       res.status(401).json({ msg: "Unauthorized. You need to be an admin." });
@@ -28,7 +28,7 @@ router.get("/", passport.authenticate("jwt", { session: false }), async (req, re
       const member = await req.user.getIeee();
       let points = await ProPoint.findAll({where : {
         [Op.or] : {
-          eventId : req.query.eventId || null,
+          EventId : req.query.eventId || null,
           courseId : req.query.courseId || null,
           createdAt : {
             [Op.lt] : req.query.toDate,
@@ -36,7 +36,7 @@ router.get("/", passport.authenticate("jwt", { session: false }), async (req, re
           }
         },
         confirmed : req.query.confirmed,
-        userId : (member.ferpa && member.officer) ? req.query.id || req.user.id : req.user.id
+        UserId : (member.ferpa && member.officer) ? req.query.id || req.user.id : req.user.id
       }});
       res.status(200).json(points);      
     } catch (err) {
@@ -53,7 +53,7 @@ router.put("/:id", passport.authenticate("jwt", { session: false }), async (req,
         member.set({memberId : req.body.memberId})
         await member.save().catch(next);
       } else if (member.officer) {
-        member = await Ieee.findOne({ where: { userId: req.params.id } }).catch(next);
+        member = await Ieee.findOne({ where: { UserId: req.params.id } }).catch(next);
         if (member) {
           member.set(req.body);
           await member.save().catch(next);

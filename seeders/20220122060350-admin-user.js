@@ -3,16 +3,9 @@ const bcrypt = require('bcryptjs');
 
 module.exports = {
   async up (queryInterface, Sequelize) {
-    /**
-     * Add seed commands here.
-     *
-     * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {});
-    */
-   await queryInterface.bulkInsert('users', [{
+    const t = await queryInterface.sequelize.transaction();
+    try {
+   await queryInterface.bulkInsert('Users', [{
      id : 10000000,
      firstname: 'Iris',
      lastname: 'Admin',
@@ -20,26 +13,33 @@ module.exports = {
      password: await bcrypt.hash("zqP$sGf5", 10),
      classification: 'EE',
      alumni: true,
-     createdAt: Date.now(),
-     updatedAt: Date.now()
-   }], {});
-   await queryInterface.bulkInsert('ieee', [{
+     createdAt: new Date(),
+     updatedAt: new Date()
+   }], {transaction: t});
+   await queryInterface.bulkInsert('Ieee', [{
      memberId: 101,
      officer: "Admin",
      ferpa: '/public/ferpa/1',
      UserId: 10000000,
-     createdAt: Date.now(),
-     updatedAt: Date.now()
-   }], {})
+     createdAt: new Date(),
+     updatedAt: new Date
+   }], {transaction:t})
+   await t.commit();
+  }catch(err){
+    await t.rollback();
+    throw err;
+  }
   },
 
   async down (queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
-    await queryInterface.bulkDelete('users', {id:10000000}, {});
+    const t = await queryInterface.sequelize.transaction();
+    try{
+    await queryInterface.bulkDelete('users', {id:10000000}, {transaction:t});
+    await queryInterface.bulkDelete('ieee', {userId:10000000}, {transaction:t});
+    await t.commit();
+  }catch(err){
+    await t.rollback();
+    throw err;
+  }
   }
 };

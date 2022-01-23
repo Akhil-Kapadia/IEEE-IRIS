@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Propoint extends Model {
+  class ProPoint extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,14 +11,17 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Propoint.belongsTo(models.User);
-      Propoint.belongsTo(models.Event);
+      ProPoint.belongsTo(models.User);
+      ProPoint.belongsTo(models.Event);
     }
   }
-  Propoint.init({
-    points: DataTypes.INTEGER
+  ProPoint.init({
+    points: DataTypes.INTEGER,
+    confirmed: DataTypes.BOOLEAN,
+    courseId: DataTypes.INTEGER,
+    description: DataTypes.STRING
   }, {
     sequelize
   });
-  return Propoint;
+  return ProPoint;
 };

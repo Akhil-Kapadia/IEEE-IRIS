@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       User.hasOne(models.Ieee);
-      User.hasMany(models.Propoint);
+      User.hasMany(models.ProPoint);
 
     }
   }
@@ -48,7 +48,8 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      sequelize
+      sequelize,
+      modelName: 'User'
     }
   );
   return User;
