@@ -23,6 +23,8 @@ module.exports = (passport) => {
         }, async function(jwtPayload, done) {
             const {id, officer} = jwtPayload;
 
+            console.log(User.toJSON());
+
             const user = await User.findByPk(id).catch(err => {
                 return done(err, false);
             });

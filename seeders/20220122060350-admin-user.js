@@ -12,7 +12,6 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-   try{
    await queryInterface.bulkInsert('users', [{
      id : 10000000,
      firstname: 'Iris',
@@ -32,9 +31,6 @@ module.exports = {
      createdAt: Date.now(),
      updatedAt: Date.now()
    }], {})
-  }catch(err){
-    console.log(err);
-  }
   },
 
   async down (queryInterface, Sequelize) {

@@ -18,8 +18,7 @@ module.exports = (sequelize, DataTypes) => {
   Propoint.init({
     points: DataTypes.INTEGER
   }, {
-    sequelize,
-    modelName: 'Propoint',
+    sequelize
   });
   return Propoint;
 };

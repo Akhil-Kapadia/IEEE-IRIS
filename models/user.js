@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       User.hasOne(models.Ieee);
       User.hasMany(models.Propoint);
-      
+
     }
   }
   User.init(
@@ -48,8 +48,7 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      sequelize,
-      modelName: "User",
+      sequelize
     }
   );
   return User;
