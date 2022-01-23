@@ -1,6 +1,6 @@
 const passport = require('passport');
 const passportJWT = require('passport-jwt');
-const { User } = require('./db');
+const { User } = require('../models/index');
 const JWTstrategy = passportJWT.Strategy;
 const dotenv = require('dotenv').config();
 
@@ -16,13 +16,13 @@ const cookieExtractor = req => {
 
 
 module.exports = (passport) => {
-    console.log(`Environment variable${process.env.JWT_SECRET}`);
         passport.use('jwt', new JWTstrategy({
             jwtFromRequest: cookieExtractor,
             secretOrKey : process.env.JWT_SECRET,
             jsonWebTokenOptions : {maxAge : '7d'}   // Auth ends after 7 days
         }, async function(jwtPayload, done) {
             const {id, officer} = jwtPayload;
+
 
             const user = await User.findByPk(id).catch(err => {
                 return done(err, false);

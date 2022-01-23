@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { User, Ieee } = require("../config/db");
+const { User, Ieee } = require("../models/index");
 const passport = require("passport");
 
 //get all IEEE members
@@ -27,7 +27,7 @@ router.get("/:id", passport.authenticate("jwt", { session: false }), async (req,
         let member = await req.user.getIeee().catch(next);
         return res.status(200).json(member);
       } else if (req.user.role) {
-        await Ieee.findOne({ where: { userId: req.params.id } })
+        await Ieee.findOne({ where: { UserId: req.params.id } })
           .then(function (ieee) {
             if (ieee) {
               res.status(200).json(member);
@@ -51,7 +51,7 @@ router.put("/:id", passport.authenticate("jwt", { session: false }), async (req,
         member.set({memberId : req.body.memberId})
         await member.save().catch(next);
       } else if (req.user.role) {
-        let member = await Ieee.findOne({ where: { userId: req.params.id } }).catch(next);
+        let member = await Ieee.findOne({ where: { UserId: req.params.id } }).catch(next);
         if (member) {
           member.set(req.body);
           await member.save().catch(next);

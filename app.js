@@ -11,7 +11,8 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 
 //config
-require('./config/db');
+// require('./config/db');
+require('./models/index');
 require('./config/auth')(passport);
 
 // express middleware

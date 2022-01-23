@@ -1,5 +1,5 @@
 const express = require('express');
-const {User, Ieee} = require('../config/db');
+const {User, Ieee} = require('../models/index');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 
@@ -45,7 +45,7 @@ router.put('/:id', passport.authenticate('jwt', {session : false}),async(req, re
         if (req.user.id == req.params.id) {
           return res.status(200).json(member);
         } else if (req.user.role) {
-          Ieee.findOne({ where: { userId: req.params.id } })
+          Ieee.findOne({ where: { UserId: req.params.id } })
             .then(function (ieee) {
               if (ieee) {
                 res.status(200).json(member);

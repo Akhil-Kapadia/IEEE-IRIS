@@ -21,7 +21,7 @@ export default function AddPoints() {
       points: data.get("propoint"),
       courseId: data.get("courseId"),
       description: data.get("description") || event,
-      eventId: data.get("eventId"),
+      EventId: data.get("eventId"),
     };
 
     axios

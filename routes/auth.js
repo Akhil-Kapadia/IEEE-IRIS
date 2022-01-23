@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
-const { User, Ieee } = require("../config/db");
+const { User, Ieee } = require("../models/index");
 const bcrypt = require("bcryptjs");
 const validator = require("validator");
 
