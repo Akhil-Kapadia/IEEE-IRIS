@@ -17,8 +17,8 @@ import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
 function PointsData(props) {
   const [data, setData] = React.useState(props.data);
   const columns = [
-    { field: "userId", headerName: "R-Number", flex: 0.10 },
-    { field: "eventId", headerName: "Event ID", flex:0.05},
+    { field: "UserId", headerName: "R-Number", flex: 0.10 },
+    { field: "EventId", headerName: "Event ID", flex:0.05},
     { field: "courseId", headerName: "Course ID", flex: 0.05},
     { field: "description", headerName: "Event Title or Description", flex:0.45},
     { field: 'createdAt', headerName : "Added On", flex : 0.15, valueFormatter :  (params) => {

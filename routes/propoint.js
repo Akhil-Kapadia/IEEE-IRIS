@@ -28,7 +28,7 @@ router.get("/", passport.authenticate("jwt", { session: false }), async (req, re
       const member = await req.user.getIeee();
       let points = await ProPoint.findAll({where : {
         [Op.or] : {
-          EventId : req.query.eventId || null,
+          EventId : req.query.EventId || null,
           courseId : req.query.courseId || null,
           createdAt : {
             [Op.lt] : req.query.toDate,
@@ -81,7 +81,7 @@ router.post('/', passport.authenticate("jwt", { session: false }), async (req, r
       description :req.body.description
     }).catch( err => {res.status(500).json(err)});
     await point.setUser(req.user);
-    let event = await Event.findByPk(req.body.eventId);
+    let event = await Event.findByPk(req.body.EventId);
     await point.setEvent(event);
     res.status(200).json(point);
   } catch (err) {
