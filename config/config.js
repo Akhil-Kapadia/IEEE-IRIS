@@ -13,11 +13,11 @@ module.exports = {
     "dialect": "mysql"
   },
   "production": {
-    "username": process.env.DB_USER,
-    "password": process.env.DB_PASS,
-    "database": process.env.DB_NAME,
-    "host": process.env.DB_HOST,
-    "port" : process.env.DB_PORT,
+    "username": process.env.PG_DBUSER,
+    "password": process.env.PG_DBPASS,
+    "database": process.env.PG_DBNAME,
+    "host": process.env.PG_DBHOST,
+    "port" : process.env.PG_DBPORT,
     "dialect": "postgres"
   }
 }
