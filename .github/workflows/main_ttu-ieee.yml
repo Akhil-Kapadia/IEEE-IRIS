@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'TTU-IEEE'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_ECEE4562CCDB48DB8502BE9D7072AF0A }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_AE546455125541D79637EB368A513FB5 }}
           package: .
