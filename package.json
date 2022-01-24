@@ -4,7 +4,8 @@
   "description": "Express backend",
   "main": "index.js",
   "scripts": {
-    "start": "npm install && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all && node ./bin/www",
+    "postinstall": "npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
+    "start": "node ./bin/www",
     "dev": "nodemon ./bin/www"
   },
   "author": "",
@@ -22,6 +23,7 @@
     "passport-jwt": "^4.0.0",
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
+    "pm2": "^5.1.2",
     "sequelize": "^6.13.0",
     "validator": "^13.7.0"
   },
