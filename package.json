@@ -4,7 +4,7 @@
   "description": "Express backend",
   "main": "index.js",
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "sequelize-cli db:migrate --env production && sequelize-cli db:seed:all --env production && node ./bin/www",
     "dev": "nodemon ./bin/www"
   },
   "author": "",
