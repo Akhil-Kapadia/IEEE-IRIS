@@ -26,7 +26,8 @@ module.exports = {
    }], {transaction:t})
    await t.commit();
   }catch(err){
-    await t.rollback();s
+    await t.rollback();
+    console.log(err.name);
   }
   },
 
