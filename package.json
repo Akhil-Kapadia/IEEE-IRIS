@@ -4,7 +4,7 @@
   "description": "Express backend",
   "main": "index.js",
   "scripts": {
-    "postinstall": "npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
+    "postinstall": "sequelize-cli db:migrate --env production && sequelize-cli db:seed:all --env production",
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www"
   },
