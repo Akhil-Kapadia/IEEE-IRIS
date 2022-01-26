@@ -40,8 +40,6 @@ export default function PointsTable() {
   const [loading, setLoading] = React.useState(false);
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
-      eventId: "",
-      courseId: "",
       fromDate: moment().subtract(3, "months").format(),
       toDate: moment().format(),
       confirmed: false,
@@ -53,15 +51,6 @@ export default function PointsTable() {
     data.toDate = moment(data.toDate).format();
     data.fromDate = moment(data.fromDate).format();
 
-    // //remove empty querys
-    // Object.keys(data).forEach(
-    //   (k) => !data[k] && data[k] !== undefined && delete obj[k]
-    // );
-    // if(Object.keys(data).length > 2){
-    //   delete data[toDate];
-    //   delete data[fromDate];
-    // }
-    // console.log(data);
     axios
       .get("/api/propoint", {
         params: data,
@@ -69,8 +58,6 @@ export default function PointsTable() {
       .then(function (res) {
         setPoints(res.data);
         reset({
-          eventId: "",
-          courseId: "",
           fromDate: data.fromDate,
           toDate: moment().format(),
           confirmed: data.confirmed,
@@ -88,31 +75,13 @@ export default function PointsTable() {
         onSubmit={handleSubmit(onSubmit)}
         noValidate
         flexGrow
-        direction="row"
+        direction="column"
         alignContent="center"
         justifyContent="center"
-        spacing={1}
+        spacing={2}
         sx={{ p: 2 }}
       >
-        <Grid item xs={2}>
-          <Controller
-            name="eventId"
-            control={control}
-            render={({ field }) => (
-              <TextField {...field} type="number" label="Event ID" fullWidth />
-            )}
-          />
-        </Grid>
-        <Grid item xs={2}>
-          <Controller
-            name="courseId"
-            control={control}
-            render={({ field }) => (
-              <TextField {...field} type="number" label="Course ID" fullWidth />
-            )}
-          />
-        </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={12}>
           <Controller
             name="fromDate"
             control={control}
@@ -126,7 +95,7 @@ export default function PointsTable() {
             )}
           />
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={12}>
           <Controller
             name="toDate"
             control={control}
@@ -140,7 +109,7 @@ export default function PointsTable() {
             )}
           />
         </Grid>
-        <Grid item xs={1}>
+        <Grid item xs={12}>
           <Controller
             name="confirmed"
             control={control}
@@ -154,13 +123,14 @@ export default function PointsTable() {
             )}
           />
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={6}>
           <LoadingButton
             name="submit"
             type="submit"
             variant="contained"
             color="secondary"
             size="large"
+            alignContent = 'center'
             loading={loading}
             fullWidth
           >

@@ -6,7 +6,7 @@
   "scripts": {
     "database": "sequelize-cli db:migrate --env production && sequelize-cli db:seed:all --env production",
     "start": "pm2 start ./bin/www --no-daemon --env production",
-    "dev": "nodemon ./bin/www"
+    "dev": "nodemon ./bin/www --ignore ./frontend"
   },
   "author": "",
   "license": "ISC",
