@@ -84,12 +84,12 @@ export default function AddPoints() {
     >
       <Grid
         container
-        spacing={1}
-        direction="row"
+        spacing={2}
+        direction="column"
         justifyContent="center"
         alignItems="center"
       >
-        <Grid item xs={2}>
+        <Grid item xs = {12} md={12}>
           <TextField
             margin="normal"
             type="number"
@@ -100,11 +100,10 @@ export default function AddPoints() {
             id="id"
             label="Event ID"
             name="eventId"
-            size="small"
             autoFocus={true}
           />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={12}>
           <TextField
             margin="normal"
             type="number"
@@ -113,12 +112,11 @@ export default function AddPoints() {
             id="courseId"
             label="Course ID"
             name="courseId"
-            size="small"
             placeholder="3331"
             autoFocus
           />
         </Grid>
-        <Grid item xs={5}>
+        <Grid item xs={12}>
           <TextField
             margin="normal"
             fullWidth
@@ -128,11 +126,10 @@ export default function AddPoints() {
             name="description"
             placeholder={event}
             error={Boolean(event == "No Matching event ID")}
-            size="small"
             autoFocus
           />
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={12}>
           <TextField
             margin="normal"
             type="number"
@@ -142,16 +139,14 @@ export default function AddPoints() {
             label="ProPoints"
             name="propoint"
             defaultValue="1"
-            size="small"
             autoFocus
           />
         </Grid>
-        <Grid item xs={12} sm={3}>
+        <Grid item xs={12} sm={6}>
           <Typography variant="body1">{msg}</Typography>
           <LoadingButton
             type="submit"
             autoFocus
-            size="normal"
             fullWidth
             variant="contained"
             color="secondary"

@@ -26,16 +26,12 @@ router.get("/user/:id", passport.authenticate("jwt", { session: false }), async 
 router.get("/", passport.authenticate("jwt", { session: false }), async (req, res, next) => {
     try {
       const member = await req.user.getIeee();
-      let points = await ProPoint.findAll({where : {
-        [Op.or] : {
-          EventId : req.query.EventId || null,
-          courseId : req.query.courseId || null,
-          createdAt : {
-            [Op.lt] : req.query.toDate,
-            [Op.gt] : req.query.fromDate
-          }
+      const points = await ProPoint.findAll({where : {
+        createdAt : {
+          [Op.lt] : req.query.toDate,
+          [Op.gt] : req.query.fromDate
         },
-        confirmed : req.query.confirmed,
+        confirmed : (req.query.confirmed === 'true'),
         UserId : (member.ferpa && member.officer) ? req.query.id || req.user.id : req.user.id
       }});
       res.status(200).json(points);      
@@ -71,7 +67,7 @@ router.put("/:id", passport.authenticate("jwt", { session: false }), async (req,
 // Create a new propoint
 router.post('/', passport.authenticate("jwt", { session: false }), async (req, res, next) => {
   try {
-    if(validator.isEmpty(req.body.courseId) || !validator.isInt(req.body.points) || !validator.isInt(req.body.eventId) || (req.body.description === "No Matching event ID")){
+    if(validator.isEmpty(req.body.courseId) || !validator.isInt(req.body.points) || !validator.isInt(req.body.EventId) || (req.body.description === "No Matching event ID")){
       return res.status(400).json({msg : 'Please enter values for Event ID, course # and ProPoints'});
     }
     let point = await ProPoint.create({
