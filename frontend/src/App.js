@@ -3,8 +3,8 @@ import * as React from "react";
 
 import Register from "./components/register";
 import SignIn from "./components/SignIn";
-import Layout from "./components/layout";
-import AdminLayout from "./components/AdminPanel/layout";
+import Layout from "./pages/home";
+import AdminLayout from "./pages/admin";
 
 function App() {
 
