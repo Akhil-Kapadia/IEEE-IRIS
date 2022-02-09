@@ -20,12 +20,11 @@ import { Stack } from "@mui/material";
 
 function Router(props) {
   const { children } = props;
-  if (typeof window === "undefined") {
-    return <StaticRouter location="/drafts">{children}</StaticRouter>;
+  if (typeof window === 'undefined') {
+    return <StaticRouter location="/">{children}</StaticRouter>;
   }
-
   return (
-    <MemoryRouter initialEntries={["/drafts"]} initialIndex={0}>
+    <MemoryRouter initialEntries={["/"]} initialIndex={0}>
       {children}
     </MemoryRouter>
   );
@@ -46,15 +45,15 @@ function useRouteMatch(patterns) {
     }
   }
 
-  return null;
+  return "/";
 }
 
 export default function MenuTabs() {
   const routeMatch = useRouteMatch([
     "/",
-    "/annoucements",
-    "/propoint",
-    "student-resources",
+    "/announcements",
+    "/propoints",
+    "/student-resources",
     "/minecraft",
   ]);
   const currentTab = routeMatch?.pattern?.path;

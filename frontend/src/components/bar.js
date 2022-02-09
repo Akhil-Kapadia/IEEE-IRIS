@@ -9,8 +9,10 @@ import MenuItem from "@mui/material/MenuItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import LogoutIcon from "@mui/icons-material/Logout";
+import HomeIcon from "@mui/icons-material/Home";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import IconButton from "@mui/material/IconButton";
 import { Link, useNavigate, Outlet } from "react-router-dom";
 import axios from "axios";
 
@@ -49,6 +51,17 @@ export default function Bar() {
     <Box>
       <AppBar position="static">
         <Toolbar>
+          <IconButton
+            component={Link}
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="home"
+            sx={{ mr: 2 }}
+            to="/"
+          >
+            <HomeIcon />
+          </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             TTU ECE IEEE Student Branch
           </Typography>

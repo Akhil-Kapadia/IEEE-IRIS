@@ -23,10 +23,10 @@ function App() {
           <Route path="minecraft" element={"TBI"}/>
           <Route index element={<AboutUs />} />
         </Route>
+        <Route path="/admin" element={<AdminLayout/>}/>
       </Route>
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<SignIn />} />
-      <Route path="/admin" element={<AdminLayout/>}/>
     </Routes>
   </main>
   );
