@@ -1,7 +1,7 @@
 import * as React from "react";
 import Paper from '@mui/material/Paper';
 
-import EventForm from "../components/AdminPanel/events";
+import EventForm from "../components/events";
 
 export default function AdminLayout() {
 

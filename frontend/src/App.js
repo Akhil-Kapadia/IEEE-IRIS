@@ -9,6 +9,7 @@ import Bar from "./components/bar";
 import ProPoints from "./routes/propoint";
 import Announcement from "./routes/annoucements";
 import AboutUs from "./routes/aboutus";
+import PanelLayout from "./components/panelLayout"
 
 function App() {
 
@@ -23,7 +24,9 @@ function App() {
           <Route path="minecraft" element={"TBI"}/>
           <Route index element={<AboutUs />} />
         </Route>
-        <Route path="/admin" element={<AdminLayout/>}/>
+        <Route element={<PanelLayout />} >
+          <Route path="admin" element={<AdminLayout/>}/>
+        </Route>
       </Route>
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<SignIn />} />

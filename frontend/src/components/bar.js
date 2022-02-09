@@ -49,7 +49,7 @@ export default function Bar() {
 
   return (
     <Box>
-      <AppBar position="static">
+      <AppBar position="fixed" sx={{zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <Toolbar>
           <IconButton
             component={Link}
