@@ -11,7 +11,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, Outlet } from "react-router-dom";
 import axios from "axios";
 
 export default function Bar() {
@@ -46,7 +46,7 @@ export default function Bar() {
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box>
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
@@ -103,6 +103,7 @@ export default function Bar() {
           </div>
         </Toolbar>
       </AppBar>
+      <Outlet />
     </Box>
   );
 }

@@ -6,80 +6,98 @@ import { useTheme } from "@mui/material/styles";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
-import { Outlet } from "react-router";
-import Slide from "@mui/material/Slide";
-import SwipableViews from "react-swipeable-views";
+import {
+  MemoryRouter,
+  Route,
+  Routes,
+  Link,
+  matchPath,
+  useLocation,
+  Outlet,
+} from "react-router-dom";
+import { StaticRouter } from "react-router-dom/server";
+import { Stack } from "@mui/material";
 
-import ProPoints from "./ProPoints/propoint";
-
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
+function Router(props) {
+  const { children } = props;
+  if (typeof window === "undefined") {
+    return <StaticRouter location="/drafts">{children}</StaticRouter>;
+  }
 
   return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`full-width-tabpanel-${index}`}
-      aria-labelledby={`full-width-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
-    </div>
+    <MemoryRouter initialEntries={["/drafts"]} initialIndex={0}>
+      {children}
+    </MemoryRouter>
   );
 }
 
-TabPanel.propTypes = {
+Router.propTypes = {
   children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
 };
 
-function allyProps(index) {
-  return {
-    id: `full-width-tab-${index}`,
-    "aria-controls": `full-width-tabpanel-${index}`,
-  };
+function useRouteMatch(patterns) {
+  const { pathname } = useLocation();
+
+  for (let i = 0; i < patterns.length; i += 1) {
+    const pattern = patterns[i];
+    const possibleMatch = matchPath(pattern, pathname);
+    if (possibleMatch !== null) {
+      return possibleMatch;
+    }
+  }
+
+  return null;
 }
 
 export default function MenuTabs() {
-  const theme = useTheme();
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  const handleChangeIndex = (event, index) => {
-    setValue(index);
-  };
+  const routeMatch = useRouteMatch([
+    "/",
+    "/annoucements",
+    "/propoint",
+    "student-resources",
+    "/minecraft",
+  ]);
+  const currentTab = routeMatch?.pattern?.path;
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Stack>
       <Box sx={{ borderBottom: 1, borderColor: "grey.500", flexGrow: 1 }}>
         <Tabs
-          value={value}
-          onChange={handleChange}
+          value={currentTab}
           centered
           textColor="primary"
           indicatorColor="secondary"
         >
-          <Tab label="About Us" {...allyProps(0)} />
-          <Tab label="Announcements" {...allyProps(1)} />
-          <Tab label="Pro Points" {...allyProps(2)} />
+          <Tab label="About Us" value="/" to="/" component={Link} />
+          <Tab
+            label="Announcements"
+            value="/announcements"
+            to="/announcements"
+            component={Link}
+          />
+          <Tab
+            label="Pro Points"
+            value="/propoints"
+            to="/propoints"
+            component={Link}
+          />
+          <Tab
+            label="Student Resources"
+            value="/student-resources"
+            to="/student-resources"
+            component={Link}
+          />
+          <Tab
+            label="MineCraft"
+            value="/minecraft"
+            to="/minecraft"
+            component={Link}
+          />
         </Tabs>
       </Box>
-      <SwipableViews axis='x' index={value} onChangeIndex={handleChangeIndex}>
-        <TabPanel value={value} index={0}>
-          <Typography>Testing</Typography>
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          <Typography>Hello</Typography>
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          <ProPoints />
-        </TabPanel>
-      </SwipableViews>
-      <Outlet />
-    </Box>
+      <Box sx={{ p: 2 }}>
+        <Outlet />
+      </Box>
+    </Stack>
   );
 }
