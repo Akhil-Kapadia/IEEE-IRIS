@@ -99,7 +99,7 @@ export default function Bar() {
                 <div>
                   <MenuItem
                     onClick={() => {
-                      navigate("/admin");
+                      navigate("/admin/posts");
                     }}
                   >
                     <ListItemIcon>

@@ -1,6 +1,4 @@
 import * as React from "react";
-import PropTypes from "prop-types";
-import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import { useTheme } from "@mui/material/styles";
 import Tabs from "@mui/material/Tabs";
@@ -15,24 +13,8 @@ import {
   useLocation,
   Outlet,
 } from "react-router-dom";
-import { StaticRouter } from "react-router-dom/server";
 import { Stack } from "@mui/material";
 
-function Router(props) {
-  const { children } = props;
-  if (typeof window === 'undefined') {
-    return <StaticRouter location="/">{children}</StaticRouter>;
-  }
-  return (
-    <MemoryRouter initialEntries={["/"]} initialIndex={0}>
-      {children}
-    </MemoryRouter>
-  );
-}
-
-Router.propTypes = {
-  children: PropTypes.node,
-};
 
 function useRouteMatch(patterns) {
   const { pathname } = useLocation();
@@ -56,7 +38,7 @@ export default function MenuTabs() {
     "/student-resources",
     "/minecraft",
   ]);
-  const currentTab = routeMatch?.pattern?.path;
+  const currentTab = routeMatch?.pattern?.path || "/";
 
   return (
     <Stack>
@@ -67,7 +49,12 @@ export default function MenuTabs() {
           textColor="primary"
           indicatorColor="secondary"
         >
-          <Tab label="About Us" value="/" to="/" component={Link} />
+          <Tab 
+            label="About Us" 
+            value="/" 
+            to="/" 
+            component={Link} 
+          />
           <Tab
             label="Announcements"
             value="/announcements"
