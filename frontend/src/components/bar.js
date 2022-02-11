@@ -13,8 +13,11 @@ import HomeIcon from "@mui/icons-material/Home";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import IconButton from "@mui/material/IconButton";
+import { styled } from "@mui/material/styles";
 import { Link, useNavigate, Outlet } from "react-router-dom";
 import axios from "axios";
+import { CssBaseline } from "@mui/material";
+
 
 export default function Bar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -48,8 +51,8 @@ export default function Bar() {
   };
 
   return (
-    <Box>
-      <AppBar position="fixed" sx={{zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+    <Box >
+      <AppBar position="static" sx={{zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <Toolbar>
           <IconButton
             component={Link}
