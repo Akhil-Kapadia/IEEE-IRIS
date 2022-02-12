@@ -4,18 +4,17 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import Button from "@mui/material/Button";
 import HomeIcon from "@mui/icons-material/Home";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import LogoutIcon from '@mui/icons-material/Logout';
+import LogoutIcon from "@mui/icons-material/Logout";
 import { Link, Outlet } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import Stack from '@mui/material/Stack'
+import Stack from "@mui/material/Stack";
 
 const handleLogout = () => {
   localStorage.clear();
@@ -63,10 +62,7 @@ export default function Bar(props) {
   return (
     <Stack sx={{ flexGrow: 1, display: "flex" }}>
       <Box>
-        <AppBar
-          position="static"
-          sx={{}}
-        >
+        <AppBar position="static" sx={{}}>
           <Toolbar>
             <IconButton
               size="large"
@@ -78,17 +74,19 @@ export default function Bar(props) {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            <Typography
+              variant="h6"
+              component="div"
+              noWrap
+              sx={{ flexGrow: 1 }}
+            >
               TTU ECE IEEE Student Branch
             </Typography>
-            <Box edge="end">
             <IconButton
               component={Link}
               size="large"
-              edge="end"
               color="inherit"
               aria-label="home"
-              sx={{ mr: 2 }}
               to="/"
             >
               <HomeIcon />
@@ -98,28 +96,27 @@ export default function Bar(props) {
               edge="end"
               color="inherit"
               aria-label="Log out"
-              sx={{mr:2}}
+              sx={{ ml: 2 }}
               onClick={handleLogout}
             >
-              <LogoutIcon  />
+              <LogoutIcon />
             </IconButton>
-            </Box>
           </Toolbar>
         </AppBar>
         <Box component="nav" sx={{ width: { sm: 240 }, flexShrink: { sm: 0 } }}>
-        <Drawer
-          anchor="left"
-          open={anchor}
-          onClose={toggleDrawer(false)}
-          PaperProps={{
-            sx: {
-              backgroundColor: "lightgray",
-            },
-          }}
-        >
-          <Paper>{TabPanel()}</Paper>
-        </Drawer>
-      </Box>
+          <Drawer
+            anchor="left"
+            open={anchor}
+            onClose={toggleDrawer(false)}
+            PaperProps={{
+              sx: {
+                backgroundColor: "lightgray",
+              },
+            }}
+          >
+            <Paper>{TabPanel()}</Paper>
+          </Drawer>
+        </Box>
       </Box>
 
       <Outlet />

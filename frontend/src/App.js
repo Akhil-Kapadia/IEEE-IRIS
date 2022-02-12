@@ -37,8 +37,8 @@ function App() {
           element={
             <Bar
               base=""
-              text={["My Profile", authorized().officer && "Admin Panel"]}
-              routes={["profile", authorized().officer && "admin"]}
+              text={["My Profile", Boolean(authorized().officer) ? "Admin Panel" : ""]}
+              routes={["profile", Boolean(authorized().officer)  ? "admin" : ""]}
             />
           }
         >

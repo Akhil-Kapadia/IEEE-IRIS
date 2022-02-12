@@ -1,13 +1,8 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import { useTheme } from "@mui/material/styles";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
 import {
-  MemoryRouter,
-  Route,
-  Routes,
   Link,
   matchPath,
   useLocation,
