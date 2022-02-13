@@ -86,12 +86,30 @@ router.get("/logout", async (req, res, next) => {
 router.post("/register", async (req, res, next) => {
   try {
     const isEmail = validator.isEmail(req.body.email);
-    const isRnum = validator.isInt(req.body.id, { gt: 9999999, lt: 99999999 });
+    const isRnum = validator.isInt(req.body.rNum, { gt: 9999999, lt: 99999999 });
     const isPwd = !validator.isEmpty(req.body.password);
+    const pwdMatch = validator.equals(req.body.password, req.body.passwordconfirm);
+    const pwdStrong = validator.isStrongPassword(req.body.password);
     if (!(isEmail && isRnum && isPwd)) {
       return res.status(400).json({
-        success: false,
+        success: false, 
         msg: "Please enter your email, R-Number, password correctly",
+        Email: !isEmail,
+        Rnum: !isRnum,
+        password: !isPwd,
+      });
+    } else if (!(pwdMatch)){
+      return res.status(400).json({
+        success: false,
+        msg: "Passwords do not match!",
+        Email: !isEmail,
+        Rnum: !isRnum,
+        password: !isPwd,
+      });
+    } else if (!(pwdStrong)) {
+      return res.status(400).json({
+        success: false,
+        msg: "Password is not strong!",
         Email: !isEmail,
         Rnum: !isRnum,
         password: !isPwd,

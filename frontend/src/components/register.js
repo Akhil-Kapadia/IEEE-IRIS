@@ -17,6 +17,7 @@ import { FormControlLabel, MenuItem } from '@mui/material';
 import axios from 'axios';
 import qs from 'qs';
 import {Link ,Outlet, useNavigate} from 'react-router-dom';
+import { Controller, useForm } from "react-hook-form";
 
 function Copyright(props) {
   return (
@@ -37,42 +38,62 @@ export default function Register() {
   // Select and box state
   const [classification, setClassification] = React.useState('');
   const [checked, setChecked] = React.useState(false);
+  const [disable, setDisable] = React.useState(false);
   const [isValid, setValid] = React.useState([false, false, false]);
   const [errMsg, setMsg] = React.useState('');
+  const { control, handleSubmit, watch, reset, resetField, setError, clearErrors, formState : {errors} } = useForm({
+    defaultValues: {
+      firstname: '',
+      lastname : '',
+      rNum : '',
+      email : '',
+      password : '',
+      passwordconfirm : '',
+      classification : classification,
+      alumni : checked
+    },
+  });
+
   const handleBox = (event) =>{
     setChecked(event.target.checked);
   }
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    let data = new FormData(event.currentTarget);
-    data = {
-      firstname: data.get('firstName'),
-      lastname : data.get('lastName'),
-      id : data.get('rNum'),
-      email : data.get('email'),
-      password : data.get('password'),
-      classification : classification,
-      alumni : checked
-    };
-
-    // Send form data to backend and handle errors
-    axios.post('/api/register', qs.stringify(data))
+  const onSubmit = (data) => {
+    setDisable(true);
+    axios
+      .post("/api/register", qs.stringify(data), {timeout: 5000})
       .then(function (res) {
-        navigate('/login');
+        setDisable(false);
+        setMsg(
+          `Successfully added ProPoint : ${res.data.id} - ${res.data.description}`
+        );
       })
-      .catch(function (err){
+      .catch((err) => {
+        if(err.request){
+          setMsg("Unable to establish remote server connection.");
+          setDisable(false);
+        }
         setMsg(err.response.data.msg);
         if(err.response.status === 400){
           console.log([err.response.data.isEmail, err.response.data.isRnum]);
           setValid([err.response.data.Email, err.response.data.Rnum, err.response.data.password]);
         }
       });
+
+    reset({
+      firstname: '',
+      lastname : '',
+      rNum : '',
+      email : '',
+      password : '',
+      passwordconfirm : '',
+      classification : classification,
+      alumni : checked
+    });
   };
 
-
-  return (
+   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -90,63 +111,100 @@ export default function Register() {
           <Typography component="h1" variant="h5">
             Register
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-            <Grid container spacing={2}>
+          <Box 
+            component="form" 
+            noValidate 
+            onSubmit={handleSubmit(onSubmit)}
+            sx={{ mt: 3 }}>
+            <Grid
+              container
+              spacing={2}
+            >
               <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
+                <Controller
+                name = "firstName"
+                control = {control}
+                render = { ({field}) => 
+                  <TextField
+                  {...field}
                   label="First Name"
-                  autoFocus
-                />
+                  fullWidth
+                  required
+                  />
+              }/>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField
-                  required
+                <Controller
+                name = "lastName"
+                control={control}
+                render = { ({field}) => 
+                  <TextField
+                  {...field}
+                  label= "Last Name"
                   fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                />
+                  required
+                  />
+                }/>
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="rNum"
-                  label="R-Number"
-                  name="rNum"
+              <Grid item xs={12} sm={12}>
+                <Controller
+                name= "rNum"
+                control = {control}
+                render= { ({field}) => 
+                  <TextField
+                  {...field}
+                  label= "R-Number"
                   error = {isValid[1]}
                   helperText = "8-Digit TTU ID. Ex 12345678"
-                />
+                  fullWidth
+                  required
+                  />
+                }/>
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
+                <Controller
+                name="email"
+                control= {control}
+                render= { ({field}) => 
+                  <TextField
+                  {...field}
                   label="Email Address"
-                  name="email"
-                  autoComplete="email"
                   error = {isValid[0]}
                   helperText = "TTU email - @ttu.edu"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
                   fullWidth
-                  error = {isValid[2]}
-                  name="password"
-                  label="Password"
+                  required
+                  />
+                }/>
+              </Grid>
+              <Grid item xs = {12} md={12}>
+                <Controller
+                name = "password"
+                control = {control}
+                render = { ({field}) => 
+                  <TextField
+                  {...field}
                   type="password"
-                  id="password"
-                  autoComplete="new-password"
-                />
+                  label="Password"
+                  error = {isValid[2]}
+                  helperText = "Must be 8 characters long and contain at least 1 lowercase character, 1 uppercase character, 1 number, and 1 special character."
+                  fullWidth
+                  required
+                  />
+              }/>
+              </Grid>
+              <Grid item xs = {12} md={12}>
+                <Controller
+                name = "passwordconfirm"
+                control = {control}
+                render = { ({field}) => 
+                  <TextField
+                  {...field}
+                  type="password"
+                  label="Confirm Password"
+                  fullWidth
+                  required
+                  />
+              }/>
               </Grid>
               <Grid item xs={12}>
                 <FormControl fullWidth>
@@ -175,13 +233,6 @@ export default function Register() {
                   <Checkbox onChange = {handleBox} />
                 } label = "Alumni"/>
               </Grid>
-              {/* Uncomment below button if we ever decide to do newsletter*/}
-              {/* <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want emails about IEEE events at TTU through email."
-                />
-              </Grid> */}
             </Grid>
             <Typography variant = "body1" gutterBottom component='h5' sx = {{textAlign : 'center', color:'error.main'}}>
               {errMsg}

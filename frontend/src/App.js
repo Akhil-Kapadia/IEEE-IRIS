@@ -7,7 +7,7 @@ import EventForm from "./components/events";
 
 //routes
 import Register from "./components/register";
-
+import Profile from "./routes/profile";
 import ProPoints from "./routes/propoint";
 import Announcement from "./routes/annoucements";
 import AboutUs from "./routes/aboutus";
@@ -48,7 +48,7 @@ function App() {
             <Route path="minecraft" element={"TBI"} />
             <Route path="about-us" element={<AboutUs />} />
             <Route index element={<Announcement />} />
-          </Route>
+            </Route>
         </Route>
         <Route
           path="/admin"
@@ -70,6 +70,7 @@ function App() {
           <Route path="propoints" element={<>TBI</>} />
           <Route path="posts" element={<>TBI</>} />
         </Route>
+        <Route path='/profile' element={<Profile />} />
         <Route
           path="/profile"
           element={
