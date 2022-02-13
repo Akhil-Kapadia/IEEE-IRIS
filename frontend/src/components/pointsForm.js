@@ -4,12 +4,20 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Typography from "@mui/material/Typography";
+import Modal from '@mui/material/Modal';
+import Fade from '@mui/material/Fade';
+import Backdrop from '@mui/material/Backdrop';
 
 import axios from "axios";
 import qs from "qs";
 import { Controller, useForm } from "react-hook-form";
 
+import Login from './login'
+
+
 export default function AddPoints() {
+  const [login, setLogin] = React.useState(false);
+
   const [msg, setMsg] = React.useState("");
   const [disable, setDisable] = React.useState(false);
   const { control, handleSubmit, watch, reset, resetField, setError, clearErrors, formState : {errors} } = useForm({
@@ -36,17 +44,18 @@ export default function AddPoints() {
         if(err.request){
           setMsg("Unable to establish remote server connection.");
           setDisable(false);
-          return;
         }
         // Unauthorized
         if (err.response.status === 401) {
-          localStorage.clear();
-          setMsg("Unauthorized. Please refresh the page and login!");
+          sessionStorage.clear();
+          setMsg("Unauthorized. Please login!");
+          setLogin(true)
         }
         if (err.response.status === 400) {
           setMsg("Please enter in the correct Event/Course ID!");
           setDisable(false);
         }
+
     });
 
     reset({
@@ -83,11 +92,11 @@ export default function AddPoints() {
     .catch(function (err) {
       if(err.request){
         setMsg('Unable to establish database connection');
-        return;
       }
       if (err.response.status === 401) {
-        localStorage.clear();
-        setMsg("Unauthorized. Please refresh the page and login!");
+        sessionStorage.clear();
+        setMsg("Unauthorized. Please login!");
+        setLogin(true);
       }
     });
   }, [watchEventId])
@@ -103,7 +112,6 @@ export default function AddPoints() {
         flexGrow: 1,
         flexDirection: "column",
         justifyContent: "center",
-        alignItems: "center",
         borderBottom: 1,
       }}
     >
@@ -128,7 +136,7 @@ export default function AddPoints() {
             {...field}
             type="number"
             label="Event ID"
-            error= {fieldState.error}
+            error= {Boolean(fieldState.error)}
             helperText={errors?.EventId?.message}
             fullWidth
             required
@@ -151,7 +159,7 @@ export default function AddPoints() {
             type= "number"
             label= "Course Number"  
             placeholder="3331"
-            error= {fieldState.error}
+            error= {Boolean(fieldState.error)}
             helperText= "I.e. Robotics Lab is ECE '3331'"
             fullWidth
             required
@@ -201,6 +209,7 @@ export default function AddPoints() {
           </LoadingButton>
         </Grid>
       </Grid>
+      <Login open={login} />
     </Box>
   );
 }

@@ -11,6 +11,8 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { DataGrid } from "@mui/x-data-grid";
 
+import Login from "./login";
+
 function PointsData(props) {
   const columns = [
     { field: "UserId", headerName: "R-Number", flex: 0.10 },
@@ -34,6 +36,7 @@ function PointsData(props) {
 export default function PointsTable() {
   const [points, setPoints] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
+  const [login, setLogin] = React.useState(false);
   const [msg, setMsg] = React.useState('');
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
@@ -61,11 +64,13 @@ export default function PointsTable() {
         });
         setLoading(false);
         setMsg('');
+        setLogin(false);
       })
       .catch((err) => {
+        setLoading(false);
         if (err.response.status === 401) {
-          localStorage.clear();
-          setMsg("Unauthorized. Please refresh the page and login!");
+          sessionStorage.clear();
+          setLogin(true);
         }
       });
   };
@@ -79,7 +84,7 @@ export default function PointsTable() {
         noValidate
         flexGrow
         direction="column"
-        alignContent="center"
+        alignItems="center"
         justifyContent="center"
         spacing={2}
         sx={{ p: 2 }}
@@ -133,7 +138,6 @@ export default function PointsTable() {
             variant="contained"
             color="secondary"
             size="large"
-            alignContent = 'center'
             loading={loading}
             fullWidth
           >
@@ -141,7 +145,7 @@ export default function PointsTable() {
           </LoadingButton>
         </Grid>
       </Grid>
-    
+      <Login open={login} />    
       <PointsData data={points} />
       </>
 

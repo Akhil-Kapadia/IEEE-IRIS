@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import * as React from "react";
 //components
-import SignIn from "./components/SignIn";
+import Login from "./components/login";
 import Bar from "./layouts/layout";
 import EventForm from "./components/events";
 
@@ -20,7 +20,7 @@ import HomeLayout from "./layouts/homeLayout";
  * @returns Object of user itme
  */
 const authorized = () => {
-  let data = localStorage.getItem("user");
+  let data = sessionStorage.getItem("user");
   if (data) {
     return JSON.parse(data);
   } else {
@@ -44,10 +44,10 @@ function App() {
         >
           <Route element={<HomeLayout />}>
             <Route path="propoints" element={<ProPoints />} />
-            <Route path="announcements" element={<Announcement />} />
             <Route path="student-resources" element={"TBI"} />
             <Route path="minecraft" element={"TBI"} />
-            <Route index element={<AboutUs />} />
+            <Route path="about-us" element={<AboutUs />} />
+            <Route index element={<Announcement />} />
           </Route>
         </Route>
         <Route
@@ -86,7 +86,7 @@ function App() {
         </Route>
 
         <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<SignIn />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </main>
   );

@@ -8,7 +8,7 @@ import {
   useLocation,
   Outlet,
 } from "react-router-dom";
-import { Stack } from "@mui/material";
+import { Divider, Stack } from "@mui/material";
 
 
 function useRouteMatch(patterns) {
@@ -28,7 +28,7 @@ function useRouteMatch(patterns) {
 export default function MenuTabs() {
   const routeMatch = useRouteMatch([
     "/",
-    "/announcements",
+    "/about-us",
     "/propoints",
     "/student-resources",
     "/minecraft",
@@ -37,23 +37,24 @@ export default function MenuTabs() {
 
   return (
     <Stack>
-      <Box sx={{ borderBottom: 1, borderColor: "grey.500", flexGrow: 1 }}>
+      <Box sx={{ borderBottom: 1, borderColor: "grey.500", display:'flex', justifyContent: 'center', width:'100%' }}>
         <Tabs
           value={currentTab}
-          centered
           textColor="primary"
           indicatorColor="secondary"
+          variant='scrollable'
+          scrollButtons='auto'
         >
           <Tab 
             label="About Us" 
-            value="/" 
-            to="/" 
+            value="/about-us" 
+            to="/about-us" 
             component={Link} 
           />
           <Tab
             label="Announcements"
-            value="/announcements"
-            to="/announcements"
+            value="/"
+            to="/"
             component={Link}
           />
           <Tab
