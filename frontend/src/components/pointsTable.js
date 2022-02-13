@@ -12,6 +12,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import { DataGrid } from "@mui/x-data-grid";
 
 import Login from "./login";
+import { Typography } from "@mui/material";
 
 function PointsData(props) {
   const columns = [
@@ -62,12 +63,15 @@ export default function PointsTable() {
           toDate: moment().format(),
           confirmed: data.confirmed,
         });
-        setLoading(false);
         setMsg('');
         setLogin(false);
+        setLoading(false);
       })
       .catch((err) => {
         setLoading(false);
+        if(err.request){
+          setMsg('Unable to establish database connection');
+        }
         if (err.response.status === 401) {
           sessionStorage.clear();
           setLogin(true);
@@ -132,6 +136,7 @@ export default function PointsTable() {
           />
         </Grid>
         <Grid item xs={6}>
+          <Typography variant="body1">{msg}</Typography>
           <LoadingButton
             name="submit"
             type="submit"
@@ -140,8 +145,9 @@ export default function PointsTable() {
             size="large"
             loading={loading}
             fullWidth
+            sx={{ mt: 2, mb: 2 }}
           >
-            {msg || "Search"}
+            Search
           </LoadingButton>
         </Grid>
       </Grid>

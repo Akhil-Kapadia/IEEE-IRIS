@@ -8,7 +8,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
@@ -16,20 +16,15 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Stack from "@mui/material/Stack";
 
-
+const handleLogout = () => {
+  localStorage.clear();
+  axios.get("/api/logout").catch((err) => {
+    console.error(err);
+  });
+};
 
 export default function Bar(props) {
   const [anchor, setAnchor] = React.useState(false);
-  const navigate = useNavigate();
-
-  const handleLogout = async() => {
-    try {
-      sessionStorage.clear();
-      await axios.get("/api/logout", {timeout: 2000});
-      navigate("/");
-    } catch(err) {
-    }
-  };
 
   const toggleDrawer = (open) => (event) => {
     if (
@@ -116,15 +111,14 @@ export default function Bar(props) {
             PaperProps={{
               sx: {
                 backgroundColor: "lightgray",
-              },
+              }
             }}
           >
             <Paper>{TabPanel()}</Paper>
           </Drawer>
         </Box>
       </Box>
-
-      <Outlet />
+    <Outlet />
     </Stack>
   );
 }
