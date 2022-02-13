@@ -1,85 +1,85 @@
 import * as React from "react";
-import PropTypes from "prop-types";
-import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-import { useTheme } from "@mui/material/styles";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
-import { Outlet } from "react-router";
-import Slide from "@mui/material/Slide";
-import SwipableViews from "react-swipeable-views";
+import {
+  Link,
+  matchPath,
+  useLocation,
+  Outlet,
+} from "react-router-dom";
+import { Divider, Stack } from "@mui/material";
 
-import ProPoints from "./ProPoints/propoint";
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
+function useRouteMatch(patterns) {
+  const { pathname } = useLocation();
 
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`full-width-tabpanel-${index}`}
-      aria-labelledby={`full-width-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
-    </div>
-  );
-}
+  for (let i = 0; i < patterns.length; i += 1) {
+    const pattern = patterns[i];
+    const possibleMatch = matchPath(pattern, pathname);
+    if (possibleMatch !== null) {
+      return possibleMatch;
+    }
+  }
 
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
-
-function allyProps(index) {
-  return {
-    id: `full-width-tab-${index}`,
-    "aria-controls": `full-width-tabpanel-${index}`,
-  };
+  return "/";
 }
 
 export default function MenuTabs() {
-  const theme = useTheme();
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  const handleChangeIndex = (event, index) => {
-    setValue(index);
-  };
+  const routeMatch = useRouteMatch([
+    "/",
+    "/about-us",
+    "/propoints",
+    "/student-resources",
+    "/minecraft",
+  ]);
+  const currentTab = routeMatch?.pattern?.path || "/";
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <Box sx={{ borderBottom: 1, borderColor: "grey.500", flexGrow: 1 }}>
+    <Stack>
+      <Box sx={{ borderBottom: 1, borderColor: "grey.500", display:'flex', justifyContent: 'center', width:'100%' }}>
         <Tabs
-          value={value}
-          onChange={handleChange}
-          centered
+          value={currentTab}
           textColor="primary"
           indicatorColor="secondary"
+          variant='scrollable'
+          scrollButtons='auto'
         >
-          <Tab label="About Us" {...allyProps(0)} />
-          <Tab label="Announcements" {...allyProps(1)} />
-          <Tab label="Pro Points" {...allyProps(2)} />
+          <Tab 
+            label="About Us" 
+            value="/about-us" 
+            to="/about-us" 
+            component={Link} 
+          />
+          <Tab
+            label="Announcements"
+            value="/"
+            to="/"
+            component={Link}
+          />
+          <Tab
+            label="Pro Points"
+            value="/propoints"
+            to="/propoints"
+            component={Link}
+          />
+          <Tab
+            label="Student Resources"
+            value="/student-resources"
+            to="/student-resources"
+            component={Link}
+          />
+          <Tab
+            label="MineCraft"
+            value="/minecraft"
+            to="/minecraft"
+            component={Link}
+          />
         </Tabs>
       </Box>
-      <SwipableViews axis='x' index={value} onChangeIndex={handleChangeIndex}>
-        <TabPanel value={value} index={0}>
-          <Typography>Testing</Typography>
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          <Typography>Hello</Typography>
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          <ProPoints />
-        </TabPanel>
-      </SwipableViews>
-      <Outlet />
-    </Box>
+      <Box sx={{ p: 2 }}>
+        <Outlet />
+      </Box>
+    </Stack>
   );
 }
