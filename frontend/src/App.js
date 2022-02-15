@@ -7,8 +7,9 @@ import EventForm from "./components/events";
 
 //routes
 import Register from "./components/register";
-
+import Profile from "./routes/profile"
 import ProPoints from "./routes/propoint";
+import ProPointsAdmin from "./routes/admin/propoints";
 import Announcement from "./routes/annoucements";
 import AboutUs from "./routes/aboutus";
 
@@ -17,7 +18,7 @@ import HomeLayout from "./layouts/homeLayout";
 
 /**
  * Returns user info to be used for auth and restricting route access
- * @returns Object of user itme
+ * @returns Object of user stored in session
  */
 const authorized = () => {
   let data = sessionStorage.getItem("user");
@@ -67,7 +68,7 @@ function App() {
         >
           <Route path="users" element={<>TBI</>} />
           <Route path="events" element={<EventForm />} />
-          <Route path="propoints" element={<>TBI</>} />
+          <Route path="propoints" element={<ProPointsAdmin /> } />
           <Route path="posts" element={<>TBI</>} />
         </Route>
         <Route
@@ -82,7 +83,7 @@ function App() {
         >
           <Route path="socials" element={<>TBI</>} />
           <Route path="portfolio" element={<>TBI</>} />
-          <Route path="user" element={<>TBI</>} />
+          <Route path="user" element={<Profile />} />
         </Route>
 
         <Route path="/register" element={<Register />} />

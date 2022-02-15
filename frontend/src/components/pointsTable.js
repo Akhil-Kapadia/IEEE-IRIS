@@ -1,159 +1,79 @@
-import * as React from "react";
-import axios from "axios";
-import { Controller, useForm } from "react-hook-form";
-import moment from "moment";
-import Grid from "@mui/material/Grid";
-import MobileDateTimePicker from "@mui/lab/MobileDateTimePicker";
-import TextField from "@mui/material/TextField";
-import LoadingButton from "@mui/lab/LoadingButton";
-import Checkbox from "@mui/material/Checkbox";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import { DataGrid } from "@mui/x-data-grid";
+import * as React from 'react';
+import api from '../config';
+import Box from '@mui/material/Box';
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 
-import Login from "./login";
-import { Typography } from "@mui/material";
 
-function PointsData(props) {
+/**
+ * Returns user info to be used for auth and restricting route access.
+ * To be replaced by an actual validation scheme
+ * @returns Object of user itme
+ */
+ const authorized = () => {
+  let data = sessionStorage.getItem("user");
+  if (data) {
+    return JSON.parse(data);
+  } else {
+    return { id: "", officer: "" };
+  }
+};
+
+export default function PointsTable(props) {
+  const [loading, setLoading] = React.useState(false);
+  const [points, setPoints] = React.useState(props.data);
   const columns = [
-    { field: "UserId", headerName: "R-Number", flex: 0.10 },
-    { field: "EventId", headerName: "Event ID", flex:0.05},
-    { field: "courseId", headerName: "Course ID", flex: 0.05},
-    { field: "description", headerName: "Event Title or Description", flex:0.45},
-    { field: 'createdAt', headerName : "Added On", flex : 0.15, valueFormatter :  (params) => {
-      return moment(params.value).format('llll');
-    }},
-    { field: "points", headerName: "Pro Points", flex: 0.05},
-    { field: "confirmed", headerName: "Confirmed", flex: 0.10},
+    { field: "UserId", headerName: "R-Number", width: 100 },
+    { field: "userName", headerName: "Full Name", width: 200},
+    { field: "EventId", headerName: "Event ID", width: 100},
+    { field: "courseId", headerName: "Course ID", width: 100, editable: true},
+    { field: "description", headerName: "Event Title or Description", flex:1, editable: true},
+    { field: 'createdAt', headerName : "Added On", width : 200, type: 'dateTime', valueGetter: ({ value }) => value && new Date(value)},
+    { field: "points", headerName: "Pro Points", width: 100, type: 'number', editable: true},
+    { field: "confirmed", headerName: "Confirmed", width: 100, type: 'boolean', editable:authorized().officer },
   ];
+
+  React.useEffect(() => {
+    setPoints(props.data);
+  }, [props.data]);
+
+  const handleCellCommit = React.useCallback (
+    async (params) => {
+      try {
+      
+        // api call to update propoint.
+        let response = await api.put("/propoint", {
+            id: params.id,
+            [params.field]: params.value
+        });
+
+        //TODO: add snack bar
+        setPoints((prev) =>
+          prev.map((row) => (row.id === params.id ? response.data : row)),
+        );   
+
+      } catch (err) {
+        //restore old row
+        setPoints( (prev) => [...prev]);
+      }
+    }, [api]
+  );
+  
   
   return (
-  <div style = {{width:'100%'}}>
-    <DataGrid autoHeight columns={columns} rows={props.data} />
+  <div style = {{display: 'flex', width:'100%'}}>
+    <div style= {{flexGrow: 1}} >
+    <DataGrid 
+      autoHeight 
+      disableSelectionOnClick 
+      checkboxSelection
+      loading={loading}
+      columns={columns} rows={points} 
+      components={{Toolbar: GridToolbar}}
+      isRowSelectable={ (params) => !params.row.confirmed}
+      isCellEditable={ (params) => !params.row.confirmed || authorized().officer } 
+      onCellEditCommit={handleCellCommit}
+   />
+   </div>
   </div>
-  );
-}
-
-export default function PointsTable() {
-  const [points, setPoints] = React.useState([]);
-  const [loading, setLoading] = React.useState(false);
-  const [login, setLogin] = React.useState(false);
-  const [msg, setMsg] = React.useState('');
-  const { control, handleSubmit, reset } = useForm({
-    defaultValues: {
-      fromDate: moment().subtract(3, "months").format(),
-      toDate: moment().format(),
-      confirmed: false,
-    },
-  });
-
-  const onSubmit = (data) => {
-    setLoading(true);
-    data.toDate = moment(data.toDate).format();
-    data.fromDate = moment(data.fromDate).format();
-
-    axios
-      .get("/api/propoint", {
-        params: data,
-      })
-      .then(function (res) {
-        setPoints(res.data);
-        reset({
-          fromDate: data.fromDate,
-          toDate: moment().format(),
-          confirmed: data.confirmed,
-        });
-        setMsg('');
-        setLogin(false);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setLoading(false);
-        if(err.request){
-          setMsg('Unable to establish database connection');
-        }
-        if (err.response.status === 401) {
-          sessionStorage.clear();
-          setLogin(true);
-        }
-      });
-  };
-
-  return (
-    <>
-      <Grid
-        container
-        component="form"
-        onSubmit={handleSubmit(onSubmit)}
-        noValidate
-        flexGrow
-        direction="column"
-        alignItems="center"
-        justifyContent="center"
-        spacing={2}
-        sx={{ p: 2 }}
-      >
-        <Grid item xs={12}>
-          <Controller
-            name="fromDate"
-            control={control}
-            render={({ field }) => (
-              <MobileDateTimePicker
-                {...field}
-                renderInput={(props) => <TextField {...props} />}
-                label="From:"
-                fullWidth
-              />
-            )}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Controller
-            name="toDate"
-            control={control}
-            render={({ field }) => (
-              <MobileDateTimePicker
-                {...field}
-                renderInput={(props) => <TextField {...props} />}
-                label="To:"
-                fullWidth
-              />
-            )}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Controller
-            name="confirmed"
-            control={control}
-            render={({ field }) => (
-              <FormGroup>
-                <FormControlLabel
-                  control={<Checkbox {...field} size="large" />}
-                  label="Confirmed"
-                />
-              </FormGroup>
-            )}
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <Typography variant="body1">{msg}</Typography>
-          <LoadingButton
-            name="submit"
-            type="submit"
-            variant="contained"
-            color="secondary"
-            size="large"
-            loading={loading}
-            fullWidth
-            sx={{ mt: 2, mb: 2 }}
-          >
-            Search
-          </LoadingButton>
-        </Grid>
-      </Grid>
-      <Login open={login} />    
-      <PointsData data={points} />
-      </>
-
   );
 }
