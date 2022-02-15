@@ -22,17 +22,15 @@ router.get("/user/:id", passport.authenticate("jwt", { session: false }), async 
     }
   });
 
-//Finds all propoints with given querys
+// GETS all propoints for current user with giver queries.
 router.get("/", passport.authenticate("jwt", { session: false }), async (req, res, next) => {
     try {
-      const member = await req.user.getIeee();
       const points = await ProPoint.findAll({where : {
         createdAt : {
           [Op.lt] : req.query.toDate,
           [Op.gt] : req.query.fromDate
         },
-        confirmed : (req.query.confirmed === 'true'),
-        UserId : (member.ferpa && member.officer) ? req.query.id || req.user.id : req.user.id
+        UserId : req.user.id
       }});
       res.status(200).json(points);      
     } catch (err) {
@@ -41,23 +39,47 @@ router.get("/", passport.authenticate("jwt", { session: false }), async (req, re
   }
 );
 
-// update a users ieee info
-router.put("/:id", passport.authenticate("jwt", { session: false }), async (req, res, next) => {
+// For officers to get all propoints depending on queries.
+router.get("/all", passport.authenticate("jwt", { session: false }), async (req,res, next) => {
+  try {
+    let points;
+    const member = await req.user.getIeee();
+    if( !(member.officer && member.ferpa)) {
+      res.status(401).json({msg: "UnAuthorized: You need to be an officer with ferpa certification."});
+      return;
+    }
+    if (req.query.eventId) {
+      points = await ProPoint.getEvent(query.eventId);
+    } else {
+      points = await ProPoint.findAll({where : {
+        createdAt : {
+          [Op.lt] : req.query.toDate,
+          [Op.gt] : req.query.fromDate
+        }
+      }});
+    }
+    res.status(200).json(points);
+  } catch (err) {
+    next(err);
+  }
+})
+
+// Update current users propoints.
+router.put("/", passport.authenticate("jwt", { session: false }), async (req, res, next) => {
     try {
-      let member = await req.user.getIeee().catch(next);
-      if (req.user.id == req.params.id) {
-        member.set({memberId : req.body.memberId})
-        await member.save().catch(next);
-      } else if (member.officer) {
-        member = await Ieee.findOne({ where: { UserId: req.params.id } }).catch(next);
-        if (member) {
-          member.set(req.body);
-          await member.save().catch(next);
-          } else {
-            res.status(404).json({ msg: "IEEE member not found" });
-          }
-      }
-      res.status(200).json(member);
+      let id = req.body.id;
+      delete req.body.id;
+      let points = await ProPoint.update(
+        req.body,
+        { 
+          returning : true,
+          where: {
+            id : id
+        }}
+      );
+      points = await ProPoint.findByPk(id);
+
+      res.status(200).json(points);
     } catch (err) {
       next(err);
     }
