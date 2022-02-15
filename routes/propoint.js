@@ -1,8 +1,9 @@
 const router = require("express").Router();
-const { User, Ieee, ProPoint, Event } = require("../models/index");
+const { User, Ieee, ProPoint, Event, sequelize } = require("../models/index");
 const passport = require("passport");
 const { Op } = require('sequelize');
 const validator = require('validator');
+const { raw } = require("express");
 
 //get all propoints for a given user.
 router.get("/user/:id", passport.authenticate("jwt", { session: false }), async (req, res, next) => {
@@ -25,13 +26,14 @@ router.get("/user/:id", passport.authenticate("jwt", { session: false }), async 
 // GETS all propoints for current user with giver queries.
 router.get("/", passport.authenticate("jwt", { session: false }), async (req, res, next) => {
     try {
-      const points = await ProPoint.findAll({where : {
+      let points = await ProPoint.findAll({where : {
         createdAt : {
           [Op.lt] : req.query.toDate,
           [Op.gt] : req.query.fromDate
         },
         UserId : req.user.id
       }});
+      points = points.map( (row) => { return {...row.dataValues, userName: `${req.user.firstname} ${req.user.lastname}` }; });
       res.status(200).json(points);      
     } catch (err) {
       next(err);
@@ -49,15 +51,44 @@ router.get("/all", passport.authenticate("jwt", { session: false }), async (req,
       return;
     }
     if (req.query.eventId) {
-      points = await ProPoint.getEvent(query.eventId);
+      // run raw sql query to get names
+      points = await sequelize.query(
+        `SELECT 
+          propoints.id,
+          users.firstname,
+          users.lastname,
+          propoints."eventId",
+          propoints."courseId",
+          propoints.description,
+          propoints."createdAt",
+          propoints.points,
+          propoints.confirmed
+        FROM propoints 
+        INNER JOIN users
+        ON "userId" = users.id
+        WHERE "eventId"=${req.query.eventId}`
+        ,{type: sequelize.QueryTypes.SELECT});
     } else {
-      points = await ProPoint.findAll({where : {
-        createdAt : {
-          [Op.lt] : req.query.toDate,
-          [Op.gt] : req.query.fromDate
-        }
-      }});
+      points = await sequelize.query(
+        `SELECT 
+          propoints.id,
+          users.firstname,
+          users.lastname,
+          propoints."eventId",
+          propoints."courseId",
+          propoints.description,
+          propoints."createdAt",
+          propoints.points,
+          propoints.confirmed
+        FROM propoints 
+        INNER JOIN users
+        ON "userId" = users.id
+        WHERE propoints."createdAt" BETWEEN
+        '${req.query.fromDate}' AND
+        '${req.query.toDate}'`
+        ,{type: sequelize.QueryTypes.SELECT});
     }
+
     res.status(200).json(points);
   } catch (err) {
     next(err);
