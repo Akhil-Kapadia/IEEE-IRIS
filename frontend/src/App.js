@@ -70,7 +70,6 @@ function App() {
           <Route path="propoints" element={<>TBI</>} />
           <Route path="posts" element={<>TBI</>} />
         </Route>
-        <Route path='/profile' element={<Profile />} />
         <Route
           path="/profile"
           element={
@@ -84,6 +83,7 @@ function App() {
           <Route path="socials" element={<>TBI</>} />
           <Route path="portfolio" element={<>TBI</>} />
           <Route path="user" element={<>TBI</>} />
+          <Route path='/profile' element={<Profile />} />
         </Route>
 
         <Route path="/register" element={<Register />} />

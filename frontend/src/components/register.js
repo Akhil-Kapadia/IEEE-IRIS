@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { FormControlLabel, MenuItem } from '@mui/material';
+import { useRef } from "react";
 import axios from 'axios';
 import qs from 'qs';
 import {Link ,Outlet, useNavigate} from 'react-router-dom';
@@ -38,10 +39,9 @@ export default function Register() {
   // Select and box state
   const [classification, setClassification] = React.useState('');
   const [checked, setChecked] = React.useState(false);
-  const [disable, setDisable] = React.useState(false);
+  const [msg, setMsg] = React.useState('');
   const [isValid, setValid] = React.useState([false, false, false]);
-  const [errMsg, setMsg] = React.useState('');
-  const { control, handleSubmit, watch, reset, resetField, setError, clearErrors, formState : {errors} } = useForm({
+  const { control, handleSubmit, watch, reset, formState : {errors} } = useForm({
     defaultValues: {
       firstname: '',
       lastname : '',
@@ -53,33 +53,38 @@ export default function Register() {
       alumni : checked
     },
   });
+  const password = useRef({});
+  password.current = watch("password","");
 
   const handleBox = (event) =>{
     setChecked(event.target.checked);
   }
   const navigate = useNavigate();
-
+  
   const onSubmit = (data) => {
-    setDisable(true);
-    axios
-      .post("/api/register", qs.stringify(data), {timeout: 5000})
-      .then(function (res) {
-        setDisable(false);
-        setMsg(
-          `Successfully added ProPoint : ${res.data.id} - ${res.data.description}`
-        );
+      axios.post(
+        "/api/register",
+        qs.stringify({
+          firstname: data.firstname,
+          lastname: data.lastname,
+          id: data.rNum,
+          email: data.email,
+          password: data.password,
+          classification : classification,
+          alumni: checked
+        }),
+        { timeout: 2000 }
+      )
+      .then(function (res){
+          navigate('/login');
       })
-      .catch((err) => {
-        if(err.request){
-          setMsg("Unable to establish remote server connection.");
-          setDisable(false);
-        }
+      .catch( function (err) {
         setMsg(err.response.data.msg);
         if(err.response.status === 400){
           console.log([err.response.data.isEmail, err.response.data.isRnum]);
           setValid([err.response.data.Email, err.response.data.Rnum, err.response.data.password]);
         }
-      });
+      })
 
     reset({
       firstname: '',
@@ -113,7 +118,7 @@ export default function Register() {
           </Typography>
           <Box 
             component="form" 
-            noValidate 
+            //noValidate 
             onSubmit={handleSubmit(onSubmit)}
             sx={{ mt: 3 }}>
             <Grid
@@ -150,61 +155,93 @@ export default function Register() {
                 <Controller
                 name= "rNum"
                 control = {control}
+                rules={{
+                  required: "You must specify an R-Number",
+                  maxLength: {
+                    value: 8,
+                    message: "R-Number Error!"
+                  }
+                }}
                 render= { ({field}) => 
                   <TextField
                   {...field}
                   label= "R-Number"
-                  error = {isValid[1]}
                   helperText = "8-Digit TTU ID. Ex 12345678"
                   fullWidth
-                  required
                   />
                 }/>
+                <Typography variant = "body2" sx = {{textAlign : 'left', color:'error.main'}}>
+                {errors.rNum && <p>{errors.rNum.message}</p>}
+                </Typography>
               </Grid>
               <Grid item xs={12}>
                 <Controller
                 name="email"
                 control= {control}
+                rules={{
+                  required: "Please enter your email.",
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,}$/i,
+                    message: "invalid email address"
+                  }
+                }}
                 render= { ({field}) => 
                   <TextField
                   {...field}
                   label="Email Address"
-                  error = {isValid[0]}
                   helperText = "TTU email - @ttu.edu"
                   fullWidth
                   required
                   />
                 }/>
+                <Typography variant = "body2" sx = {{textAlign : 'left', color:'error.main'}}>
+                {errors.email && <p>{errors.email.message}</p>}
+                </Typography>
               </Grid>
               <Grid item xs = {12} md={12}>
                 <Controller
                 name = "password"
                 control = {control}
+                rules={{
+                  required: "You must specify a password",
+                  minLength: {
+                    value: 8,
+                    message: "Password must be at least 8 characters!"
+                  }
+                }}
                 render = { ({field}) => 
                   <TextField
                   {...field}
                   type="password"
                   label="Password"
-                  error = {isValid[2]}
-                  helperText = "Must be 8 characters long and contain at least 1 lowercase character, 1 uppercase character, 1 number, and 1 special character."
+                  helperText = "Password must be at least 8 characters"
                   fullWidth
                   required
                   />
               }/>
+                <Typography variant = "body2" sx = {{textAlign : 'left', color:'error.main'}}>
+                {errors.password && <p>{errors.password.message}</p>}
+                </Typography>
               </Grid>
               <Grid item xs = {12} md={12}>
                 <Controller
                 name = "passwordconfirm"
                 control = {control}
+                // rules={{
+                //   validate: value => value === password.current || "Passwords do not match!"
+                // }}
                 render = { ({field}) => 
                   <TextField
                   {...field}
                   type="password"
                   label="Confirm Password"
                   fullWidth
-                  required
                   />
-              }/>
+                }
+                />
+                <Typography variant = "body2" sx = {{textAlign : 'left', color:'error.main'}}>
+                  {errors.passwordconfirm && <p>{errors.passwordconfirm.message}</p>}
+                </Typography>
               </Grid>
               <Grid item xs={12}>
                 <FormControl fullWidth>
@@ -234,9 +271,6 @@ export default function Register() {
                 } label = "Alumni"/>
               </Grid>
             </Grid>
-            <Typography variant = "body1" gutterBottom component='h5' sx = {{textAlign : 'center', color:'error.main'}}>
-              {errMsg}
-            </Typography>
             <Button
               type="submit"
               fullWidth
@@ -245,7 +279,7 @@ export default function Register() {
             >
               Register
             </Button>
-            <Grid container justifyContent="flex-end">
+            <Grid container justifyContent="center">
               <Grid item>
                 <Box>
                 <Link to='/login'>

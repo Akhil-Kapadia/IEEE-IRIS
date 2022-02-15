@@ -37,7 +37,7 @@ export default function AddPoints() {
       .then(function (res) {
         setDisable(false);
         setMsg(
-          `Successfully added ProPoint : ${res.data.EventId} - ${res.data.description}`
+          `Successfully added ProPoint : ${res.data.id} - ${res.data.description}`
         );
       })
       .catch((err) => {
