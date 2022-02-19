@@ -1,21 +1,23 @@
 import * as React from "react";
 import axios from "axios";
-import qs from "qs";
 import { Controller, useForm } from "react-hook-form";
 import moment from "moment";
 import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
+import Box from '@mui/material/Box';
 import MobileDateTimePicker from "@mui/lab/MobileDateTimePicker";
 import TextField from "@mui/material/TextField";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Checkbox from "@mui/material/Checkbox";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import Box from "@mui/material/Box";
-import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
+
+import { DataGrid } from "@mui/x-data-grid";
+
+import Login from "./login";
+import { Typography } from "@mui/material";
+import PointsTable from "./pointsTable";
 
 function PointsData(props) {
-  const [data, setData] = React.useState(props.data);
   const columns = [
     { field: "UserId", headerName: "R-Number", flex: 0.10 },
     { field: "EventId", headerName: "Event ID", flex:0.05},
@@ -35,14 +37,15 @@ function PointsData(props) {
   );
 }
 
-export default function PointsTable() {
+export default function UserPoints() {
   const [points, setPoints] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
+  const [login, setLogin] = React.useState(false);
+  const [msg, setMsg] = React.useState('');
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
       fromDate: moment().subtract(3, "months").format(),
       toDate: moment().format(),
-      confirmed: false,
     },
   });
 
@@ -60,15 +63,25 @@ export default function PointsTable() {
         reset({
           fromDate: data.fromDate,
           toDate: moment().format(),
-          confirmed: data.confirmed,
         });
+        setMsg('');
+        setLogin(false);
         setLoading(false);
       })
-      .catch((err) => {});
+      .catch((err) => {
+        setLoading(false);
+        if(err.request){
+          setMsg('Unable to establish database connection');
+        }
+        if (err.response.status === 401) {
+          sessionStorage.clear();
+          setLogin(true);
+        }
+      });
   };
 
   return (
-    <>
+    <Box sx={{flexGrow:1}}>
       <Grid
         container
         component="form"
@@ -76,7 +89,7 @@ export default function PointsTable() {
         noValidate
         flexGrow
         direction="column"
-        alignContent="center"
+        alignItems="center"
         justifyContent="center"
         spacing={2}
         sx={{ p: 2 }}
@@ -109,38 +122,25 @@ export default function PointsTable() {
             )}
           />
         </Grid>
-        <Grid item xs={12}>
-          <Controller
-            name="confirmed"
-            control={control}
-            render={({ field }) => (
-              <FormGroup>
-                <FormControlLabel
-                  control={<Checkbox {...field} size="large" />}
-                  label="Confirmed"
-                />
-              </FormGroup>
-            )}
-          />
-        </Grid>
         <Grid item xs={6}>
+          <Typography variant="body1">{msg}</Typography>
           <LoadingButton
             name="submit"
             type="submit"
             variant="contained"
             color="secondary"
             size="large"
-            alignContent = 'center'
             loading={loading}
             fullWidth
+            sx={{ mt: 2, mb: 2 }}
           >
             Search
           </LoadingButton>
         </Grid>
       </Grid>
-    
-      <PointsData data={points} />
-      </>
+      <Login open={login} />    
+      <PointsTable admin={false} data={points} />
+      </Box>
 
   );
 }
