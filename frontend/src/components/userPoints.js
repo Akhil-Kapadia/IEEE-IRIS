@@ -137,8 +137,7 @@ export default function UserPoints() {
             Search
           </LoadingButton>
         </Grid>
-      </Grid>
-      <Login open={login} />    
+      </Grid>  
       <PointsTable admin={false} data={points} />
       </Box>
 
