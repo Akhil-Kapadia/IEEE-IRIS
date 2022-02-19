@@ -9,7 +9,6 @@ import EventForm from "./components/events";
 import Register from "./components/register";
 import Profile from "./routes/profile"
 import ProPoints from "./routes/propoint";
-import ProPointsAdmin from "./routes/admin/propoints";
 import Announcement from "./routes/annoucements";
 import AboutUs from "./routes/aboutus";
 
@@ -38,8 +37,8 @@ function App() {
           element={
             <Bar
               base=""
-              text={["My Profile", Boolean(authorized().officer) ? "Admin Panel" : ""]}
-              routes={["profile", Boolean(authorized().officer)  ? "admin" : ""]}
+              text={["My Profile", "Admin Panel"]}
+              routes={["profile", "admin"]}
             />
           }
         >
@@ -68,7 +67,7 @@ function App() {
         >
           <Route path="users" element={<>TBI</>} />
           <Route path="events" element={<EventForm />} />
-          <Route path="propoints" element={<ProPointsAdmin /> } />
+          <Route path="propoints" element={<>TBI</> } />
           <Route path="posts" element={<>TBI</>} />
         </Route>
         <Route
