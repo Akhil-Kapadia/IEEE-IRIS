@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
-const { User, Ieee } = require("../models/index");
+const { User, Ieee, t } = require("../models/index");
 const bcrypt = require("bcryptjs");
 const validator = require("validator");
 
@@ -103,9 +103,9 @@ router.post("/register", async (req, res, next) => {
         res.status(500).json({ success: false, msg: err });
       } else {
         req.body.password = hash;
-        await User.create(req.body)
+        await User.create(req.body, { transaction: t })
           .then(async function (user) {
-            await user.createIeee(); // Create an empty Ieee association to ref later in profile
+            await user.createIeee({}, { transaction: t }); // Create an empty Ieee association to ref later in profile
 
             res.status(200).json({
               success: true,
@@ -115,16 +115,17 @@ router.post("/register", async (req, res, next) => {
           })
           .catch((err) => {
             if (err.name == "SequelizeUniqueConstraintError") {
-              return res.status(409)
-                .json({
-                  success: false,
-                  msg: "User already exists. Please log-in!",
-                });
+              return res.status(409).json({
+                success: false,
+                msg: "User already exists. Please log-in!",
+              });
             }
           });
       }
+      await t.commit();
     });
   } catch (next) {
+    await t.rollback();
     next(err);
   }
 });

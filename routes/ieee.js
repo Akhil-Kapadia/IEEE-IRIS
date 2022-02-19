@@ -1,9 +1,12 @@
 const router = require("express").Router();
-const { User, Ieee } = require("../models/index");
+const { User, Ieee, t } = require("../models/index");
 const passport = require("passport");
 
 //get all IEEE members
-router.get("/all", passport.authenticate("jwt", { session: false }), async (req, res, next) => {
+router.get(
+  "/all",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
     try {
       // If its an officer, print out all users, else print own user.
       if (req.user.role) {
@@ -21,7 +24,10 @@ router.get("/all", passport.authenticate("jwt", { session: false }), async (req,
 );
 
 //get users ieee member
-router.get("/:id", passport.authenticate("jwt", { session: false }), async (req, res, next) => {
+router.get(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
     try {
       if (req.user.id == req.params.id) {
         let member = await req.user.getIeee().catch(next);
@@ -44,23 +50,31 @@ router.get("/:id", passport.authenticate("jwt", { session: false }), async (req,
 );
 
 // update a users ieee info
-router.put("/:id", passport.authenticate("jwt", { session: false }), async (req, res, next) => {
+router.put(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
     try {
       if (req.user.id == req.params.id) {
-        let member = await req.user.getIeee().catch(next);
-        member.set({memberId : req.body.memberId})
+        let member = await req.user.getIeee({}, { transaction: t }).catch(next);
+        member.set({ memberId: req.body.memberId });
         await member.save().catch(next);
       } else if (req.user.role) {
-        let member = await Ieee.findOne({ where: { UserId: req.params.id } }).catch(next);
+        let member = await Ieee.findOne({
+          where: { UserId: req.params.id },
+          transaction: t,
+        }).catch(next);
         if (member) {
           member.set(req.body);
-          await member.save().catch(next);
-          } else {
-            res.status(404).json({ msg: "IEEE member not found" });
-          }
+          await member.save({}, { transaction: t }).catch(next);
+        } else {
+          res.status(404).json({ msg: "IEEE member not found" });
+        }
       }
       res.status(200).json(member);
+      await t.commit();
     } catch (err) {
+      t.rollback();
       next(err);
     }
   }
