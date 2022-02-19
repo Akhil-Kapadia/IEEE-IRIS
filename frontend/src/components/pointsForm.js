@@ -209,7 +209,6 @@ export default function AddPoints() {
           </LoadingButton>
         </Grid>
       </Grid>
-      <Login open={login} />
     </Box>
   );
 }

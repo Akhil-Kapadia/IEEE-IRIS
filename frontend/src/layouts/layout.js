@@ -7,8 +7,9 @@ import Toolbar from "@mui/material/Toolbar";
 import HomeIcon from "@mui/icons-material/Home";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
+import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import Paper from "@mui/material/Paper";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
@@ -16,21 +17,34 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Stack from "@mui/material/Stack";
 
-const handleLogout = () => {
-  localStorage.clear();
-  axios.get("/api/logout").catch((err) => {
-    console.error(err);
-  });
-};
+import api from "../config";
+
+
 
 export default function Bar(props) {
   const [anchor, setAnchor] = React.useState(false);
+  const navigate = useNavigate();
+
+  const handleClick = async() => {
+    if(sessionStorage.getItem("user")){
+      sessionStorage.clear();
+      await api.get("/logout");
+      navigate("/")
+    } else {
+      navigate('/login');
+    }
+  };
+  
+  const setIcon = () => {
+    if(sessionStorage.getItem("user")){
+      return (<LogoutIcon />);
+    } else {
+      return (<LoginIcon />);
+    }
+  };
 
   const toggleDrawer = (open) => (event) => {
-    if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
+    if (event.type === "keydown" && (event.key === "Tab" || event.key === "Shift")) {
       return;
     }
     setAnchor(open);
@@ -97,9 +111,10 @@ export default function Bar(props) {
               color="inherit"
               aria-label="Log out"
               sx={{ ml: 2 }}
-              onClick={handleLogout}
+              onClick={handleClick}
             >
-              <LogoutIcon />
+              {Boolean(sessionStorage.getItem("user")) && <LogoutIcon />}
+              {!Boolean(sessionStorage.getItem("user")) && <LoginIcon />}
             </IconButton>
           </Toolbar>
         </AppBar>
