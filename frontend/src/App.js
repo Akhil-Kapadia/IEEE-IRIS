@@ -14,21 +14,16 @@ import AboutUs from "./routes/aboutus";
 
 //layouts
 import HomeLayout from "./layouts/homeLayout";
+import ManageProPoints from "./routes/manage-propoints";
 
-/**
- * Returns user info to be used for auth and restricting route access
- * @returns Object of user stored in session
- */
-const authorized = () => {
-  let data = sessionStorage.getItem("user");
-  if (data) {
-    return JSON.parse(data);
-  } else {
-    return { id: "", officer: "" };
-  }
-};
 
-function App() {
+
+export default function App() {
+  const [login, setLogin] = React.useState(false);
+  const [msg, setMsg] = React.useState('');
+
+
+
   return (
     <main>
       <Routes>
@@ -58,16 +53,18 @@ function App() {
               text={[
                 "User Management",
                 "Manage ProPoints",
+                "Add ProPoints",
                 "IEEE Events",
                 "Annoucement Posts",
               ]}
-              routes={["/users", "/propoints", "/events", "/posts"]}
+              routes={["/users", "/manage-propoints", "/add-propoints", "/events", "/posts"]}
             />
           }
         >
           <Route path="users" element={<>TBI</>} />
           <Route path="events" element={<EventForm />} />
-          <Route path="propoints" element={<>TBI</> } />
+          <Route path="manage-propoints" element={<ManageProPoints /> } />
+          <Route path="add-propoints" element={<>TBI</>} />
           <Route path="posts" element={<>TBI</>} />
         </Route>
         <Route
@@ -92,4 +89,3 @@ function App() {
   );
 }
 
-export default App;

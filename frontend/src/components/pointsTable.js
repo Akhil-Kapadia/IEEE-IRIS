@@ -27,7 +27,7 @@ export default function PointsTable(props) {
     { field: "EventId", headerName: "Event ID", width: 100},
     { field: "courseId", headerName: "Course ID", width: 100, editable: true},
     { field: "description", headerName: "Event Title or Description", flex:1, editable: true},
-    { field: 'createdAt', headerName : "Added On", width : 200, type: 'dateTime', valueGetter: ({ value }) => value && new Date(value)},
+    { field: 'createdAt', headerName : "Added On", width : 200, type: 'dateTime', valueGetter: ({ value }) => value && Date(value)},
     { field: "points", headerName: "Pro Points", width: 100, type: 'number', editable: true},
     { field: "confirmed", headerName: "Confirmed", width: 100, type: 'boolean', editable:authorized().officer },
   ];

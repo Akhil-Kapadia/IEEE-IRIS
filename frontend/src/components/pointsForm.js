@@ -16,8 +16,6 @@ import Login from './login'
 
 
 export default function AddPoints() {
-  const [login, setLogin] = React.useState(false);
-
   const [msg, setMsg] = React.useState("");
   const [disable, setDisable] = React.useState(false);
   const { control, handleSubmit, watch, reset, resetField, setError, clearErrors, formState : {errors} } = useForm({
@@ -49,7 +47,6 @@ export default function AddPoints() {
         if (err.response.status === 401) {
           sessionStorage.clear();
           setMsg("Unauthorized. Please login!");
-          setLogin(true)
         }
         if (err.response.status === 400) {
           setMsg("Please enter in the correct Event/Course ID!");
@@ -96,7 +93,6 @@ export default function AddPoints() {
       if (err.response.status === 401) {
         sessionStorage.clear();
         setMsg("Unauthorized. Please login!");
-        setLogin(true);
       }
     });
   }, [watchEventId])

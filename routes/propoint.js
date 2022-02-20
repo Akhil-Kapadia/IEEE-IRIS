@@ -33,7 +33,8 @@ router.get("/", passport.authenticate("jwt", { session: false }), async (req, re
         },
         UserId : req.user.id
       }});
-      points = points.map( (row) => { return {...row.dataValues, userName: `${req.user.firstname} ${req.user.lastname}` }; });
+      points = points.map( (row) => { return {...row.dataValues, userName: `${req.user.firstname} ${req.user.lastname}`}; 
+      });
       res.status(200).json(points);      
     } catch (err) {
       next(err);
@@ -55,8 +56,8 @@ router.get("/all", passport.authenticate("jwt", { session: false }), async (req,
       points = await sequelize.query(
         `SELECT 
           propoints.id,
-          users.firstname,
-          users.lastname,
+          propoints."UserId",
+          users.firstname || ' ' || users.lastname as "userName",
           propoints."eventId",
           propoints."courseId",
           propoints.description,
@@ -72,8 +73,8 @@ router.get("/all", passport.authenticate("jwt", { session: false }), async (req,
       points = await sequelize.query(
         `SELECT 
           propoints.id,
-          users.firstname,
-          users.lastname,
+          propoints."UserId",
+          users.firstname || ' ' || users.lastname as "userName",
           propoints."eventId",
           propoints."courseId",
           propoints.description,
@@ -88,7 +89,6 @@ router.get("/all", passport.authenticate("jwt", { session: false }), async (req,
         '${req.query.toDate}'`
         ,{type: sequelize.QueryTypes.SELECT});
     }
-
     res.status(200).json(points);
   } catch (err) {
     next(err);
@@ -117,7 +117,30 @@ router.put("/", passport.authenticate("jwt", { session: false }), async (req, re
   }
 );
 
-// Create a new propoint
+// Create a new propoint for user
+router.post('/admin', passport.authenticate("jwt", { session: false }), async (req, res, next) => {
+  try {
+    if(validator.isEmpty(req.body.courseId) || !validator.isInt(req.body.points) || !validator.isInt(req.body.EventId) || (req.body.description === "No Matching event ID")){
+      return res.status(400).json({msg : 'Please enter values for Event ID, course # and ProPoints'});
+    }
+    let point = await ProPoint.create({
+      points : req.body.points,
+      confirmed : true,
+      courseId : req.body.courseId,
+      description :req.body.description
+    }).catch( err => {res.status(500).json(err)});
+    await point.setUser(req.body.user);
+    let event = await Event.findByPk(req.body.EventId);
+    await point.setEvent(event);
+    res.status(200).json(point);
+  } catch (err) {
+    next(err);
+      // res.status(500).json(err);
+  }
+});
+
+
+// Create a new propoint for user
 router.post('/', passport.authenticate("jwt", { session: false }), async (req, res, next) => {
   try {
     if(validator.isEmpty(req.body.courseId) || !validator.isInt(req.body.points) || !validator.isInt(req.body.EventId) || (req.body.description === "No Matching event ID")){
