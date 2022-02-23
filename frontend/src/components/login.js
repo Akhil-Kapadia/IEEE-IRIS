@@ -10,7 +10,8 @@ import Container from "@mui/material/Container";
 import qs from "qs";
 import { Controller, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import api from "../config";
+
+import {api} from "../App";
 
 function Copyright(props) {
   return (

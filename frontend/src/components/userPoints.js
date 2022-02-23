@@ -1,5 +1,4 @@
 import * as React from "react";
-import axios from "axios";
 import { Controller, useForm } from "react-hook-form";
 import moment from "moment";
 import Grid from "@mui/material/Grid";
@@ -10,6 +9,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 
 import { Typography } from "@mui/material";
 import PointsTable from "./pointsTable";
+import {api} from "../App";
 
 
 export default function UserPoints() {
@@ -28,8 +28,8 @@ export default function UserPoints() {
     data.toDate = moment(data.toDate).format();
     data.fromDate = moment(data.fromDate).format();
 
-    axios
-      .get("/api/propoint", {
+    api
+      .get("/propoint", {
         params: data,
       })
       .then(function (res) {

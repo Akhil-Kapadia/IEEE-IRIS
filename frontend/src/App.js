@@ -1,5 +1,6 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import * as React from "react";
+import axios from "axios";
 //components
 import Login from "./components/login";
 import Bar from "./layouts/layout";
@@ -11,19 +12,32 @@ import Profile from "./routes/profile"
 import ProPoints from "./routes/propoint";
 import Announcement from "./routes/annoucements";
 import AboutUs from "./routes/aboutus";
+import ManageProPoints from "./routes/manage-propoints";
+import AddProPoints from "./routes/add-propoints";
+
 
 //layouts
 import HomeLayout from "./layouts/homeLayout";
-import ManageProPoints from "./routes/manage-propoints";
 
-
+const api = axios.create({
+  baseURL: "/api",
+  timeout: 1000,
+});
 
 export default function App() {
-  const [login, setLogin] = React.useState(false);
-  const [msg, setMsg] = React.useState('');
+  const navigate = useNavigate();
+  let navi;
 
+  api.interceptors.response.use(function (res) {
+    return res;
+  }, function (err) {
+    if (err.response.status === 401){
+      setTimeout( async() => {navigate("/login")}, 10);
+    }
+    return  Promise.reject(err);
+  });
 
-
+  
   return (
     <main>
       <Routes>
@@ -64,7 +78,7 @@ export default function App() {
           <Route path="users" element={<>TBI</>} />
           <Route path="events" element={<EventForm />} />
           <Route path="manage-propoints" element={<ManageProPoints /> } />
-          <Route path="add-propoints" element={<>TBI</>} />
+          <Route path="add-propoints" element={<AddProPoints />} />
           <Route path="posts" element={<>TBI</>} />
         </Route>
         <Route
@@ -89,3 +103,4 @@ export default function App() {
   );
 }
 
+export {api};

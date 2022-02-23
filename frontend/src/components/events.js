@@ -1,5 +1,4 @@
 import * as React from "react";
-import axios from "axios";
 import qs from "qs";
 import { Controller, useForm } from "react-hook-form";
 import moment from "moment";
@@ -9,6 +8,7 @@ import TextField from "@mui/material/TextField";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Typography from "@mui/material/Typography";
 import MobileDateTimePicker from "@mui/lab/MobileDateTimePicker";
+import { api } from "../App";
 
 export default function EventForm() {
   const [loading, setLoading] = React.useState(false);
@@ -23,8 +23,8 @@ export default function EventForm() {
   const onSubmit = (data) => {
     setLoading(true);
     data.Date = moment(data.Date).format();
-    axios
-      .post("/api/event", {
+    api
+      .post("/event", {
         event: data.Description,
         date: data.Date,
         participants: 0,

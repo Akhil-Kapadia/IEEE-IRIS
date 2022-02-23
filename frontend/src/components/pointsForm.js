@@ -8,11 +8,11 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Backdrop from '@mui/material/Backdrop';
 
-import axios from "axios";
 import qs from "qs";
 import { Controller, useForm } from "react-hook-form";
 
 import Login from './login'
+import { api } from "../App";
 
 
 export default function AddPoints() {
@@ -30,7 +30,7 @@ export default function AddPoints() {
 
   const onSubmit = (data) => {
     setDisable(true);
-    axios
+    api
       .post("/api/propoint", qs.stringify(data), {timeout: 5000})
       .then(function (res) {
         setDisable(false);
@@ -67,12 +67,11 @@ export default function AddPoints() {
     if(!watchEventId){
       return ;
     }
-    axios
+    api
     .get("/api/event", {
       params: {
         id: watchEventId,
-      },
-      timeout: 5000, // 5 seconds
+      }
     })
     .then(function (res) {
       if (res.data) {
