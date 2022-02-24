@@ -31,7 +31,7 @@ export default function AddPoints() {
   const onSubmit = (data) => {
     setDisable(true);
     api
-      .post("/api/propoint", qs.stringify(data), {timeout: 5000})
+      .post("/propoint", qs.stringify(data), {timeout: 5000})
       .then(function (res) {
         setDisable(false);
         setMsg(
