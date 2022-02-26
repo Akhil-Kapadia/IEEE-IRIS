@@ -68,7 +68,7 @@ export default function AddPoints() {
       return ;
     }
     api
-    .get("/api/event", {
+    .get("/event", {
       params: {
         id: watchEventId,
       }
