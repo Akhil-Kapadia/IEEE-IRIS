@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
   ProPoint.init({
     points: DataTypes.INTEGER,
     confirmed: DataTypes.BOOLEAN,
+    confirmedBy: DataTypes.STRING,
     courseId: DataTypes.INTEGER,
     description: DataTypes.STRING
   }, {

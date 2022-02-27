@@ -8,11 +8,11 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Backdrop from '@mui/material/Backdrop';
 
-import axios from "axios";
 import qs from "qs";
 import { Controller, useForm } from "react-hook-form";
 
 import Login from './login'
+import { api } from "../App";
 
 
 export default function AddPoints() {
@@ -30,8 +30,8 @@ export default function AddPoints() {
 
   const onSubmit = (data) => {
     setDisable(true);
-    axios
-      .post("/api/propoint", qs.stringify(data), {timeout: 5000})
+    api
+      .post("/propoint", qs.stringify(data), {timeout: 5000})
       .then(function (res) {
         setDisable(false);
         setMsg(
@@ -67,12 +67,11 @@ export default function AddPoints() {
     if(!watchEventId){
       return ;
     }
-    axios
-    .get("/api/event", {
+    api
+    .get("/event", {
       params: {
         id: watchEventId,
-      },
-      timeout: 5000, // 5 seconds
+      }
     })
     .then(function (res) {
       if (res.data) {
@@ -170,7 +169,6 @@ export default function AddPoints() {
             <TextField
             {...field}
             label= "Event Title or Description"
-            autoFocus
             multiline
             />
           }/>
@@ -194,7 +192,6 @@ export default function AddPoints() {
           <Typography variant="body1">{msg}</Typography>
           <LoadingButton
             type="submit"
-            autoFocus
             fullWidth
             variant="contained"
             color="secondary"

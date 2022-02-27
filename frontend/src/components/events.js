@@ -1,5 +1,4 @@
 import * as React from "react";
-import axios from "axios";
 import qs from "qs";
 import QRCode from "react-qr-code";
 import { Controller, useForm } from "react-hook-form";
@@ -80,8 +79,8 @@ export default function EventForm() {
   const onSubmit = (data) => {
     setLoading(true);
     data.Date = moment(data.Date).format();
-    axios
-      .post("/api/event", {
+    api
+      .post("/event", {
         event: data.Description,
         date: data.Date,
         participants: 0,

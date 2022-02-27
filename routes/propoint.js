@@ -5,25 +5,7 @@ const { Op } = require('sequelize');
 const validator = require('validator');
 const { raw } = require("express");
 
-//get all propoints for a given user.
-router.get("/user/:id", passport.authenticate("jwt", { session: false }), async (req, res, next) => {
-    try {
-      let member = await req.user.getIeee();
-      // If its an officer and has a ferpa cert, get all propoints.
-      if (member.officer && member.ferpa) {
-        member = await Ieee.findOne({
-          where : {UserId : req.params.id}
-        })
-        let points = await req.user.getProPoints();
-        return res.status(200).json(points);
-      } 
-      res.status(401).json({ msg: "Unauthorized. You need to be an admin." });
-    } catch (err) {
-      next(err);
-    }
-  });
-
-// GETS all propoints for current user with giver queries.
+// GETS all propoints for current user with given queries.
 router.get("/", passport.authenticate("jwt", { session: false }), async (req, res, next) => {
     try {
       let points = await ProPoint.findAll({where : {
@@ -33,7 +15,7 @@ router.get("/", passport.authenticate("jwt", { session: false }), async (req, re
         },
         UserId : req.user.id
       }});
-      points = points.map( (row) => { return {...row.dataValues, userName: `${req.user.firstname} ${req.user.lastname}`}; 
+      points = points.map( (row) => { return {...row.dataValues, fullname: `${req.user.fullname}`}; 
       });
       res.status(200).json(points);      
     } catch (err) {
@@ -57,13 +39,14 @@ router.get("/all", passport.authenticate("jwt", { session: false }), async (req,
         `SELECT 
           propoints.id,
           propoints."UserId",
-          users.firstname || ' ' || users.lastname as "userName",
+          users.firstname || ' ' || users.lastname as "fullname",
           propoints."eventId",
           propoints."courseId",
           propoints.description,
           propoints."createdAt",
           propoints.points,
-          propoints.confirmed
+          propoints.confirmed,
+          propoints.confirmedBy
         FROM propoints 
         INNER JOIN users
         ON "userId" = users.id
@@ -74,13 +57,14 @@ router.get("/all", passport.authenticate("jwt", { session: false }), async (req,
         `SELECT 
           propoints.id,
           propoints."UserId",
-          users.firstname || ' ' || users.lastname as "userName",
+          users.firstname || ' ' || users.lastname as "fullname",
           propoints."eventId",
           propoints."courseId",
           propoints.description,
           propoints."createdAt",
           propoints.points,
-          propoints.confirmed
+          propoints.confirmed,
+          propoints.confirmedBy
         FROM propoints 
         INNER JOIN users
         ON "userId" = users.id
@@ -109,6 +93,8 @@ router.put("/", passport.authenticate("jwt", { session: false }), async (req, re
         }}
       );
       points = await ProPoint.findByPk(id);
+      let name = await points.getUser();
+      points.dataValues.fullname = name.fullname;
 
       res.status(200).json(points);
     } catch (err) {
@@ -117,22 +103,56 @@ router.put("/", passport.authenticate("jwt", { session: false }), async (req, re
   }
 );
 
-// Create a new propoint for user
+// Confirm a propoint, must be an officer
+router.put("/confirm", passport.authenticate("jwt", { session: false }), async (req, res, next) => {
+  try {
+    if(req.user.role === null) {
+      return res.status(401).json({msg: "Unauthorized"});
+    }
+    let id = req.body.id;
+    delete req.body.id;
+    let points = await ProPoint.update({
+      confirmed: req.body.confirmed,
+      confirmedBy: (req.body.confirmed) ? req.user.fullname : null
+    },{ 
+        returning : true,
+        where: {
+          id : id
+      }}
+    );
+    points = await ProPoint.findByPk(id);
+    let name = await points.getUser();
+    points.dataValues.fullname = name.fullname;
+
+    res.status(200).json(points);
+  } catch (err) {
+    next(err);
+  }
+}
+);
+
+// Officer creates propoint for user
 router.post('/admin', passport.authenticate("jwt", { session: false }), async (req, res, next) => {
   try {
-    if(validator.isEmpty(req.body.courseId) || !validator.isInt(req.body.points) || !validator.isInt(req.body.EventId) || (req.body.description === "No Matching event ID")){
-      return res.status(400).json({msg : 'Please enter values for Event ID, course # and ProPoints'});
+    if(req.user.role === null) {
+      res.status(401).json({msg: "UnAuthorized: You need to be an IEEE officer."});
+      return;  
+    }
+    let user = await User.findByPk(req.body.userId);
+    if(user === null) {
+      return res.status(404).json({msg: "User not found! Please register first!"});
     }
     let point = await ProPoint.create({
+      UserId: req.body.userId,
+      EventId: req.body.eventId,
+      confirmedBy: req.user.fullname,
       points : req.body.points,
       confirmed : true,
       courseId : req.body.courseId,
       description :req.body.description
-    }).catch( err => {res.status(500).json(err)});
-    await point.setUser(req.body.user);
-    let event = await Event.findByPk(req.body.EventId);
-    await point.setEvent(event);
-    res.status(200).json(point);
+    });
+
+    res.status(200).json({...point.dataValues, firstname: user.firstname, lastname: user.lastname});
   } catch (err) {
     next(err);
       // res.status(500).json(err);

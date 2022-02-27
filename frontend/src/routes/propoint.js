@@ -1,6 +1,4 @@
 import * as React from "react";
-import axios from "axios";
-import qs from "qs";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 

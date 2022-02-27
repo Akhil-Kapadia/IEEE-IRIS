@@ -12,7 +12,7 @@ import TextField from "@mui/material/TextField";
 import LoadingButton from "@mui/lab/LoadingButton";
 
 import PointsTable from "../components/pointsTable";
-import api from "../config";
+import {api} from "../App";
 
 export default function ManageProPoints() {
   const { control, reset, handleSubmit, formState: { errors }} = useForm({
