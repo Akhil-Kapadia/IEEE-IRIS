@@ -46,9 +46,6 @@ export default function UserPoints() {
         if(err.request){
           setMsg('Unable to establish database connection');
         }
-        if (err.response.status === 401) {
-          sessionStorage.clear();
-        }
       });
   };
 

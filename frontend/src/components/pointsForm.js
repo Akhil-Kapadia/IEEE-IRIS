@@ -169,7 +169,6 @@ export default function AddPoints() {
             <TextField
             {...field}
             label= "Event Title or Description"
-            autoFocus
             multiline
             />
           }/>
@@ -193,7 +192,6 @@ export default function AddPoints() {
           <Typography variant="body1">{msg}</Typography>
           <LoadingButton
             type="submit"
-            autoFocus
             fullWidth
             variant="contained"
             color="secondary"

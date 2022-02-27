@@ -47,7 +47,7 @@ export default function Login() {
         }));
       sessionStorage.setItem("user", JSON.stringify(res.data.user));
       reset({ rNum: "", password: "" });
-      navigate(-1);
+      navigate(-1, {replace: true});
     } catch (err) {
       setMsg(err.response.data.msg);
     }

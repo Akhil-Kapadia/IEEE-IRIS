@@ -25,17 +25,25 @@ const api = axios.create({
 });
 
 export default function App() {
+  const [navi, setNavi] = React.useState(false)
   const navigate = useNavigate();
-  let navi;
 
+  // TODO: Implement a better way routing 401 status that doesn't leak mem.
   api.interceptors.response.use(function (res) {
     return res;
-  }, function (err) {
+  }, async function (err) {
     if (err.response.status === 401){
-      setTimeout( async() => {navigate("/login")}, 10);
+      setNavi(true);
     }
     return  Promise.reject(err);
   });
+
+  React.useEffect( () => {
+    if(navi === true){
+      setNavi(false);
+      navigate("/login");
+    }
+  }, [navi])
 
   
   return (

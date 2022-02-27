@@ -17,12 +17,13 @@ import DialogTitle from "@mui/material/DialogTitle";
 
 import { api } from "../App";
 
+let pattern = /[0-9].{7}/;
+
 function PointsDialog(props) {
   const [open, setOpen] = React.useState(false);
   const {control, reset, handleSubmit, formState: { errors }} = useForm({
     defaultValues: {
-      rNum: "",
-      courseId: "",
+      rNum: ""
     },
   });
   const { enqueueSnackbar } = useSnackbar();
@@ -37,12 +38,11 @@ function PointsDialog(props) {
 
   const onSubmit = async (data) => {
     try {
-      let userId = /[0-9].{7}/.exec(data.rNum)[0];
+      let userId = pattern.exec(data.rNum)[0];
       let res = await api.post("/propoint/admin", qs.stringify({
           userId: userId,
           eventId: props.event,
           points: props.points,
-          courseId: data.courseId,
           description: "Submitted by Officer",
         })
       );
@@ -73,8 +73,7 @@ function PointsDialog(props) {
             control={control}
             rules={{ 
               required: true,
-              maxLength: 8,
-              minLength: 8
+              validate: (value) => pattern.test(value)
              }}
             render={({ field }) => (
               <TextField
@@ -85,23 +84,6 @@ function PointsDialog(props) {
                 margin="dense"
                 label="R-Number"
                 fullWidth
-                variant="standard"
-              />
-            )}
-          />
-          <Controller
-            name="courseId"
-            control={control}
-            rules={{ required: true }}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                required
-                error={Boolean(errors.courseId)}
-                type="number"
-                margin="dense"
-                placeholder="3331"
-                label="Course Number"
                 variant="standard"
               />
             )}
