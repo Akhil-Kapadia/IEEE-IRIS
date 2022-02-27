@@ -1,73 +1,114 @@
 import * as React from "react";
-import qs from "qs";
 import QRCode from "react-qr-code";
 import { Controller, useForm } from "react-hook-form";
 import moment from "moment";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Typography from "@mui/material/Typography";
 import MobileDateTimePicker from "@mui/lab/MobileDateTimePicker";
-import Card from "@mui/material/Card";
-import Button from "@mui/material/button";
+import Button from "@mui/material/Button";
+import Modal from "@mui/material/Modal";
 
-function qrCode() {
+import { api } from "../App";
+import { useSnackbar } from "notistack";
+
+function PointsCode(props) {
   const [qr, setQR] = React.useState(<></>);
+  const [open, setOpen] = React.useState(false);
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
-      points: 1
+      eventId: "",
+      points: 1,
     },
   });
 
-  const generateQr = () => {};
+  const onSubmit = () => {
+    setOpen(true);
+    setQR(<QRCode value="https://ttu-ieee.azurewebsites.net/propoint/" />);
+  };
 
-  return;
-  <Box container sx={{flexGrow:1, flexDirection:"column", justifyContent:"center" }}>
-    <Grid
-      component="form"
-      onSubmit={handleSubmit(onSubmit)}
-      noValidate
-      sx={{
-        margin: 2,
-        flexGrow: 1,
-        flexDirection: "row",
-        justifyContent: "center"
-      }}
-    >
-      <Grid item>
-        <Controller
-          name="points"
-          control={control}
-          render={ ({field}) =>
-            <TextField
-            {...field}
-            required
-            type="number"
-            label="Points"
-            />}
-        />
-        </Grid
-        <Grid item>
-        <Button
-          type="submit"
-          onClick={handleSubmit(onSubmit)}
-          size="large"
-          fullWidth
-          variant="contained"
-          color="secondary"
-        >
-          Generate ProPoint QR Code
-        </Button>
+  return (
+    <Box>
+      <Grid
+        container
+        spacing={2}
+        component="form"
+        onSubmit={handleSubmit(onSubmit)}
+        noValidate
+        alignContent="center"
+        justifyContent="center"
+        flexDirection="column"
+        sx={{ p: 2 }}
+      >
+        <Grid item xs={12}>
+          <Controller
+            name="eventId"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                required
+                fullWidth
+                type="number"
+                label="Event ID"
+              />
+            )}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Controller
+            name="points"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                required
+                fullWidth
+                type="number"
+                label="Points"
+              />
+            )}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Button
+            type="submit"
+            onClick={handleSubmit(onSubmit)}
+            size="large"
+            fullWidth
+            variant="contained"
+            color="secondary"
+            sx={{ mt: 2, mb: 2 }}
+          >
+            Generate ProPoint QR Code
+          </Button>
+        </Grid>
       </Grid>
-    </Grid>
-  </Box>;
+      <Modal open={open} onClose={() => setOpen(false)}>
+        <Paper
+          sx={{
+            p: 2,
+            justifyContent: "center",
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+          }}
+        >
+          {qr}
+        </Paper>
+      </Modal>
+    </Box>
+  );
 }
 
 export default function EventForm() {
   const [loading, setLoading] = React.useState(false);
-  const [msg, setMsg] = React.useState("");
+  const { enqueueSnackbar } = useSnackbar();
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
       Description: "",
@@ -76,52 +117,52 @@ export default function EventForm() {
     },
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     setLoading(true);
-    data.Date = moment(data.Date).format();
-    api
-      .post("/event", {
+    try {
+      data.Date = moment(data.Date).format();
+      let res = await api.post("/event", {
         event: data.Description,
+        location: data.location,
         date: data.Date,
-        participants: 0,
-      })
-      .then(function (res) {
-        setMsg(
-          `Created Event "${res.data.event}" with ID : ${
-            res.data.id
-          } on ${moment(res.data.date).format("llll")}.`
-        );
-        reset({
-          Description: "",
-          Date: moment().format(),
-        });
-        setLoading(false);
-      })
-      .catch((err) => {});
+      });
+
+      enqueueSnackbar(`Created Event with ID of ${res.data.id}`, {
+        variant: "success",
+      });
+      reset({
+        Description: "",
+        location: "",
+        Date: moment().format(),
+      });
+    } catch (err) {
+      enqueueSnackbar(err.response.data, { variant: "error" });
+    }
+    setLoading(false);
   };
 
   return (
-    <Stack>
-      <Paper>
+    <Paper elevation={3}>
+      <Stack>
         <Grid
           container
           component="form"
           onSubmit={handleSubmit(onSubmit)}
           noValidate
-          spacing={1}
+          spacing={2}
           flexGrow
           direction="column"
           justifyContent="center"
           alignItems="center"
           sx={{
-            margin: 2,
+            p: 2,
             flexGrow: 1,
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
           }}
         >
-          <Grid item xs={10}>
+          <Grid item xs={12}>
             <Controller
               name="Description"
               control={control}
@@ -163,8 +204,7 @@ export default function EventForm() {
               )}
             />
           </Grid>
-          <Grid item>
-            <Typography variant="body1">{msg}</Typography>
+          <Grid item sm={6}>
             <LoadingButton
               type="submit"
               size="normal"
@@ -178,7 +218,10 @@ export default function EventForm() {
             </LoadingButton>
           </Grid>
         </Grid>
-      </Paper>
-    </Stack>
+        <br />
+        <br />
+        <PointsCode />
+      </Stack>
+    </Paper>
   );
 }
