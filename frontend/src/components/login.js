@@ -22,7 +22,7 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link to="/">TTU ECE IEEE Student Branch</Link> {new Date().getFullYear()}
+      <Link to="/">TTU ECE IEEE Student Branch (HomePage)</Link> {new Date().getFullYear()}
       {"."}
     </Typography>
   );
