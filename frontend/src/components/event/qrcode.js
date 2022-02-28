@@ -1,5 +1,6 @@
 import * as React from "react";
 import QRCode from "react-qr-code";
+import qs from 'qs';
 import { Controller, useForm } from "react-hook-form";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
@@ -20,10 +21,23 @@ export default function PointsCode() {
     },
   });
 
-  const onSubmit = () => {
+  const onSubmit = (data) => {
+    let URL = process.env.URL || "http://localhost:3000";
+    console.log(`${URL}/propoints/${qs.stringify(data)}`);
     setOpen(true);
-    setQR(<QRCode value="https://ttu-ieee.azurewebsites.net/propoint/" />);
+    setQR(<QRCode value={`${URL}/propoints/${qs.stringify(data)}`} />);
+    reset({eventId: "", points: 1});
   };
+
+  const checkEvent = async(value) => {
+    try {
+      let res = await api.get("/event", {params : {id : value}});
+      if(res.data) return true;
+      return false;
+    } catch (error) {
+      return false;
+    }
+  }
 
   return (
     <Box>
@@ -42,11 +56,15 @@ export default function PointsCode() {
           <Controller
             name="eventId"
             control={control}
-            render={({ field }) => (
+            rules={{
+              validate: checkEvent
+            }}
+            render={({ field, fieldState }) => (
               <TextField
                 {...field}
                 required
                 fullWidth
+                error={fieldState.error}
                 type="number"
                 label="Event ID"
               />
