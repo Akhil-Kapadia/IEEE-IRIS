@@ -1,65 +1,64 @@
 import * as React from "react";
-import qs from "qs";
 import { Controller, useForm } from "react-hook-form";
 import moment from "moment";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import LoadingButton from "@mui/lab/LoadingButton";
-import Typography from "@mui/material/Typography";
 import MobileDateTimePicker from "@mui/lab/MobileDateTimePicker";
-import { api } from "../App";
+
+import { api } from "../../App";
+import { useSnackbar } from "notistack";
 
 export default function EventForm() {
   const [loading, setLoading] = React.useState(false);
-  const [msg, setMsg] = React.useState('');
+  const { enqueueSnackbar } = useSnackbar();
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
       Description: "",
+      location: "",
       Date: moment().format(),
     },
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     setLoading(true);
-    data.Date = moment(data.Date).format();
-    api
-      .post("/event", {
+    try {
+      data.Date = moment(data.Date).format();
+      let res = await api.post("/event", {
         event: data.Description,
+        location: data.location,
         date: data.Date,
-        participants: 0,
-      })
-      .then(function (res) {
-        setMsg(`Created Event "${res.data.event}" with ID : ${res.data.id} on ${moment(res.data.date).format('llll')}.`);
-        reset({
-          Description: "",
-          Date: moment().format(),
-        });
-        setLoading(false);
-      })
-      .catch((err) => {});
+      });
+
+      enqueueSnackbar(`Created Event with ID of ${res.data.id}`, {
+        variant: "success",
+      });
+      reset({
+        Description: "",
+        location: "",
+        Date: moment().format(),
+      });
+    } catch (err) {
+      enqueueSnackbar(err.response.data, { variant: "error" });
+    }
+    setLoading(false);
   };
 
   return (
+    <Box>
       <Grid
         container
-        component='form'
+        component="form"
         onSubmit={handleSubmit(onSubmit)}
         noValidate
-        spacing={1}
+        spacing={2}
         flexGrow
-        direction = 'column'
+        direction="column"
         justifyContent="center"
         alignItems="center"
-        sx={{
-          margin: 2,
-          flexGrow: 1,
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center"
-        }}
       >
-        <Grid item xs={10}>
+        <Grid item xs={12}>
           <Controller
             name="Description"
             control={control}
@@ -69,7 +68,20 @@ export default function EventForm() {
                 fullWidth
                 multiline
                 label="Event Title or Description"
-                autoFocus
+              />
+            )}
+          />
+        </Grid>
+        <Grid item>
+          <Controller
+            name="location"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                fullWidth
+                multiline
+                label="Location of Event"
               />
             )}
           />
@@ -88,11 +100,9 @@ export default function EventForm() {
             )}
           />
         </Grid>
-        <Grid item>
-          <Typography variant="body1">{msg}</Typography>
+        <Grid item sm={6}>
           <LoadingButton
             type="submit"
-            autoFocus
             size="normal"
             fullWidth
             variant="contained"
@@ -104,5 +114,6 @@ export default function EventForm() {
           </LoadingButton>
         </Grid>
       </Grid>
+    </Box>
   );
 }

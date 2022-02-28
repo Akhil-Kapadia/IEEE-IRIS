@@ -1,10 +1,13 @@
 import { Routes, Route, useNavigate } from "react-router-dom";
 import * as React from "react";
 import axios from "axios";
+
 //components
 import Login from "./components/login";
 import Bar from "./layouts/layout";
-import EventForm from "./components/events";
+
+//layouts
+import HomeLayout from "./layouts/homeLayout";
 
 //routes
 import Register from "./components/register";
@@ -14,10 +17,8 @@ import Announcement from "./routes/annoucements";
 import AboutUs from "./routes/aboutus";
 import ManageProPoints from "./routes/manage-propoints";
 import AddProPoints from "./routes/add-propoints";
+import Events from "./routes/events";
 
-
-//layouts
-import HomeLayout from "./layouts/homeLayout";
 
 const api = axios.create({
   baseURL: "/api",
@@ -84,7 +85,7 @@ export default function App() {
           }
         >
           <Route path="users" element={<>TBI</>} />
-          <Route path="events" element={<EventForm />} />
+          <Route path="events" element={<Events />} />
           <Route path="manage-propoints" element={<ManageProPoints /> } />
           <Route path="add-propoints" element={<AddProPoints />} />
           <Route path="posts" element={<>TBI</>} />
