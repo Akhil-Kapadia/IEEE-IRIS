@@ -73,7 +73,8 @@ export default function PointsTable(props) {
   
   
   return (
-  <div style = {{display: 'flex', width:'100%'}}>
+    <Box flexGrow>
+  <div style = {{display: 'flex', height:'100%'}}>
     <div style= {{flexGrow: 1}} >
     <DataGrid 
       autoHeight 
@@ -88,5 +89,6 @@ export default function PointsTable(props) {
    />
    </div>
   </div>
+  </Box>
   );
 }
