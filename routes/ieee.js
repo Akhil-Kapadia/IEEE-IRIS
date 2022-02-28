@@ -66,4 +66,16 @@ router.put("/:id", passport.authenticate("jwt", { session: false }), async (req,
   }
 );
 
+router.put("/admin", passport.authenticate("jwt", { session: false }), async (req, res, next) => {
+  try {
+    let ieee = await Ieee.findOne({where: {
+      userId: req.body.rNum
+    }})
+    delete req.body.rNum
+    await ieee.update(req.body);
+  } catch (err) {
+    
+  }
+});
+
 module.exports = router;
