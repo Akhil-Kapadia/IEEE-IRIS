@@ -8,16 +8,14 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Backdrop from '@mui/material/Backdrop';
 
-import axios from "axios";
 import qs from "qs";
 import { Controller, useForm } from "react-hook-form";
 
 import Login from './login'
+import { api } from "../App";
 
 
 export default function AddPoints() {
-  const [login, setLogin] = React.useState(false);
-
   const [msg, setMsg] = React.useState("");
   const [disable, setDisable] = React.useState(false);
   const { control, handleSubmit, watch, reset, resetField, setError, clearErrors, formState : {errors} } = useForm({
@@ -32,8 +30,8 @@ export default function AddPoints() {
 
   const onSubmit = (data) => {
     setDisable(true);
-    axios
-      .post("/api/propoint", qs.stringify(data), {timeout: 5000})
+    api
+      .post("/propoint", qs.stringify(data), {timeout: 5000})
       .then(function (res) {
         setDisable(false);
         setMsg(
@@ -49,7 +47,6 @@ export default function AddPoints() {
         if (err.response.status === 401) {
           sessionStorage.clear();
           setMsg("Unauthorized. Please login!");
-          setLogin(true)
         }
         if (err.response.status === 400) {
           setMsg("Please enter in the correct Event/Course ID!");
@@ -70,12 +67,11 @@ export default function AddPoints() {
     if(!watchEventId){
       return ;
     }
-    axios
-    .get("/api/event", {
+    api
+    .get("/event", {
       params: {
         id: watchEventId,
-      },
-      timeout: 5000, // 5 seconds
+      }
     })
     .then(function (res) {
       if (res.data) {
@@ -96,7 +92,6 @@ export default function AddPoints() {
       if (err.response.status === 401) {
         sessionStorage.clear();
         setMsg("Unauthorized. Please login!");
-        setLogin(true);
       }
     });
   }, [watchEventId])
@@ -174,7 +169,6 @@ export default function AddPoints() {
             <TextField
             {...field}
             label= "Event Title or Description"
-            autoFocus
             multiline
             />
           }/>
@@ -198,7 +192,6 @@ export default function AddPoints() {
           <Typography variant="body1">{msg}</Typography>
           <LoadingButton
             type="submit"
-            autoFocus
             fullWidth
             variant="contained"
             color="secondary"

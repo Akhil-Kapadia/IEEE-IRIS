@@ -1,5 +1,4 @@
 import * as React from "react";
-import axios from "axios";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import AppBar from "@mui/material/AppBar";
@@ -17,7 +16,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Stack from "@mui/material/Stack";
 
-import api from "../config";
+import {api} from "../App";
 
 
 

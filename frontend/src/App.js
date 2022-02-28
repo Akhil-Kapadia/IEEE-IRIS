@@ -1,5 +1,6 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import * as React from "react";
+import axios from "axios";
 //components
 import Login from "./components/login";
 import Bar from "./layouts/layout";
@@ -11,24 +12,40 @@ import Profile from "./routes/profile"
 import ProPoints from "./routes/propoint";
 import Announcement from "./routes/annoucements";
 import AboutUs from "./routes/aboutus";
+import ManageProPoints from "./routes/manage-propoints";
+import AddProPoints from "./routes/add-propoints";
+
 
 //layouts
 import HomeLayout from "./layouts/homeLayout";
 
-/**
- * Returns user info to be used for auth and restricting route access
- * @returns Object of user stored in session
- */
-const authorized = () => {
-  let data = sessionStorage.getItem("user");
-  if (data) {
-    return JSON.parse(data);
-  } else {
-    return { id: "", officer: "" };
-  }
-};
+const api = axios.create({
+  baseURL: "/api",
+  timeout: 1000,
+});
 
-function App() {
+export default function App() {
+  const [navi, setNavi] = React.useState(false)
+  const navigate = useNavigate();
+
+  // TODO: Implement a better way routing 401 status that doesn't leak mem.
+  api.interceptors.response.use(function (res) {
+    return res;
+  }, async function (err) {
+    if (err.response.status === 401){
+      setNavi(true);
+    }
+    return  Promise.reject(err);
+  });
+
+  React.useEffect( () => {
+    if(navi === true){
+      setNavi(false);
+      navigate("/login");
+    }
+  }, [navi])
+
+  
   return (
     <main>
       <Routes>
@@ -58,16 +75,18 @@ function App() {
               text={[
                 "User Management",
                 "Manage ProPoints",
+                "Add ProPoints",
                 "IEEE Events",
                 "Annoucement Posts",
               ]}
-              routes={["/users", "/propoints", "/events", "/posts"]}
+              routes={["/users", "/manage-propoints", "/add-propoints", "/events", "/posts"]}
             />
           }
         >
           <Route path="users" element={<>TBI</>} />
           <Route path="events" element={<EventForm />} />
-          <Route path="propoints" element={<>TBI</> } />
+          <Route path="manage-propoints" element={<ManageProPoints /> } />
+          <Route path="add-propoints" element={<AddProPoints />} />
           <Route path="posts" element={<>TBI</>} />
         </Route>
         <Route
@@ -92,4 +111,4 @@ function App() {
   );
 }
 
-export default App;
+export {api};
