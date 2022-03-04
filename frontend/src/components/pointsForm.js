@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Backdrop from '@mui/material/Backdrop';
-
+import { useLocation, useSearchParams } from "react-router-dom";
 import qs from "qs";
 import { Controller, useForm } from "react-hook-form";
 
@@ -18,16 +18,18 @@ import { api } from "../App";
 export default function AddPoints() {
   const [msg, setMsg] = React.useState("");
   const [disable, setDisable] = React.useState(false);
+  const { search } = useLocation();
+  const urlParams = Object.fromEntries([...new URLSearchParams(search)]);
   const { control, handleSubmit, watch, reset, resetField, setError, clearErrors, formState : {errors} } = useForm({
     defaultValues: {
-      points: 1,
+      points: urlParams.points || '',
       courseId: '',
       description: '',
-      EventId: ''
+      EventId: urlParams.eventId || ''
     },
   });
-  const watchEventId = watch("EventId");
 
+  console.log(urlParams);
   const onSubmit = (data) => {
     setDisable(true);
     api
@@ -62,40 +64,6 @@ export default function AddPoints() {
       points: 1
     });
   };
-
-  React.useEffect( () => {
-    if(!watchEventId){
-      return ;
-    }
-    api
-    .get("/event", {
-      params: {
-        id: watchEventId,
-      }
-    })
-    .then(function (res) {
-      if (res.data) {
-        resetField('description', {keepError: false, defaultValue: res.data.event});
-        clearErrors('EventId');
-      } else {
-        resetField('description', {defaultValue: "No Matching event ID"});
-        setError('EventId', {
-          type: 'manual',
-          message: 'This is not a registered Event!'
-        });
-      }
-    })
-    .catch(function (err) {
-      if(err.request){
-        setMsg('Unable to establish database connection');
-      }
-      if (err.response.status === 401) {
-        sessionStorage.clear();
-        setMsg("Unauthorized. Please login!");
-      }
-    });
-  }, [watchEventId])
-
 
   return (
     <Box

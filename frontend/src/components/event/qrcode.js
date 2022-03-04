@@ -23,7 +23,7 @@ export default function PointsCode() {
 
   const onSubmit = (data) => {
     let URL = process.env.URL || "http://localhost:3000";
-    console.log(`${URL}/propoints/${qs.stringify(data)}`);
+    console.log(`${URL}/propoints/?${qs.stringify(data)}`);
     setOpen(true);
     setQR(<QRCode value={`${URL}/propoints/${qs.stringify(data)}`} />);
     reset({eventId: "", points: 1});
