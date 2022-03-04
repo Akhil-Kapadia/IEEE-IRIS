@@ -14,6 +14,7 @@ import { api } from "../../App";
 export default function PointsCode() {
   const [qr, setQR] = React.useState(<></>);
   const [open, setOpen] = React.useState(false);
+  const [event, setEvent] = React.useState({});
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
       eventId: "",
@@ -23,7 +24,8 @@ export default function PointsCode() {
 
   const onSubmit = (data) => {
     let URL = process.env.URL || "http://localhost:3000";
-    console.log(`${URL}/propoints/?${qs.stringify(data)}`);
+    console.log(JSON.stringify(event));
+    console.log(`${URL}/propoints/?${qs.stringify({...data, event: event.event})}`);
     setOpen(true);
     setQR(<QRCode value={`${URL}/propoints/${qs.stringify(data)}`} />);
     reset({eventId: "", points: 1});
@@ -32,6 +34,7 @@ export default function PointsCode() {
   const checkEvent = async(value) => {
     try {
       let res = await api.get("/event", {params : {id : value}});
+      setEvent(res.data);
       if(res.data) return true;
       return false;
     } catch (error) {

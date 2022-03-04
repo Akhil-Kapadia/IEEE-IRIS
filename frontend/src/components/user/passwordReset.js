@@ -30,6 +30,14 @@ export default function ResetPassword() {
     }
   }
 
+  const checkUser = () => {
+    try {
+      
+    } catch (err) {
+      
+    }
+  }
+
   return (
     <Box
       container
@@ -72,9 +80,6 @@ export default function ResetPassword() {
           </LoadingButton>
         </Grid>
       </Grid>
-      <Alert open={} onClose={() => setOpen(false)}>
-        {`Are you sure you want to change ${user.fullname}'s password?`}
-      </Alert>
     </Box>
   );
 }

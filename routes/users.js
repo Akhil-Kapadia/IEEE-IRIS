@@ -39,6 +39,14 @@ router.get('/:id', passport.authenticate('jwt', {session : false}), async(req, r
     }
 });
 
+router.get("/", passport.authenticate('jwt', {session : false}), async(req, res, next) => {
+    try {
+        res.status(200).json(req.user)
+    } catch (err) {
+        next(err)
+    }
+})
+
 // Update user profile
 router.put('/:id', passport.authenticate('jwt', {session : false}),async(req, res, next) => {
     try{

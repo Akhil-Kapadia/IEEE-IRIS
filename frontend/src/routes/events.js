@@ -11,7 +11,7 @@ import EventTable from "../components/event/eventTable";
 export default function Events() {
 
   return (
-    <Paper elevation="3" sx={{p:2}}>
+    <Paper elevation={3} sx={{p:2}}>
       <Stack spacing={2}>
         <Typography>
 
