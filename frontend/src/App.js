@@ -1,12 +1,14 @@
 import { Routes, Route, useNavigate } from "react-router-dom";
 import * as React from "react";
-import axios from "axios";
 import Button from "@mui/material/Button"
 import Dialog from "@mui/material/Dialog"
 import DialogTitle from "@mui/material/DialogTitle"
 import DialogContentText from "@mui/material/DialogContentText"
 import DialogContent from "@mui/material/DialogContent"
 import DialogActions from "@mui/material/DialogActions"
+
+//config
+import {api} from "./config";
 
 //components
 import Login from "./components/login";
@@ -24,12 +26,8 @@ import AboutUs from "./routes/aboutus";
 import ManageProPoints from "./routes/manage-propoints";
 import AddProPoints from "./routes/add-propoints";
 import Events from "./routes/events";
+import Users from "./routes/users";
 
-
-const api = axios.create({
-  baseURL: "/api",
-  timeout: 1000,
-});
 
 export default function App() {
   const [navi, setNavi] = React.useState(false)
@@ -98,7 +96,7 @@ export default function App() {
             />
           }
         >
-          <Route path="users" element={<>TBI</>} />
+          <Route path="users" element={<Users />} />
           <Route path="events" element={<Events />} />
           <Route path="manage-propoints" element={<ManageProPoints /> } />
           <Route path="add-propoints" element={<AddProPoints />} />

@@ -9,7 +9,7 @@ import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 
-import { api } from "../../App";
+import { api } from "../../config";
 
 export default function PointsCode() {
   const [qr, setQR] = React.useState(<></>);

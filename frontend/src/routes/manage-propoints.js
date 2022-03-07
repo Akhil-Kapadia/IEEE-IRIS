@@ -11,8 +11,8 @@ import MobileDateTimePicker from "@mui/lab/MobileDateTimePicker";
 import TextField from "@mui/material/TextField";
 import LoadingButton from "@mui/lab/LoadingButton";
 
-import PointsTable from "../components/pointsTable";
-import {api} from "../App";
+import PointsTable from "../components/propoint/pointsTable";
+import {api} from "../config";
 
 export default function ManageProPoints() {
   const { control, reset, handleSubmit, formState: { errors }} = useForm({

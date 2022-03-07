@@ -15,7 +15,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
-import { api } from "../App";
+import { api } from "../config";
 
 let pattern = /[0-9].{7}/;
 

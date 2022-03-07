@@ -5,9 +5,10 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import LoadingButton from "@mui/lab/LoadingButton";
 
-import { api } from "../../App";
+import { api } from "../../config";
 
 export default function ResetPassword() {
+  const[loading, setLoading] = React.useState(false);
   const [user, setUser] = React.useState({});
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
@@ -15,7 +16,7 @@ export default function ResetPassword() {
     },
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = async(data) => {
     try {
       let res = await api.get(`/user/${data.rNum}`);
       if(res.data === null) {

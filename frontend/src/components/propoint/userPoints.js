@@ -9,7 +9,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 
 import { Typography } from "@mui/material";
 import PointsTable from "./pointsTable";
-import {api} from "../App";
+import {api} from "../../config";
 
 
 export default function UserPoints() {

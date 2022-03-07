@@ -12,8 +12,8 @@ import qs from "qs";
 import { useSnackbar } from "notistack";
 import { Controller, useForm } from "react-hook-form";
 
-import Login from './login'
-import { api } from "../App";
+import Login from '../login'
+import { api } from "../../config";
 
 
 export default function AddPoints() {

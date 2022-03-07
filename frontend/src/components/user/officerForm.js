@@ -4,10 +4,13 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import LoadingButton from "@mui/lab/LoadingButton";
+import Button from "@mui/material/Button";
+import qs from "qs";
 
-import { api } from "../../App";
+import { api } from "../../config";
 
 export default function OfficerForm() {
+  const[loading, setLoading] = React.useState(false);
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
       rNum: "",

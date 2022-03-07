@@ -7,7 +7,7 @@ import TextField from "@mui/material/TextField";
 import LoadingButton from "@mui/lab/LoadingButton";
 import MobileDateTimePicker from "@mui/lab/MobileDateTimePicker";
 
-import { api } from "../../App";
+import { api } from "../../config";
 import { useSnackbar } from "notistack";
 
 export default function EventForm() {

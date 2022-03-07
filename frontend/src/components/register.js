@@ -18,7 +18,7 @@ import qs from "qs";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
 
-import {api} from "../App";
+import {api} from "../config";
 
 function Copyright(props) {
   return (
