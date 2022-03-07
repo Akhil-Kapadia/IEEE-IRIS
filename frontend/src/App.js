@@ -1,6 +1,14 @@
 import { Routes, Route, useNavigate } from "react-router-dom";
 import * as React from "react";
-import axios from "axios";
+import Button from "@mui/material/Button"
+import Dialog from "@mui/material/Dialog"
+import DialogTitle from "@mui/material/DialogTitle"
+import DialogContentText from "@mui/material/DialogContentText"
+import DialogContent from "@mui/material/DialogContent"
+import DialogActions from "@mui/material/DialogActions"
+
+//config
+import {api} from "./config";
 
 //components
 import Login from "./components/login";
@@ -18,18 +26,13 @@ import AboutUs from "./routes/aboutus";
 import ManageProPoints from "./routes/manage-propoints";
 import AddProPoints from "./routes/add-propoints";
 import Events from "./routes/events";
+import Users from "./routes/users";
 
-
-const api = axios.create({
-  baseURL: "/api",
-  timeout: 1000,
-});
 
 export default function App() {
   const [navi, setNavi] = React.useState(false)
   const navigate = useNavigate();
 
-  // TODO: Implement a better way routing 401 status that doesn't leak mem.
   api.interceptors.response.use(function (res) {
     return res;
   }, async function (err) {
@@ -39,16 +42,25 @@ export default function App() {
     return  Promise.reject(err);
   });
 
-  React.useEffect( () => {
-    if(navi === true){
-      setNavi(false);
-      navigate("/login");
-    }
-  }, [navi])
+  const handleClick = () => {
+    setNavi(false);
+    navigate("/login");
+  }
 
   
   return (
     <main>
+      <Dialog open={navi} onClose={() => setNavi(false)} >
+        <DialogTitle>Unauthorized!</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Have you logged in? If you have and still cannot access this resource you may not have the proper authentification level. Please see an IEEE officer.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClick} >Goto login</Button>
+        </DialogActions>
+      </Dialog>
       <Routes>
         <Route
           path="/"
@@ -61,7 +73,7 @@ export default function App() {
           }
         >
           <Route element={<HomeLayout />}>
-            <Route path="propoints" element={<ProPoints />} />
+            <Route path="propoints/*" element={<ProPoints />} />
             <Route path="student-resources" element={"TBI"} />
             <Route path="minecraft" element={"TBI"} />
             <Route path="about-us" element={<AboutUs />} />
@@ -84,7 +96,7 @@ export default function App() {
             />
           }
         >
-          <Route path="users" element={<>TBI</>} />
+          <Route path="users" element={<Users />} />
           <Route path="events" element={<Events />} />
           <Route path="manage-propoints" element={<ManageProPoints /> } />
           <Route path="add-propoints" element={<AddProPoints />} />

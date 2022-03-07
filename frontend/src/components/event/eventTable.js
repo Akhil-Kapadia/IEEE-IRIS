@@ -3,7 +3,7 @@ import moment from "moment";
 import { DataGrid } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 
-import { api } from "../../App";
+import { api } from "../../config";
 
 export default function EventTable() {
   const [events, setEvent] = React.useState([]);

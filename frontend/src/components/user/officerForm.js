@@ -1,119 +1,129 @@
 import * as React from "react";
 import { Controller, useForm } from "react-hook-form";
-import moment from "moment";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import LoadingButton from "@mui/lab/LoadingButton";
-import MobileDateTimePicker from "@mui/lab/MobileDateTimePicker";
+import { useSnackbar } from "notistack";
+import qs from "qs";
 
 import { api } from "../../config";
-import { useSnackbar } from "notistack";
 
-export default function EventForm() {
-  const [loading, setLoading] = React.useState(false);
+export default function OfficerForm() {
+  const[loading, setLoading] = React.useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
-      Description: "",
-      location: "",
-      Date: moment().format(),
+      rNum: "",
+      memberId: '',
+      ferpa: '',
+      officer: ''
     },
   });
 
-  const onSubmit = async (data) => {
+  const onSubmit = async(data) => {
     setLoading(true);
     try {
-      data.Date = moment(data.Date).format();
-      let res = await api.post("/event", {
-        event: data.Description,
-        location: data.location,
-        date: data.Date,
-      });
-
-      enqueueSnackbar(`Created Event with ID of ${res.data.id}`, {
-        variant: "success",
-      });
+      let res = await api.put("/ieee/admin", qs.stringify(data));
+      enqueueSnackbar(`IEEE member updated!`, {variant:"info"});
       reset({
-        Description: "",
-        location: "",
-        Date: moment().format(),
-      });
+        rNum: "",
+        memberId: '',
+        ferpa: '',
+        officer: ''
+      })
     } catch (err) {
-      enqueueSnackbar(err.response.data, { variant: "error" });
+      if(err.response.status === 404) {
+        return enqueueSnackbar("User not found", {variant:'error'});
+      }
+      if(err.response) enqueueSnackbar("Failed to update member!")
     }
     setLoading(false);
-  };
+  }
 
   return (
     <Box>
       <Grid
         container
+        spacing={2}
         component="form"
         onSubmit={handleSubmit(onSubmit)}
         noValidate
-        spacing={2}
-        flexGrow
-        direction="column"
+        alignContent="center"
         justifyContent="center"
-        alignItems="center"
+        flexDirection="column"
+        sx={{ p: 2 }}
       >
         <Grid item xs={12}>
           <Controller
-            name="Description"
+            name="rNum"
             control={control}
-            render={({ field }) => (
+            render={({ field, fieldState }) => (
               <TextField
                 {...field}
                 fullWidth
-                multiline
-                label="Event Title or Description"
-              />
-            )}
-          />
-        </Grid>
-        <Grid item>
-          <Controller
-            name="location"
-            control={control}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                fullWidth
-                multiline
-                label="Location of Event"
+                type="number"
+                label="R-Number"
               />
             )}
           />
         </Grid>
         <Grid item xs={12}>
           <Controller
-            name="Date"
+            name="memberId"
             control={control}
-            render={({ field }) => (
-              <MobileDateTimePicker
+            render={({ field, fieldState }) => (
+              <TextField
                 {...field}
-                renderInput={(props) => <TextField {...props} />}
-                label="Date of Event"
                 fullWidth
+                type="number"
+                label="IEEE Member ID"
               />
             )}
           />
         </Grid>
-        <Grid item sm={6}>
+        <Grid item xs={12}>
+          <Controller
+            name="officer"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                fullWidth
+                label="Officer Position"
+              />
+            )}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Controller
+            name="ferpa"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                fullWidth
+                label="Ferpa Certification"
+              />
+            )}
+          />
+        </Grid>
+        <Grid item xs={12}>
           <LoadingButton
             type="submit"
-            size="normal"
+            onClick={handleSubmit(onSubmit)}
+            size="large"
             fullWidth
+            loading={loading}
             variant="contained"
             color="secondary"
-            loading={loading}
             sx={{ mt: 2, mb: 2 }}
           >
-            Create Event
+            Add Officer
           </LoadingButton>
         </Grid>
       </Grid>
     </Box>
+
   );
 }

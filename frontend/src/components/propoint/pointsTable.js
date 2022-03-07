@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {api} from '../App';
+import {api} from '../../config';
 import Box from '@mui/material/Box';
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import moment from 'moment';
