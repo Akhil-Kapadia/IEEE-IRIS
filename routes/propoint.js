@@ -154,8 +154,8 @@ router.post('/admin', passport.authenticate("jwt", { session: false }), async (r
 
     res.status(200).json({...point.dataValues, firstname: user.firstname, lastname: user.lastname});
   } catch (err) {
+    console.log(JSON.stringify(err))
     next(err);
-      // res.status(500).json(err);
   }
 });
 

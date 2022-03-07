@@ -6,62 +6,70 @@ import TextField from "@mui/material/TextField";
 import LoadingButton from "@mui/lab/LoadingButton";
 
 import { api } from "../../config";
+import { useSnackbar } from "notistack";
 
 export default function ResetPassword() {
   const[loading, setLoading] = React.useState(false);
-  const [user, setUser] = React.useState({});
+  const { enqueueSnackbar } = useSnackbar();
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
-      rNum: ""
+      rNum: "",
+      password: ''
     },
   });
 
   const onSubmit = async(data) => {
+    setLoading(true)
     try {
-      let res = await api.get(`/user/${data.rNum}`);
-      if(res.data === null) {
-        reset({rNum:''});
-        return;
-      }
-      setUser(res.data);
-
-
+      let res = await api.put("/user/", data);
+      reset({rNum:'', password:''})
+      enqueueSnackbar("Successfully Changed Password", {variant: 'success'});
     } catch (err) {
-      
+      enqueueSnackbar("Failed to update!", {variant: "error"});
     }
+    setLoading(false)
   }
 
-  const checkUser = () => {
+  const checkUser = async(value) => {
     try {
-      
+      let res = await api.get(`/user/${value}`);
+      if(res){
+        return true;
+      }
+      return false
     } catch (err) {
-      
+      return false
     }
   }
 
   return (
-    <Box
+    <Box>
+      <Grid 
       container
       component="form"
       onSubmit={handleSubmit(onSubmit)}
+      flexDirection="column"
       justifyContent="center"
       alignContent="center"
       flexGrow
-    >
-      <Grid spacing={2}>
+      spacing={2}>
         <Grid item>
           <Controller
             name="rNum"
             control={control}
-            render={({ field }) => (
+            rules={{
+              required: true
+            }}
+            render={({ field, fieldState }) => (
               <TextField {...field} label="R-Number" fullWidth type="number" />
             )}
           />
         </Grid>
         <Grid item>
           <Controller
-            name="rNum"
+            name="password"
             control={control}
+            rules={{required:true}}
             render={({ field }) => (
               <TextField {...field} label="Password" fullWidth type="password" />
             )}
@@ -77,7 +85,7 @@ export default function ResetPassword() {
             loading={loading}
             sx={{ mt: 2, mb: 2 }}
           >
-            Select User
+            Reset Password
           </LoadingButton>
         </Grid>
       </Grid>

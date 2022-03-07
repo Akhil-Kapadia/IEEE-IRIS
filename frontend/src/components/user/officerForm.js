@@ -4,28 +4,41 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import LoadingButton from "@mui/lab/LoadingButton";
-import Button from "@mui/material/Button";
+import { useSnackbar } from "notistack";
 import qs from "qs";
 
 import { api } from "../../config";
 
 export default function OfficerForm() {
   const[loading, setLoading] = React.useState(false);
+  const { enqueueSnackbar } = useSnackbar();
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
       rNum: "",
       memberId: '',
-      ferpa: ''
+      ferpa: '',
+      officer: ''
     },
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = async(data) => {
+    setLoading(true);
     try {
-      let res = api.put("/ieee/admin", qs.stringify(data));
-
+      let res = await api.put("/ieee/admin", qs.stringify(data));
+      enqueueSnackbar(`IEEE member updated!`, {variant:"info"});
+      reset({
+        rNum: "",
+        memberId: '',
+        ferpa: '',
+        officer: ''
+      })
     } catch (err) {
-      
+      if(err.response.status === 404) {
+        return enqueueSnackbar("User not found", {variant:'error'});
+      }
+      if(err.response) enqueueSnackbar("Failed to update member!")
     }
+    setLoading(false);
   }
 
   return (
@@ -71,31 +84,45 @@ export default function OfficerForm() {
         </Grid>
         <Grid item xs={12}>
           <Controller
+            name="officer"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                fullWidth
+                label="Officer Position"
+              />
+            )}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Controller
             name="ferpa"
             control={control}
             render={({ field }) => (
               <TextField
                 {...field}
                 fullWidth
-                label="Ferpa"
+                label="Ferpa Certification"
               />
             )}
           />
         </Grid>
         <Grid item xs={12}>
-          <Button
+          <LoadingButton
             type="submit"
             onClick={handleSubmit(onSubmit)}
             size="large"
             fullWidth
+            loading={loading}
             variant="contained"
             color="secondary"
             sx={{ mt: 2, mb: 2 }}
           >
             Add Officer
-          </Button>
+          </LoadingButton>
         </Grid>
-      </Grid>]
+      </Grid>
     </Box>
 
   );

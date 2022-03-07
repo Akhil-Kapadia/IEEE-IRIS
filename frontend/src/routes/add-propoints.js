@@ -23,7 +23,8 @@ function PointsDialog(props) {
   const [open, setOpen] = React.useState(false);
   const {control, reset, handleSubmit, formState: { errors }} = useForm({
     defaultValues: {
-      rNum: ""
+      rNum: "",
+      courseId: ""
     },
   });
   const { enqueueSnackbar } = useSnackbar();
@@ -51,7 +52,7 @@ function PointsDialog(props) {
       reset({ rNum: "", courseId: "" });
     } catch (err) {
       if(err.response.status === 401){
-        enqueueSnackbar(err.response.data, {variant: "error"});
+        enqueueSnackbar(err.response.data.msg, {variant: "error"});
       }
       if(err.response.status === 404){
         enqueueSnackbar(err.response.data.msg, {variant: "error"});
@@ -83,6 +84,24 @@ function PointsDialog(props) {
                 error={Boolean(errors.rNum)}
                 margin="dense"
                 label="R-Number"
+                fullWidth
+                variant="standard"
+              />
+            )}
+          />
+          <Controller
+            name="courseId"
+            control={control}
+            rules={{
+             }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                required
+                error={Boolean(errors.rNum)}
+                margin="dense"
+                label="courseId"
+                placeholder="3331 is Lab 1"
                 fullWidth
                 variant="standard"
               />
