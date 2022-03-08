@@ -25,8 +25,8 @@ export default function Bar(props) {
   const navigate = useNavigate();
 
   const handleClick = async() => {
-    if(sessionStorage.getItem("user")){
-      sessionStorage.clear();
+    if(localStorage.getItem("user")){
+      localStorage.clear();
       await api.get("/logout");
       navigate("/")
     } else {
@@ -35,7 +35,7 @@ export default function Bar(props) {
   };
   
   const setIcon = () => {
-    if(sessionStorage.getItem("user")){
+    if(localStorage.getItem("user")){
       return (<LogoutIcon />);
     } else {
       return (<LoginIcon />);
@@ -112,8 +112,8 @@ export default function Bar(props) {
               sx={{ ml: 2 }}
               onClick={handleClick}
             >
-              {Boolean(sessionStorage.getItem("user")) && <LogoutIcon />}
-              {!Boolean(sessionStorage.getItem("user")) && <LoginIcon />}
+              {Boolean(localStorage.getItem("user")) && <LogoutIcon />}
+              {!Boolean(localStorage.getItem("user")) && <LoginIcon />}
             </IconButton>
           </Toolbar>
         </AppBar>
