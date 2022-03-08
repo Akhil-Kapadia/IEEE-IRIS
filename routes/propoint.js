@@ -149,13 +149,12 @@ router.post('/admin', passport.authenticate("jwt", { session: false }), async (r
       confirmedBy: req.user.fullname,
       points : req.body.points,
       confirmed : true,
-      courseId : req.body.courseId,
       description :req.body.description
     });
 
     res.status(200).json({...point.dataValues, firstname: user.firstname, lastname: user.lastname});
   } catch (err) {
-    console.log(JSON.stringify(err))
+    console.log(err)
     next(err);
   }
 });
