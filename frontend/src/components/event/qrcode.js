@@ -22,13 +22,19 @@ export default function PointsCode() {
     },
   });
 
-  const onSubmit = (data) => {
-    let URL = process.env.URL || "http://localhost:3000";
-    console.log(JSON.stringify(event));
-    console.log(`${URL}/propoints/?${qs.stringify({...data, event: event.event})}`);
-    setOpen(true);
-    setQR(<QRCode value={`${URL}/propoints/${qs.stringify(data)}`} />);
-    reset({eventId: "", points: 1});
+  const onSubmit = async(data) => {
+    try {
+      let res = await api.get("/officer");
+      if(res.data.role) {
+        let URL = "https://ttu-ieee.azurewebsites.net";
+
+        console.log(`${URL}/propoints/?${qs.stringify({...data, event: event.event})}`);
+        setOpen(true);
+        setQR(<QRCode value={`${URL}/propoints/${qs.stringify(data)}`} />);
+        reset({eventId: "", points: 1});
+      }
+    } catch (err) {
+    }
   };
 
   const checkEvent = async(value) => {

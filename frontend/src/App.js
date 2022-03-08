@@ -86,16 +86,18 @@ export default function App() {
             <Bar
               base={"admin"}
               text={[
+                "Instructions",
                 "User Management",
                 "Manage ProPoints",
                 "Add ProPoints",
                 "IEEE Events",
                 "Annoucement Posts",
               ]}
-              routes={["/users", "/manage-propoints", "/add-propoints", "/events", "/posts"]}
+              routes={["/", "/users", "/manage-propoints", "/add-propoints", "/events", "/posts"]}
             />
           }
         >
+          <Route path="" element={<>Instructions page to be added. For admin options, open the panel.</>} />
           <Route path="users" element={<Users />} />
           <Route path="events" element={<Events />} />
           <Route path="manage-propoints" element={<ManageProPoints /> } />

@@ -11,7 +11,7 @@ import moment from 'moment';
  * @returns Object of user itme
  */
  const authorized = () => {
-  let data = sessionStorage.getItem("user");
+  let data = localStorage.getItem("user");
   if (data) {
     return JSON.parse(data);
   } else {

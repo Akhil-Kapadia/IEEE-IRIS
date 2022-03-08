@@ -45,7 +45,7 @@ export default function Login() {
           id: data.rNum,
           password: data.password,
         }));
-      sessionStorage.setItem("user", JSON.stringify(res.data.user));
+      localStorage.setItem("user", JSON.stringify(res.data.user));
       reset({ rNum: "", password: "" });
       navigate(-1, {replace: true});
     } catch (err) {

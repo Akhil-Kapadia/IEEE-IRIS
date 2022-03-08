@@ -40,7 +40,7 @@ export default function EventForm() {
         Date: moment().format(),
       });
     } catch (err) {
-      enqueueSnackbar(err.response.data, { variant: "error" });
+      enqueueSnackbar("Failed to create Event", { variant: "error" });
     }
     setLoading(false);
   };
