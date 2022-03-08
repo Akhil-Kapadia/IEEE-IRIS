@@ -31,6 +31,7 @@ import Users from "./routes/users";
 
 export default function App() {
   const [navi, setNavi] = React.useState(false)
+  const [tabs, setTabs] = React.useState({text: ["My Profile"], rout: ["profile"]})
   const navigate = useNavigate();
 
   api.interceptors.response.use(function (res) {
@@ -47,6 +48,14 @@ export default function App() {
     navigate("/login");
   }
 
+  React.useEffect( () =>{
+    try {
+      if(JSON.parse(localStorage.getItem("user")).officer){
+        setTabs({text: ["My Profile", "Admin Panel"], rout: ["profile", "admin"]})
+        console.log(tabs)
+      }
+    } catch (error) {}
+  },[localStorage.getItem("user")]);
   
   return (
     <main>
@@ -67,8 +76,8 @@ export default function App() {
           element={
             <Bar
               base=""
-              text={["My Profile", "Admin Panel"]}
-              routes={["profile", "admin"]}
+              text={tabs.text}
+              routes={tabs.rout}
             />
           }
         >

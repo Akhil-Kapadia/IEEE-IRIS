@@ -33,7 +33,7 @@ export default function PointsTable(props) {
       return date.format("l LT");
     }},
     { field: "points", headerName: "Pro Points", width: 100, type: 'number', editable: true},
-    { field: "confirmedBy", headername: "Confirmed By", width: 200},
+    { field: "confirmedBy", headerName: "Confirmed By", width: 200},
     { field: "confirmed", headerName: "Confirmed", width: 100, type: 'boolean', editable:authorized().officer },
   ];
 

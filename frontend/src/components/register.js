@@ -10,12 +10,11 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Link from "@mui/material/Link"
 import { Container, FormControlLabel, MenuItem } from "@mui/material";
 import { useRef } from "react";
 import qs from "qs";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
 
 import {api} from "../config";
@@ -35,7 +34,6 @@ function Copyright(props) {
   );
 }
 
-const theme = createTheme();
 
 export default function Register() {
   // Select and box state
@@ -301,7 +299,7 @@ export default function Register() {
           <Grid container justifyContent="center">
             <Grid item>
               <Box>
-                <Link to="/login">Already have an account? Sign in</Link>
+                <Link component="button" onClick={()=>navigate("/login", {replace: true})}>Already have an account? Sign in</Link>
               </Box>
             </Grid>
           </Grid>

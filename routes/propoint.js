@@ -49,8 +49,8 @@ router.get("/all", passport.authenticate("jwt", { session: false }), async (req,
           "ProPoints"."confirmedBy"
         FROM "ProPoints" 
         INNER JOIN "Users"
-        ON "userId" = users.id
-        WHERE "eventId"=${req.query.eventId}`
+        ON "UserId" = "Users".id
+        WHERE "EventId"=${req.query.eventId}`
         ,{type: sequelize.QueryTypes.SELECT});
     } else {
       points = await sequelize.query(
