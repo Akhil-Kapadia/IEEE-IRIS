@@ -24,6 +24,11 @@ router.get("/", passport.authenticate("jwt", { session: false }), async (req, re
   }
 );
 
+router.get("/nfc", passport.authenticate("jwt", { session: false }), async (req,res,next) => {
+  
+
+});
+
 // For officers to get all propoints depending on queries.
 router.get("/all", passport.authenticate("jwt", { session: false }), async (req,res, next) => {
   try {
