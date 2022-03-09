@@ -86,7 +86,7 @@ router.get("/all", passport.authenticate("jwt", { session: false }), async (req,
     res.status(500).json(err)
     // next(err);
   }
-);
+});
 
 // Update current users propoints.
 router.put(
