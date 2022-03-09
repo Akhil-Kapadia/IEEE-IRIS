@@ -7,10 +7,12 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import Link from "@mui/material/Link";
 import qs from "qs";
 import { Controller, useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
-import api from "../config";
+import {useNavigate } from "react-router-dom";
+
+import {api} from "../config";
 
 function Copyright(props) {
   return (
@@ -21,7 +23,7 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link to="/">TTU ECE IEEE Student Branch</Link> {new Date().getFullYear()}
+      <Link to="/">TTU ECE IEEE Student Branch (HomePage)</Link> {new Date().getFullYear()}
       {"."}
     </Typography>
   );
@@ -44,9 +46,9 @@ export default function Login() {
           id: data.rNum,
           password: data.password,
         }));
-      sessionStorage.setItem("user", JSON.stringify(res.data.user));
+      localStorage.setItem("user", JSON.stringify(res.data.user));
       reset({ rNum: "", password: "" });
-      navigate(-1);
+      navigate(-1, {replace: true});
     } catch (err) {
       setMsg(err.response.data.msg);
     }
@@ -135,7 +137,7 @@ export default function Login() {
               <Link to="">Forgot password?</Link>
             </Grid>
             <Grid item>
-              <Link to="/register">Don't have an account? Sign Up</Link>
+              <Link component="button" onClick={()=>{navigate("/register", {replace:true})}} >Don't have an account? Sign Up</Link>
             </Grid>
           </Grid>
         </Box>

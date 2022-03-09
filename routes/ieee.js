@@ -50,10 +50,7 @@ router.get(
 );
 
 // update a users ieee info
-router.put(
-  "/:id",
-  passport.authenticate("jwt", { session: false }),
-  async (req, res, next) => {
+router.put("/", passport.authenticate("jwt", { session: false }), async (req, res, next) => {
     try {
       if (req.user.id == req.params.id) {
         let member = await req.user.getIeee({}, { transaction: t }).catch(next);
@@ -79,5 +76,31 @@ router.put(
     }
   }
 );
+
+router.put("/admin", passport.authenticate("jwt", { session: false }), async (req, res, next) => {
+  try {
+    // Must be an officer
+    if(!req.user.role) {
+      console.log(req.user.role)
+      return res.status(401).json({msg: "Unauthorized: Not an IEEE officer"})
+    };
+    console.log(req.user)
+    // update a user IEEE information, ferpa access or officer position
+    let id = req.body.rNum;
+    delete req.body.rNum;
+    // Returns # of rows changed, not changed data
+    let changes = await Ieee.update(req.body,{ where: { UserId: id}});
+
+    if(!changes[0]) {
+      return res.status(404).json({msg: "User not found!"})
+    }
+
+    let ieee = await Ieee.findOne({where:{UserId: id}});
+
+    return res.status(200).json(ieee);
+  } catch (err) {
+    next(err);
+  }
+});
 
 module.exports = router;

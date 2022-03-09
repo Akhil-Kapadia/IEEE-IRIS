@@ -142,4 +142,17 @@ router.get(
   }
 );
 
+router.get(
+  "/officer",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    try {
+      if(req.user.role) return res.status(200).json({ role: req.user.role });
+      res.status(401).json({msg: "Unauthorized. Not an IEEE Officer"})
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
 module.exports = router;

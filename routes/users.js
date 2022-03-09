@@ -45,29 +45,25 @@ router.get(
   }
 );
 
-// Update user profile
-router.put(
-  "/:id",
-  passport.authenticate("jwt", { session: false }),
-  async (req, res, next) => {
-    try {
-      if (req.user.id == req.params.id) {
-        return res.status(200).json(member);
-      } else if (req.user.role) {
-        Ieee.findOne({ where: { UserId: req.params.id } })
-          .then(function (ieee) {
-            if (ieee) {
-              res.status(200).json(member);
-            } else {
-              res.status(404).json({ msg: "IEEE member not found" });
-            }
-          })
-          .catch(next);
-      } else {
-        res.status(401).send("Unauthorized");
-      }
-    } catch (err) {
-      next(err);
+// Update user profile if admin
+router.put('/', passport.authenticate('jwt', {session : false}),async(req, res, next) => {
+    try{
+        if(req.user.role === null) {
+            res.status(401).json({msg: "UnAuthorized: You need to be an IEEE officer."});
+            return;  
+          }
+        if(req.body.password){
+            req.body.password = await bcrypt.hash(req.body.password, 10);
+        }
+        let id = req.body.rNum;
+        delete req.body.rNum;
+        let user = await User.update(req.body, {where:{
+            id: id
+        }});
+        if(user[0] === 0) return res.status(404).json("User not found");
+        return res.status(200).json(user);
+    }catch(err){
+        next(err);
     }
   }
 );

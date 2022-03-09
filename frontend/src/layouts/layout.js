@@ -1,5 +1,4 @@
 import * as React from "react";
-import axios from "axios";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import AppBar from "@mui/material/AppBar";
@@ -17,7 +16,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Stack from "@mui/material/Stack";
 
-import api from "../config";
+import {api} from "../config";
 
 
 
@@ -26,8 +25,8 @@ export default function Bar(props) {
   const navigate = useNavigate();
 
   const handleClick = async() => {
-    if(sessionStorage.getItem("user")){
-      sessionStorage.clear();
+    if(localStorage.getItem("user")){
+      localStorage.clear();
       await api.get("/logout");
       navigate("/")
     } else {
@@ -36,7 +35,7 @@ export default function Bar(props) {
   };
   
   const setIcon = () => {
-    if(sessionStorage.getItem("user")){
+    if(localStorage.getItem("user")){
       return (<LogoutIcon />);
     } else {
       return (<LoginIcon />);
@@ -113,8 +112,8 @@ export default function Bar(props) {
               sx={{ ml: 2 }}
               onClick={handleClick}
             >
-              {Boolean(sessionStorage.getItem("user")) && <LogoutIcon />}
-              {!Boolean(sessionStorage.getItem("user")) && <LoginIcon />}
+              {Boolean(localStorage.getItem("user")) && <LogoutIcon />}
+              {!Boolean(localStorage.getItem("user")) && <LoginIcon />}
             </IconButton>
           </Toolbar>
         </AppBar>

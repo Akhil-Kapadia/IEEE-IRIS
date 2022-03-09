@@ -7,57 +7,52 @@ import Typography from "@mui/material/Typography";
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Backdrop from '@mui/material/Backdrop';
-
-import axios from "axios";
+import { useLocation, useSearchParams, useNavigate } from "react-router-dom";
 import qs from "qs";
+import { useSnackbar } from "notistack";
 import { Controller, useForm } from "react-hook-form";
 
-import Login from './login'
+import Login from '../login'
+import { api } from "../../config";
 
 
 export default function AddPoints() {
-  const [login, setLogin] = React.useState(false);
-
   const [msg, setMsg] = React.useState("");
   const [disable, setDisable] = React.useState(false);
+  const { search } = useLocation();
+  const { enqueueSnackbar } = useSnackbar();
+  const urlParams = Object.fromEntries([...new URLSearchParams(search)]);
+  const navigate = useNavigate();
   const { control, handleSubmit, watch, reset, resetField, setError, clearErrors, formState : {errors} } = useForm({
     defaultValues: {
-      points: 1,
+      points: urlParams.points || '',
       courseId: '',
-      description: '',
-      EventId: ''
+      description: urlParams.event || '',
+      EventId: urlParams.eventId || ''
     },
   });
-  const watchEventId = watch("EventId");
 
-  const onSubmit = (data) => {
+  const onSubmit = async(data) => {
     setDisable(true);
-    axios
-      .post("/api/propoint", qs.stringify(data), {timeout: 5000})
-      .then(function (res) {
-        setDisable(false);
-        setMsg(
-          `Successfully added ProPoint : ${res.data.id} - ${res.data.description}`
-        );
-      })
-      .catch((err) => {
-        if(err.request){
-          setMsg("Unable to establish remote server connection.");
-          setDisable(false);
-        }
-        // Unauthorized
-        if (err.response.status === 401) {
-          sessionStorage.clear();
-          setMsg("Unauthorized. Please login!");
-          setLogin(true)
-        }
-        if (err.response.status === 400) {
-          setMsg("Please enter in the correct Event/Course ID!");
-          setDisable(false);
-        }
-
-    });
-
+    try {
+      let res = await api.post("/propoint", qs.stringify(data));
+      enqueueSnackbar(`Successfully added ProPoint : ${res.data.points} - ${res.data.description}`, {variant: 'success'});
+      reset({
+        EventId: '',
+        courseId: '',
+        description: '',
+        points: 1
+      });
+      navigate("/propoints");
+    } catch (err) {
+      if(err.response.status === 400) {
+        enqueueSnackbar("Please enter in correct Event/Course ID");
+      }
+      if(err.response){
+        enqueueSnackbar(err.response.data);
+      }
+    }
+    setDisable(false);
     reset({
       EventId: '',
       courseId: '',
@@ -66,41 +61,15 @@ export default function AddPoints() {
     });
   };
 
-  React.useEffect( () => {
-    if(!watchEventId){
-      return ;
+  const checkEvent = async(value) => {
+    try {
+      let res = await api.get("/event", {params : {id : value}});
+      if(res.data) return true;
+      return false;
+    } catch (error) {
+      return false;
     }
-    axios
-    .get("/api/event", {
-      params: {
-        id: watchEventId,
-      },
-      timeout: 5000, // 5 seconds
-    })
-    .then(function (res) {
-      if (res.data) {
-        resetField('description', {keepError: false, defaultValue: res.data.event});
-        clearErrors('EventId');
-      } else {
-        resetField('description', {defaultValue: "No Matching event ID"});
-        setError('EventId', {
-          type: 'manual',
-          message: 'This is not a registered Event!'
-        });
-      }
-    })
-    .catch(function (err) {
-      if(err.request){
-        setMsg('Unable to establish database connection');
-      }
-      if (err.response.status === 401) {
-        sessionStorage.clear();
-        setMsg("Unauthorized. Please login!");
-        setLogin(true);
-      }
-    });
-  }, [watchEventId])
-
+  }
 
   return (
     <Box
@@ -128,6 +97,7 @@ export default function AddPoints() {
           control = {control}
           rules= {{ 
             required: true,
+            validate: checkEvent,
             pattern: /^\d+$/,
             message: "Please enter a registed Event ID!"
           }}
@@ -137,6 +107,7 @@ export default function AddPoints() {
             type="number"
             label="Event ID"
             error= {Boolean(fieldState.error)}
+            disabled={Boolean(urlParams.eventId)}
             helperText={errors?.EventId?.message}
             fullWidth
             required
@@ -174,7 +145,6 @@ export default function AddPoints() {
             <TextField
             {...field}
             label= "Event Title or Description"
-            autoFocus
             multiline
             />
           }/>
@@ -189,6 +159,7 @@ export default function AddPoints() {
             type="number"
             label="ProPoints"
             fullWidth
+            disabled={Boolean(urlParams.points)}
             defaultValue={field.defaultValue}
             required
             />
@@ -198,7 +169,6 @@ export default function AddPoints() {
           <Typography variant="body1">{msg}</Typography>
           <LoadingButton
             type="submit"
-            autoFocus
             fullWidth
             variant="contained"
             color="secondary"

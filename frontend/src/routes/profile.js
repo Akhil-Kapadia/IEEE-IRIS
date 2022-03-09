@@ -1,6 +1,6 @@
 
 
-export default function Profile(routes) {
+export default function Profile() {
 
-  return;
+  return<>TBI</>;
 }
