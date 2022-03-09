@@ -7,7 +7,7 @@ import EventForm from "./components/events";
 
 //routes
 import Register from "./components/register";
-import Profile from "./routes/profile"
+import Profile from "./routes/profile";
 import ProPoints from "./routes/propoint";
 import Announcement from "./routes/annoucements";
 import AboutUs from "./routes/aboutus";
@@ -37,8 +37,7 @@ function App() {
           element={
             <Bar
               base=""
-              text={["My Profile", "Admin Panel"]}
-              routes={["profile", "admin"]}
+
             />
           }
         >
@@ -67,7 +66,6 @@ function App() {
         >
           <Route path="users" element={<>TBI</>} />
           <Route path="events" element={<EventForm />} />
-          <Route path="propoints" element={<>TBI</> } />
           <Route path="posts" element={<>TBI</>} />
         </Route>
         <Route
