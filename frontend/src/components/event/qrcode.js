@@ -30,7 +30,7 @@ export default function PointsCode() {
 
         console.log(`${URL}/propoints/?${qs.stringify({...data, event: event.event})}`);
         setOpen(true);
-        setQR(<QRCode value={`${URL}/propoints/${qs.stringify(data)}`} />);
+        setQR(<QRCode value={`${URL}/propoints/?${qs.stringify({...data, event: `[QR] ${event.event}`})}`} />);
         reset({eventId: "", points: 1});
       }
     } catch (err) {
