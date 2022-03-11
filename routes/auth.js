@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
-const { User, Ieee } = require("../models/index");
+const { User, Ieee, PasswordTokens, t } = require("../models/index");
 const bcrypt = require("bcryptjs");
 const validator = require("validator");
 
@@ -153,5 +153,24 @@ router.get(
     }
   }
 );
+
+// Validate URL
+router.get("/password-reset/:token", async(req, res, next) => {
+  try {
+    let token = await PasswordTokens.findOne({where : {
+      token : req.params.token
+    }});
+
+    if(token){
+      return res.status(200).json(token);
+    }
+
+    res.status(404).json({msg: "Reset Token not found"});
+    
+  } catch (err) {
+    next(err);
+  }
+})
+
 
 module.exports = router;
