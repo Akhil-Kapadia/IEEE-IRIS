@@ -130,7 +130,7 @@ export default function App() {
 
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/password-reset/:token" element={<>TBI</>}
+        <Route path="/password-reset/:token" element={<>TBI</>} />
       </Routes>
     </main>
   );
