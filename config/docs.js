@@ -22,5 +22,5 @@ module.exports = {
       },
     ],
   },
-  apis: ["./routes/users.js"],
+  apis: ['./routes/*.js'],
 };
