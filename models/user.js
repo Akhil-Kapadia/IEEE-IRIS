@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       User.hasOne(models.Ieee);
       User.hasMany(models.ProPoint);
+      User.hasOne(models.Student);
 
     }
   }
@@ -37,8 +38,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      classification: DataTypes.STRING,
-      alumni: DataTypes.BOOLEAN,
       role: DataTypes.VIRTUAL,
       fullname: {
         type: DataTypes.VIRTUAL,
@@ -49,7 +48,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'User'
+      modelName: 'User',
+      tablename: 'users'
     }
   );
   return User;

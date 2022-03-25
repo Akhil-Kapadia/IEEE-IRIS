@@ -22,7 +22,8 @@ module.exports = (sequelize, DataTypes) => {
     courseId: DataTypes.INTEGER,
     description: DataTypes.STRING
   }, {
-    sequelize
+    sequelize,
+    tableName: 'propoints'
   });
   return ProPoint;
 };

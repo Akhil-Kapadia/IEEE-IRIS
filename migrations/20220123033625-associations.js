@@ -4,36 +4,36 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     const t = await queryInterface.sequelize.transaction();
     try {
-      await queryInterface.addConstraint('Ieee', {
-        fields: ['UserId'],
+      await queryInterface.addConstraint('ieee', {
+        fields: ['userId'],
         type: 'foreign key',
-        name: 'Users Ieee fk',
+        name: 'ieee_fk',
         references: {
-          table: 'Users',
+          table: 'users',
           field: 'id'
         },
         onUpdate: 'cascade',
         onDelete: 'cascade'
       }, {transaction:t});
 
-      await queryInterface.addConstraint('ProPoints', {
-        fields: ['UserId'],
+      await queryInterface.addConstraint('propoints', {
+        fields: ['userId'],
         type: 'foreign key',
-        name: 'Users ProPoints fk',
+        name: 'propoints-users_fk',
         references: {
-          table: 'Users',
+          table: 'users',
           field: 'id'
         },
         onUpdate: 'cascade',
         onDelete: 'cascade'
       },{transaction:t});
 
-      await queryInterface.addConstraint('ProPoints', {
-        fields: ['EventId'],
+      await queryInterface.addConstraint('propoints', {
+        fields: ['eventId'],
         type: 'foreign key',
-        name: 'Events ProPoints fk',
+        name: 'propoints-events_fk',
         references: {
-          table: 'Events',
+          table: 'events',
           field: 'id'
         },
         onUpdate: 'cascade',
@@ -50,9 +50,9 @@ module.exports = {
   async down (queryInterface, Sequelize) {
     const t = await queryInterface.sequelize.transaction();
     try {
-      await queryInterface.removeConstraint('Ieee', 'Users Ieee fk',{t});
-      await queryInterface.removeConstraint('ProPoints', 'Users ProPoints fk',{t});
-      await queryInterface.removeConstraint('ProPoints', 'Events ProPoints fk',{t});
+      await queryInterface.removeConstraint('ieee', 'ieee_fk',{t});
+      await queryInterface.removeConstraint('propoints', 'propoints-events_fk',{t});
+      await queryInterface.removeConstraint('propoints', 'propoints-users_fk',{t});
       await t.commit();
     }catch(err){
       await t.rollback();
