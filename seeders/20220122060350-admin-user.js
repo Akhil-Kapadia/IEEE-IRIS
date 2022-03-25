@@ -11,8 +11,6 @@ module.exports = {
      lastname: 'Admin',
      email: 'ieee@ttu.edu',
      password: await bcrypt.hash("zqP$sGf5", 10),
-     classification: 'EE',
-     alumni: true,
      createdAt: new Date(),
      updatedAt: new Date()
    }], {transaction: t});
