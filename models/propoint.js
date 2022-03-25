@@ -20,7 +20,9 @@ module.exports = (sequelize, DataTypes) => {
     confirmed: DataTypes.BOOLEAN,
     confirmedBy: DataTypes.STRING,
     courseId: DataTypes.INTEGER,
-    description: DataTypes.STRING
+    description: DataTypes.STRING,
+    userId: DataTypes.INTEGER,
+    eventId: DataTypes.INTEGER
   }, {
     sequelize,
     tableName: 'propoints'

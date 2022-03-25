@@ -37,38 +37,38 @@ router.get("/all", passport.authenticate("jwt", { session: false }), async (req,
       // run raw sql query to get names
       points = await sequelize.query(
         `SELECT 
-          "ProPoints".id,
-          "ProPoints"."UserId",
-          "Users".firstname || ' ' || "Users".lastname as "fullname",
-          "ProPoints"."EventId",
-          "ProPoints"."courseId",
-          "ProPoints".description,
-          "ProPoints"."createdAt",
-          "ProPoints".points,
-          "ProPoints".confirmed,
-          "ProPoints"."confirmedBy"
-        FROM "ProPoints" 
-        INNER JOIN "Users"
-        ON "UserId" = "Users".id
+          propoints.id,
+          propoints."userId",
+          users.firstname || ' ' || users.lastname as "fullname",
+          propoints."eventId",
+          propoints."courseId",
+          propoints.description,
+          propoints."createdAt",
+          propoints.points,
+          propoints.confirmed,
+          propoints."confirmedBy"
+        FROM propoints 
+        INNER JOIN users
+        ON "userId" = users.id
         WHERE "EventId"=${req.query.eventId}`
         ,{type: sequelize.QueryTypes.SELECT});
     } else {
       points = await sequelize.query(
         `SELECT 
-          "ProPoints".id,
-          "ProPoints"."UserId",
-          "Users".firstname || ' ' || "Users".lastname as "fullname",
-          "ProPoints"."EventId",
-          "ProPoints"."courseId",
-          "ProPoints".description,
-          "ProPoints"."createdAt",
-          "ProPoints".points,
-          "ProPoints".confirmed,
-          "ProPoints"."confirmedBy"
-        FROM "ProPoints" 
-        INNER JOIN "Users"
-        ON "UserId" = "Users".id
-        WHERE "ProPoints"."createdAt" BETWEEN
+        propoints.id,
+        propoints."userId",
+        users.firstname || ' ' || users.lastname as "fullname",
+        propoints."eventId",
+        propoints."courseId",
+        propoints.description,
+        propoints."createdAt",
+        propoints.points,
+        propoints.confirmed,
+        propoints."confirmedBy"
+      FROM propoints 
+      INNER JOIN users
+      ON "userId" = users.id
+        WHERE propoints."createdAt" BETWEEN
         '${req.query.fromDate}' AND
         '${req.query.toDate}'`
         ,{type: sequelize.QueryTypes.SELECT});
@@ -144,7 +144,7 @@ router.post('/admin', passport.authenticate("jwt", { session: false }), async (r
       return res.status(404).json({msg: "User not found! Please register first!"});
     }
     let point = await ProPoint.create({
-      UserId: req.body.userId,
+      userId: req.body.userId,
       EventId: req.body.eventId,
       confirmedBy: req.user.fullname,
       points : req.body.points,
