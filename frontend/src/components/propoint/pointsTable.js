@@ -23,9 +23,9 @@ export default function PointsTable(props) {
   const [loading, setLoading] = React.useState(false);
   const [points, setPoints] = React.useState(props.data);
   const columns = [
-    { field: "UserId", headerName: "R-Number", width: 95 },
+    { field: "userId", headerName: "R-Number", width: 95 },
     { field: "fullname", headerName: "Full Name", width: 200},
-    { field: "EventId", headerName: "Event ID", width: 80},
+    { field: "eventId", headerName: "Event ID", width: 80},
     { field: "courseId", headerName: "Course ID", width: 90, editable: true},
     { field: "description", headerName: "Event Title or Description", flex:1, editable: true},
     { field: 'createdAt', headerName : "Added On", width : 150, valueFormatter: ( {value} ) => {

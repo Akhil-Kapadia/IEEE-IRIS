@@ -7,7 +7,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-01-25T22:00:11.555Z",
     updatedAt: "2022-01-25T22:00:11.555Z",
-    UserId: 11632306,
+    userId: 11632306,
   },
   {
     id: 3,
@@ -16,7 +16,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-01-26T01:52:21.913Z",
     updatedAt: "2022-01-26T01:52:21.913Z",
-    UserId: 11666110,
+    userId: 11666110,
   },
   {
     id: 4,
@@ -25,7 +25,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-01-27T18:40:11.058Z",
     updatedAt: "2022-01-27T18:40:11.058Z",
-    UserId: 11625790,
+    userId: 11625790,
   },
   {
     id: 5,
@@ -34,7 +34,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-01-27T19:12:37.701Z",
     updatedAt: "2022-01-27T19:12:37.701Z",
-    UserId: 11590903,
+    userId: 11590903,
   },
   {
     id: 6,
@@ -43,7 +43,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-01-27T19:48:00.644Z",
     updatedAt: "2022-01-27T19:48:00.644Z",
-    UserId: 11583601,
+    userId: 11583601,
   },
   {
     id: 7,
@@ -52,7 +52,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-01-28T00:11:41.495Z",
     updatedAt: "2022-01-28T00:11:41.495Z",
-    UserId: 11494410,
+    userId: 11494410,
   },
   {
     id: 8,
@@ -61,7 +61,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-01-28T00:11:43.595Z",
     updatedAt: "2022-01-28T00:11:43.595Z",
-    UserId: 11643298,
+    userId: 11643298,
   },
   {
     id: 9,
@@ -70,7 +70,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-01-28T00:11:43.726Z",
     updatedAt: "2022-01-28T00:11:43.726Z",
-    UserId: 11525998,
+    userId: 11525998,
   },
   {
     id: 10,
@@ -79,7 +79,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-01-28T00:11:45.138Z",
     updatedAt: "2022-01-28T00:11:45.138Z",
-    UserId: 11608699,
+    userId: 11608699,
   },
   {
     id: 11,
@@ -88,7 +88,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-01-28T00:11:50.342Z",
     updatedAt: "2022-01-28T00:11:50.342Z",
-    UserId: 11610120,
+    userId: 11610120,
   },
   {
     id: 12,
@@ -97,7 +97,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-01-28T00:11:58.226Z",
     updatedAt: "2022-01-28T00:11:58.226Z",
-    UserId: 11679961,
+    userId: 11679961,
   },
   {
     id: 13,
@@ -106,7 +106,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-01-28T00:12:07.973Z",
     updatedAt: "2022-01-28T00:12:07.973Z",
-    UserId: 11634473,
+    userId: 11634473,
   },
   {
     id: 14,
@@ -115,7 +115,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-01-28T00:12:22.241Z",
     updatedAt: "2022-01-28T00:12:22.241Z",
-    UserId: 11560413,
+    userId: 11560413,
   },
   {
     id: 15,
@@ -124,7 +124,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-01-28T00:12:31.551Z",
     updatedAt: "2022-01-28T00:12:31.551Z",
-    UserId: 11638848,
+    userId: 11638848,
   },
   {
     id: 16,
@@ -133,7 +133,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-01-28T00:12:36.750Z",
     updatedAt: "2022-01-28T00:12:36.750Z",
-    UserId: 11647994,
+    userId: 11647994,
   },
   {
     id: 17,
@@ -142,7 +142,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-01-28T00:12:40.620Z",
     updatedAt: "2022-01-28T00:12:40.620Z",
-    UserId: 11556096,
+    userId: 11556096,
   },
   {
     id: 18,
@@ -151,7 +151,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-01-28T00:13:18.087Z",
     updatedAt: "2022-01-28T00:13:18.087Z",
-    UserId: 11563298,
+    userId: 11563298,
   },
   {
     id: 19,
@@ -160,7 +160,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-01-28T00:13:25.585Z",
     updatedAt: "2022-01-28T00:13:25.585Z",
-    UserId: 11689463,
+    userId: 11689463,
   },
   {
     id: 20,
@@ -169,7 +169,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-01-28T00:13:35.413Z",
     updatedAt: "2022-01-28T00:13:35.413Z",
-    UserId: 11654318,
+    userId: 11654318,
   },
   {
     id: 21,
@@ -178,7 +178,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-01-28T00:13:43.525Z",
     updatedAt: "2022-01-28T00:13:43.525Z",
-    UserId: 11685892,
+    userId: 11685892,
   },
   {
     id: 22,
@@ -187,7 +187,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-01-28T00:13:55.652Z",
     updatedAt: "2022-01-28T00:13:55.652Z",
-    UserId: 11643257,
+    userId: 11643257,
   },
   {
     id: 23,
@@ -196,7 +196,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-01-28T00:17:22.275Z",
     updatedAt: "2022-01-28T00:17:22.275Z",
-    UserId: 11628523,
+    userId: 11628523,
   },
   {
     id: 24,
@@ -205,7 +205,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-01-28T00:17:45.544Z",
     updatedAt: "2022-01-28T00:17:45.544Z",
-    UserId: 11635978,
+    userId: 11635978,
   },
   {
     id: 25,
@@ -214,7 +214,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-01-28T00:18:06.848Z",
     updatedAt: "2022-01-28T00:18:06.848Z",
-    UserId: 11721786,
+    userId: 11721786,
   },
   {
     id: 26,
@@ -223,7 +223,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-01-28T00:37:23.021Z",
     updatedAt: "2022-01-28T00:37:23.021Z",
-    UserId: 11614166,
+    userId: 11614166,
   },
   {
     id: 27,
@@ -232,7 +232,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-01-28T00:38:05.130Z",
     updatedAt: "2022-01-28T00:38:05.130Z",
-    UserId: 11641232,
+    userId: 11641232,
   },
   {
     id: 28,
@@ -241,7 +241,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-01-28T00:39:04.085Z",
     updatedAt: "2022-01-28T00:39:04.085Z",
-    UserId: 11689313,
+    userId: 11689313,
   },
   {
     id: 29,
@@ -250,7 +250,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-01-28T00:40:02.690Z",
     updatedAt: "2022-01-28T00:40:02.690Z",
-    UserId: 11623749,
+    userId: 11623749,
   },
   {
     id: 30,
@@ -259,7 +259,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-01-28T00:43:11.472Z",
     updatedAt: "2022-01-28T00:43:11.472Z",
-    UserId: 11643260,
+    userId: 11643260,
   },
   {
     id: 31,
@@ -268,7 +268,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-01-28T00:43:24.870Z",
     updatedAt: "2022-01-28T00:43:24.870Z",
-    UserId: 11726583,
+    userId: 11726583,
   },
   {
     id: 32,
@@ -277,7 +277,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-01-28T00:53:30.332Z",
     updatedAt: "2022-01-28T00:53:30.332Z",
-    UserId: 11511414,
+    userId: 11511414,
   },
   {
     id: 33,
@@ -286,7 +286,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-01-28T01:46:48.236Z",
     updatedAt: "2022-01-28T01:46:48.236Z",
-    UserId: 11684688,
+    userId: 11684688,
   },
   {
     id: 34,
@@ -295,7 +295,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-01-28T17:25:56.241Z",
     updatedAt: "2022-01-28T17:25:56.241Z",
-    UserId: 11652157,
+    userId: 11652157,
   },
   {
     id: 35,
@@ -304,7 +304,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-02T19:13:23.208Z",
     updatedAt: "2022-02-02T19:13:23.208Z",
-    UserId: 11571148,
+    userId: 11571148,
   },
   {
     id: 36,
@@ -313,7 +313,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-10T22:12:35.193Z",
     updatedAt: "2022-02-10T22:12:35.193Z",
-    UserId: 11643268,
+    userId: 11643268,
   },
   {
     id: 37,
@@ -322,7 +322,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-11T00:49:42.836Z",
     updatedAt: "2022-02-11T00:49:42.836Z",
-    UserId: 11730401,
+    userId: 11730401,
   },
   {
     id: 38,
@@ -331,7 +331,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-11T00:49:44.963Z",
     updatedAt: "2022-02-11T00:49:44.963Z",
-    UserId: 11542830,
+    userId: 11542830,
   },
   {
     id: 39,
@@ -340,7 +340,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-11T00:50:09.407Z",
     updatedAt: "2022-02-11T00:50:09.407Z",
-    UserId: 11641064,
+    userId: 11641064,
   },
   {
     id: 40,
@@ -349,7 +349,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-11T00:50:16.374Z",
     updatedAt: "2022-02-11T00:50:16.374Z",
-    UserId: 11721663,
+    userId: 11721663,
   },
   {
     id: 41,
@@ -358,7 +358,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-11T00:50:18.516Z",
     updatedAt: "2022-02-11T00:50:18.516Z",
-    UserId: 11695563,
+    userId: 11695563,
   },
   {
     id: 42,
@@ -367,7 +367,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-11T00:50:49.940Z",
     updatedAt: "2022-02-11T00:50:49.940Z",
-    UserId: 11570812,
+    userId: 11570812,
   },
   {
     id: 43,
@@ -376,7 +376,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-11T00:52:32.279Z",
     updatedAt: "2022-02-11T00:52:32.279Z",
-    UserId: 11577708,
+    userId: 11577708,
   },
   {
     id: 44,
@@ -385,7 +385,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-11T00:52:32.289Z",
     updatedAt: "2022-02-11T00:52:32.289Z",
-    UserId: 11625708,
+    userId: 11625708,
   },
   {
     id: 45,
@@ -394,7 +394,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-11T00:52:33.222Z",
     updatedAt: "2022-02-11T00:52:33.222Z",
-    UserId: 11618259,
+    userId: 11618259,
   },
   {
     id: 46,
@@ -403,7 +403,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-11T00:53:07.687Z",
     updatedAt: "2022-02-11T00:53:07.687Z",
-    UserId: 11702094,
+    userId: 11702094,
   },
   {
     id: 47,
@@ -412,7 +412,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-11T00:53:41.770Z",
     updatedAt: "2022-02-11T00:53:41.770Z",
-    UserId: 11696201,
+    userId: 11696201,
   },
   {
     id: 48,
@@ -421,7 +421,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-11T00:53:43.825Z",
     updatedAt: "2022-02-11T00:53:43.825Z",
-    UserId: 11712620,
+    userId: 11712620,
   },
   {
     id: 49,
@@ -430,7 +430,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-11T00:54:02.508Z",
     updatedAt: "2022-02-11T00:54:02.508Z",
-    UserId: 11664640,
+    userId: 11664640,
   },
   {
     id: 50,
@@ -439,7 +439,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-11T00:55:19.937Z",
     updatedAt: "2022-02-11T00:55:19.937Z",
-    UserId: 11640867,
+    userId: 11640867,
   },
   {
     id: 51,
@@ -448,7 +448,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-11T00:56:37.164Z",
     updatedAt: "2022-02-11T00:56:37.164Z",
-    UserId: 11700439,
+    userId: 11700439,
   },
   {
     id: 52,
@@ -457,7 +457,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-11T00:56:40.739Z",
     updatedAt: "2022-02-11T00:56:40.739Z",
-    UserId: 11705506,
+    userId: 11705506,
   },
   {
     id: 53,
@@ -466,7 +466,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-11T00:56:58.822Z",
     updatedAt: "2022-02-11T00:56:58.822Z",
-    UserId: 11698392,
+    userId: 11698392,
   },
   {
     id: 54,
@@ -475,7 +475,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-11T00:57:10.510Z",
     updatedAt: "2022-02-11T00:57:10.510Z",
-    UserId: 11566597,
+    userId: 11566597,
   },
   {
     id: 55,
@@ -484,7 +484,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-11T00:57:12.520Z",
     updatedAt: "2022-02-11T00:57:12.520Z",
-    UserId: 11679996,
+    userId: 11679996,
   },
   {
     id: 56,
@@ -493,7 +493,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-11T00:57:18.125Z",
     updatedAt: "2022-02-11T00:57:18.125Z",
-    UserId: 11492699,
+    userId: 11492699,
   },
   {
     id: 57,
@@ -502,7 +502,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-11T00:57:18.692Z",
     updatedAt: "2022-02-11T00:57:18.692Z",
-    UserId: 11664600,
+    userId: 11664600,
   },
   {
     id: 58,
@@ -511,7 +511,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-11T00:58:03.155Z",
     updatedAt: "2022-02-11T00:58:03.155Z",
-    UserId: 11673936,
+    userId: 11673936,
   },
   {
     id: 59,
@@ -520,7 +520,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-11T00:58:17.995Z",
     updatedAt: "2022-02-11T00:58:17.995Z",
-    UserId: 11715105,
+    userId: 11715105,
   },
   {
     id: 60,
@@ -529,7 +529,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-11T00:58:24.505Z",
     updatedAt: "2022-02-11T00:58:24.505Z",
-    UserId: 11508682,
+    userId: 11508682,
   },
   {
     id: 61,
@@ -538,7 +538,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-11T00:59:54.293Z",
     updatedAt: "2022-02-11T00:59:54.293Z",
-    UserId: 11673321,
+    userId: 11673321,
   },
   {
     id: 62,
@@ -547,7 +547,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-11T01:00:33.755Z",
     updatedAt: "2022-02-11T01:00:33.755Z",
-    UserId: 11614032,
+    userId: 11614032,
   },
   {
     id: 63,
@@ -556,7 +556,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-11T01:00:42.580Z",
     updatedAt: "2022-02-11T01:00:42.580Z",
-    UserId: 11662955,
+    userId: 11662955,
   },
   {
     id: 64,
@@ -565,7 +565,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-11T01:00:45.111Z",
     updatedAt: "2022-02-11T01:00:45.111Z",
-    UserId: 11590575,
+    userId: 11590575,
   },
   {
     id: 65,
@@ -574,7 +574,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-11T01:01:45.262Z",
     updatedAt: "2022-02-11T01:01:45.262Z",
-    UserId: 11739840,
+    userId: 11739840,
   },
   {
     id: 66,
@@ -583,7 +583,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-11T01:01:47.102Z",
     updatedAt: "2022-02-11T01:01:47.102Z",
-    UserId: 11607298,
+    userId: 11607298,
   },
   {
     id: 67,
@@ -592,7 +592,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-11T01:03:16.519Z",
     updatedAt: "2022-02-11T01:03:16.519Z",
-    UserId: 11599497,
+    userId: 11599497,
   },
   {
     id: 68,
@@ -601,7 +601,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-11T01:03:28.673Z",
     updatedAt: "2022-02-11T01:03:28.673Z",
-    UserId: 11706326,
+    userId: 11706326,
   },
   {
     id: 69,
@@ -610,7 +610,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-11T02:12:01.323Z",
     updatedAt: "2022-02-11T02:12:01.323Z",
-    UserId: 10887270,
+    userId: 10887270,
   },
   {
     id: 70,
@@ -619,7 +619,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-11T02:12:51.356Z",
     updatedAt: "2022-02-11T02:12:51.356Z",
-    UserId: 11601208,
+    userId: 11601208,
   },
   {
     id: 71,
@@ -628,7 +628,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-11T02:17:07.474Z",
     updatedAt: "2022-02-11T02:17:07.474Z",
-    UserId: 11606500,
+    userId: 11606500,
   },
   {
     id: 72,
@@ -637,7 +637,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-12T00:50:14.472Z",
     updatedAt: "2022-02-12T00:50:14.472Z",
-    UserId: 11641312,
+    userId: 11641312,
   },
   {
     id: 73,
@@ -646,7 +646,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-12T00:53:22.143Z",
     updatedAt: "2022-02-12T00:53:22.143Z",
-    UserId: 11588369,
+    userId: 11588369,
   },
   {
     id: 74,
@@ -655,7 +655,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-12T00:54:52.979Z",
     updatedAt: "2022-02-12T00:54:52.979Z",
-    UserId: 11691819,
+    userId: 11691819,
   },
   {
     id: 75,
@@ -664,7 +664,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-12T00:55:38.157Z",
     updatedAt: "2022-02-12T00:55:38.157Z",
-    UserId: 11632494,
+    userId: 11632494,
   },
   {
     id: 76,
@@ -673,7 +673,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-12T00:56:04.696Z",
     updatedAt: "2022-02-12T00:56:04.696Z",
-    UserId: 11637431,
+    userId: 11637431,
   },
   {
     id: 77,
@@ -682,7 +682,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-12T00:56:23.337Z",
     updatedAt: "2022-02-12T00:56:23.337Z",
-    UserId: 11719097,
+    userId: 11719097,
   },
   {
     id: 78,
@@ -691,7 +691,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-12T00:56:45.578Z",
     updatedAt: "2022-02-12T00:56:45.578Z",
-    UserId: 11574078,
+    userId: 11574078,
   },
   {
     id: 79,
@@ -700,7 +700,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-12T00:56:57.554Z",
     updatedAt: "2022-02-12T00:56:57.554Z",
-    UserId: 11589598,
+    userId: 11589598,
   },
   {
     id: 80,
@@ -709,7 +709,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-12T00:57:42.322Z",
     updatedAt: "2022-02-12T00:57:42.322Z",
-    UserId: 11633186,
+    userId: 11633186,
   },
   {
     id: 81,
@@ -718,7 +718,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-12T00:57:46.494Z",
     updatedAt: "2022-02-12T00:57:46.494Z",
-    UserId: 11629884,
+    userId: 11629884,
   },
   {
     id: 82,
@@ -727,7 +727,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-12T00:57:53.238Z",
     updatedAt: "2022-02-12T00:57:53.238Z",
-    UserId: 11591371,
+    userId: 11591371,
   },
   {
     id: 83,
@@ -736,7 +736,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-12T00:58:17.600Z",
     updatedAt: "2022-02-12T00:58:17.600Z",
-    UserId: 11594969,
+    userId: 11594969,
   },
   {
     id: 84,
@@ -745,7 +745,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-12T01:04:17.235Z",
     updatedAt: "2022-02-12T01:04:17.235Z",
-    UserId: 11583755,
+    userId: 11583755,
   },
   {
     id: 85,
@@ -754,7 +754,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-14T21:20:52.390Z",
     updatedAt: "2022-02-14T21:20:52.390Z",
-    UserId: 11508438,
+    userId: 11508438,
   },
   {
     id: 86,
@@ -763,7 +763,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-15T21:52:37.204Z",
     updatedAt: "2022-02-15T21:52:37.204Z",
-    UserId: 12341234,
+    userId: 12341234,
   },
   {
     id: 87,
@@ -772,7 +772,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-17T23:20:00.996Z",
     updatedAt: "2022-02-17T23:20:00.996Z",
-    UserId: 11694949,
+    userId: 11694949,
   },
   {
     id: 88,
@@ -781,7 +781,7 @@ const ieees = [
     ferpa: null,
     createdAt: "2022-02-27T01:19:31.024Z",
     updatedAt: "2022-02-27T01:19:31.024Z",
-    UserId: 11631120,
+    userId: 11631120,
   },
 ];
 module.exports = {

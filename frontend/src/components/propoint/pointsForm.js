@@ -28,7 +28,7 @@ export default function AddPoints() {
       points: urlParams.points || '',
       courseId: '',
       description: urlParams.event || '',
-      EventId: urlParams.eventId || ''
+      eventId: urlParams.eventId || ''
     },
   });
 
@@ -38,7 +38,7 @@ export default function AddPoints() {
       let res = await api.post("/propoint", qs.stringify(data));
       enqueueSnackbar(`Successfully added ProPoint : ${res.data.points} - ${res.data.description}`, {variant: 'success'});
       reset({
-        EventId: '',
+        eventId: '',
         courseId: '',
         description: '',
         points: 1
@@ -54,7 +54,7 @@ export default function AddPoints() {
     }
     setDisable(false);
     reset({
-      EventId: '',
+      eventId: '',
       courseId: '',
       description: '',
       points: 1
@@ -93,7 +93,7 @@ export default function AddPoints() {
       >
         <Grid item xs = {12} md={12}>
           <Controller
-          name = "EventId"
+          name = "eventId"
           control = {control}
           rules= {{ 
             required: true,
@@ -108,7 +108,7 @@ export default function AddPoints() {
             label="Event ID"
             error= {Boolean(fieldState.error)}
             disabled={Boolean(urlParams.eventId)}
-            helperText={errors?.EventId?.message}
+            helperText={errors?.eventId?.message}
             fullWidth
             required
             />

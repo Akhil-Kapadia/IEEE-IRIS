@@ -18,7 +18,7 @@ module.exports = {
      memberId: 101,
      officer: "Admin",
      ferpa: '/public/ferpa/1',
-     UserId: 10000000,
+     userId: 10000000,
      createdAt: new Date(),
      updatedAt: new Date
    }], {transaction:t})
@@ -33,7 +33,7 @@ module.exports = {
     const t = await queryInterface.sequelize.transaction();
     try{
     await queryInterface.bulkDelete('users', {id:10000000}, {transaction:t});
-    await queryInterface.bulkDelete('ieee', {UserId:10000000}, {transaction:t});
+    await queryInterface.bulkDelete('ieee', {userId:10000000}, {transaction:t});
     await t.commit();
   }catch(err){
     await t.rollback();

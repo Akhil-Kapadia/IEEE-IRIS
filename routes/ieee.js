@@ -27,7 +27,7 @@ router.get("/:id", passport.authenticate("jwt", { session: false }), async (req,
         let member = await req.user.getIeee().catch(next);
         return res.status(200).json(member);
       } else if (req.user.role) {
-        await Ieee.findOne({ where: { UserId: req.params.id } })
+        await Ieee.findOne({ where: { userId: req.params.id } })
           .then(function (ieee) {
             if (ieee) {
               res.status(200).json(member);
@@ -51,7 +51,7 @@ router.put("/", passport.authenticate("jwt", { session: false }), async (req, re
         member.set({memberId : req.body.memberId})
         await member.save().catch(next);
       } else if (req.user.role) {
-        let member = await Ieee.findOne({ where: { UserId: req.params.id } }).catch(next);
+        let member = await Ieee.findOne({ where: { userId: req.params.id } }).catch(next);
         if (member) {
           member.set(req.body);
           await member.save().catch(next);
@@ -78,13 +78,13 @@ router.put("/admin", passport.authenticate("jwt", { session: false }), async (re
     let id = req.body.rNum;
     delete req.body.rNum;
     // Returns # of rows changed, not changed data
-    let changes = await Ieee.update(req.body,{ where: { UserId: id}});
+    let changes = await Ieee.update(req.body,{ where: { userId: id}});
 
     if(!changes[0]) {
       return res.status(404).json({msg: "User not found!"})
     }
 
-    let ieee = await Ieee.findOne({where:{UserId: id}});
+    let ieee = await Ieee.findOne({where:{userId: id}});
 
     return res.status(200).json(ieee);
   } catch (err) {

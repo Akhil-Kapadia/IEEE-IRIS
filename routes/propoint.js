@@ -13,7 +13,7 @@ router.get("/", passport.authenticate("jwt", { session: false }), async (req, re
           [Op.lt] : req.query.toDate,
           [Op.gt] : req.query.fromDate
         },
-        UserId : req.user.id
+        userId : req.user.id
       }});
       points = points.map( (row) => { return {...row.dataValues, fullname: `${req.user.fullname}`}; 
       });
@@ -50,7 +50,7 @@ router.get("/all", passport.authenticate("jwt", { session: false }), async (req,
         FROM propoints 
         INNER JOIN users
         ON "userId" = users.id
-        WHERE "EventId"=${req.query.eventId}`
+        WHERE "eventId"=${req.query.eventId}`
         ,{type: sequelize.QueryTypes.SELECT});
     } else {
       points = await sequelize.query(
@@ -145,7 +145,7 @@ router.post('/admin', passport.authenticate("jwt", { session: false }), async (r
     }
     let point = await ProPoint.create({
       userId: req.body.userId,
-      EventId: req.body.eventId,
+      eventId: req.body.eventId,
       confirmedBy: req.user.fullname,
       points : req.body.points,
       confirmed : true,
@@ -163,7 +163,7 @@ router.post('/admin', passport.authenticate("jwt", { session: false }), async (r
 // Create a new propoint for user
 router.post('/', passport.authenticate("jwt", { session: false }), async (req, res, next) => {
   try {
-    if(validator.isEmpty(req.body.courseId) || !validator.isInt(req.body.points) || !validator.isInt(req.body.EventId) || (req.body.description === "No Matching event ID")){
+    if(validator.isEmpty(req.body.courseId) || !validator.isInt(req.body.points) || !validator.isInt(req.body.eventId) || (req.body.description === "No Matching event ID")){
       return res.status(400).json({msg : 'Please enter values for Event ID, course # and ProPoints'});
     }
     let point = await ProPoint.create({
@@ -173,7 +173,7 @@ router.post('/', passport.authenticate("jwt", { session: false }), async (req, r
       description :req.body.description
     }).catch( err => {res.status(500).json(err)});
     await point.setUser(req.user);
-    let event = await Event.findByPk(req.body.EventId);
+    let event = await Event.findByPk(req.body.eventId);
     await point.setEvent(event);
     res.status(200).json(point);
   } catch (err) {
