@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
-const { User, Ieee } = require("../models/index");
+const { User, Ieee, Student} = require("../models/index");
 const bcrypt = require("bcryptjs");
 const validator = require("validator");
 
@@ -109,6 +109,7 @@ router.post("/register", async (req, res, next) => {
         await User.create(req.body)
           .then(async function (user) {
             await user.createIeee(); // Create an empty Ieee association to ref later in profile
+            await user.createStudent();
 
             res.status(200).json({
               success: true,

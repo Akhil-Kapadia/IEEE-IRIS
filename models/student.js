@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       Student.belongsTo(models.User);
       Student.belongsTo(models.Course, {
         foreignKey: {
+          name: 'lab',
           allowNull: true
         }
       })
