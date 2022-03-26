@@ -60,13 +60,13 @@ To develop the frontend, run this command while the console is in the "frontend"
 
 ## Task List
 - [x] Update website with new database tables
-- [] Add Password reset through Email
-- [] Add profile page.
-- [] Implement PDF and png/jpeg file upload
-- [] Generate excel report for end of semester propoint reporting
-- [] Document backend using swagger
-- [] Add post functionality to annoucements page
-- [] Add NFC propoint verification
-- [] Fill out About Us page
-- [] Refactor authentication code.
-- [] Code discord bot to sync with web api
+- [ ] Add Password reset through Email
+- [ ] Add profile page.
+- [ ] Implement PDF and png/jpeg file upload
+- [ ] Generate excel report for end of semester propoint reporting
+- [ ] Document backend using swagger
+- [ ] Add post functionality to annoucements page
+- [ ] Add NFC propoint verification
+- [ ] Fill out About Us page
+- [ ] Refactor authentication code.
+- [ ] Code discord bot to sync with web api
