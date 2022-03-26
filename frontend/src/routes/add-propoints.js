@@ -43,7 +43,7 @@ function PointsDialog(props) {
           UserId: UserId,
           EventId: props.event,
           points: props.points,
-          description: "Submitted by Officer",
+          description: props.description,
         })
       );
       let msg = `Added ${props.points} for ${res.data.firstname} ${res.data.lastname}.`;
@@ -117,8 +117,8 @@ export default function AddProPoints() {
 
   const onSubmit = async (data) => {
     try {
-      await api.get("/event", { params: { event: data.EventId } });
-      setPts({ points: data.points, event: data.EventId });
+      let event = await api.get("/event/", { params: { id: data.EventId } });
+      setPts({ points: data.points, event: data.EventId, description: event.data.event});
       setOpen(true);
     } catch (err) {
       reset({ EventId: "", points: 1 });
@@ -186,7 +186,7 @@ export default function AddProPoints() {
             </Button>
           </Grid>
         </Grid>
-        <PointsDialog open={open} points={pts.points} event={pts.event} />
+        <PointsDialog open={open} points={pts.points} event={pts.event} description={pts.description} />
       </Stack>
     </Paper>
   );

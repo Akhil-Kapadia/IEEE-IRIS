@@ -26,11 +26,11 @@ export default function PointsCode() {
     try {
       let res = await api.get("/officer");
       if(res.data.role) {
-        let URL = "https://ttu-ieee.azurewebsites.net";
+        let URL = "tosmece0001.ttu.edu";
 
         console.log(`${URL}/propoints/?${qs.stringify({...data, event: event.event})}`);
         setOpen(true);
-        setQR(<QRCode value={`${URL}/propoints/${qs.stringify(data)}`} />);
+        setQR(<QRCode value={`${URL}/propoints/?${qs.stringify({...data, event: event.event})}`} />);
         reset({EventId: "", points: 1});
       }
     } catch (err) {

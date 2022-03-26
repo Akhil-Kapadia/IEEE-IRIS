@@ -2,7 +2,15 @@
 
 const course = [
   {
-    id: 1,
+    name: "Test Course",
+    CourseId: 1001,
+    section: 101,
+    dept: "ECE",
+    semester: 'Spring 2022',
+    createdAt: "2022-01-26T20:42:02.564Z",
+    updatedAt: "2022-01-26T20:42:02.593Z",
+  },
+  {
     name: "Robotics Project Lab",
     CourseId: 3331,
     section: 304,
@@ -12,7 +20,6 @@ const course = [
     updatedAt: "2022-01-26T20:42:02.593Z",
   },
   {
-    id: 2,
     name: "Robotics Project Lab",
     CourseId: 3331,
     section: 305,
@@ -22,7 +29,6 @@ const course = [
     updatedAt: "2022-01-26T20:42:02.593Z",
   },
   {
-    id: 3,
     name: "Robotics Project Lab",
     CourseId: 3331,
     section: 306,
@@ -32,7 +38,6 @@ const course = [
     updatedAt: "2022-01-26T20:42:02.593Z",
   },
   {
-    id: 4,
     name: "MicroController Project Lab",
     CourseId: 3332,
     section: 302,
@@ -42,7 +47,6 @@ const course = [
     updatedAt: "2022-01-26T20:42:02.593Z",
   },
   {
-    id: 5,
     name: "MicroController Project Lab",
     CourseId: 3332,
     section: 303,
@@ -52,7 +56,6 @@ const course = [
     updatedAt: "2022-01-26T20:42:02.593Z",
   },
   {
-    id: 6,
     name: "RF Communications Project Lab",
     CourseId: 3333,
     section: 303,
@@ -62,7 +65,6 @@ const course = [
     updatedAt: "2022-01-26T20:42:02.593Z",
   },
   {
-    id: 7,
     name: "Digital Communications Project Lab",
     CourseId: 3334,
     section: 301,
@@ -72,7 +74,6 @@ const course = [
     updatedAt: "2022-01-26T20:42:02.593Z",
   },
   {
-    id: 8,
     name: "Capstone Project Lab",
     CourseId: 4333,
     section: 302,
@@ -82,7 +83,6 @@ const course = [
     updatedAt: "2022-01-26T20:42:02.593Z",
   },
   {
-    id: 9,
     name: "Capstone Project Lab",
     CourseId: 4333,
     section: 30,
@@ -92,7 +92,6 @@ const course = [
     updatedAt: "2022-01-26T20:42:02.593Z",
   },
   {
-    id: 10,
     name: "Advanced Capstone Project Lab",
     CourseId: 4334,
     section: 302,
