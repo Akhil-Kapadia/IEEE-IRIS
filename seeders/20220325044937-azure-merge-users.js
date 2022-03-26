@@ -800,7 +800,7 @@ module.exports = {
   async down(queryInterface, Sequelize) {
     const t = await queryInterface.sequelize.transaction();
     try {
-      await queryInterface.bulkDelete("users", users, { t });
+      await queryInterface.bulkDelete("users", null, { t });
       await t.commit();
     } catch (err) {
       await t.rollback();

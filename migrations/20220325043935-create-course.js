@@ -10,7 +10,18 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      professor: {
+      CourseId: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
+      section: {
+        type: Sequelize.INTEGER
+      },
+      dept: {
+        defaultValue: 'ECE',
+        type: Sequelize.STRING
+      },
+      semester: {
         type: Sequelize.STRING
       },
       createdAt: {

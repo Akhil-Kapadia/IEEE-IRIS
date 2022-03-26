@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       ProPoint.belongsTo(models.User);
       ProPoint.belongsTo(models.Event);
+      ProPoint.belongsTo(models.Course);
     }
   }
   ProPoint.init({

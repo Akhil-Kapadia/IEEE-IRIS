@@ -799,7 +799,7 @@ module.exports = {
   async down(queryInterface, Sequelize) {
     const t = await queryInterface.sequelize.transaction();
     try {
-      await queryInterface.bulkDelete("ieee", ieees, { t });
+      await queryInterface.bulkDelete("ieee", null, { t });
       await t.commit();
     } catch (err) {
       await t.rollback();
