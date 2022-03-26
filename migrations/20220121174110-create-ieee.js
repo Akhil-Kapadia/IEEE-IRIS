@@ -27,7 +27,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      userId: {
+      UserId: {
         type: Sequelize.INTEGER,
       }
     }, {transaction:t});

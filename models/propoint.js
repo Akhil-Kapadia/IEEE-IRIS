@@ -19,13 +19,12 @@ module.exports = (sequelize, DataTypes) => {
     points: DataTypes.INTEGER,
     confirmed: DataTypes.BOOLEAN,
     confirmedBy: DataTypes.STRING,
-    courseId: DataTypes.INTEGER,
-    description: DataTypes.STRING,
-    userId: DataTypes.INTEGER,
-    eventId: DataTypes.INTEGER
+    CourseId: DataTypes.INTEGER,
+    description: DataTypes.STRING
   }, {
     sequelize,
-    tableName: 'propoints'
+    tableName: 'propoints',
+    modelName: 'ProPoint'
   });
   return ProPoint;
 };

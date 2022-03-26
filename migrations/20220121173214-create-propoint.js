@@ -21,7 +21,7 @@ module.exports = {
       confirmedBy : {
         type: Sequelize.STRING
       },
-      courseId : {
+      CourseId : {
         type : Sequelize.INTEGER
       },
       description : {
@@ -35,10 +35,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      userId: {
+      UserId: {
         type: Sequelize.INTEGER,
       },
-      eventId: {
+      EventId: {
         type: Sequelize.INTEGER,
       }
     }, {transaction:t});

@@ -17,7 +17,7 @@ module.exports = {
       lab: {
         type: Sequelize.INTEGER
       },
-      userId: {
+      UserId: {
         type: Sequelize.INTEGER
       },
       createdAt: {

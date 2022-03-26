@@ -14,7 +14,7 @@ module.exports = {
       expiration: {
         type: Sequelize.DATE
       },
-      userId: {
+      UserId: {
         type: Sequelize.INTEGER
       },
       createdAt: {

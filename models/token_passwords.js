@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   token_passwords.init({
     token: DataTypes.STRING,
     expiration: DataTypes.DATE,
-    userId: DataTypes.INTEGER
+    UserId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'TokenPasswords',

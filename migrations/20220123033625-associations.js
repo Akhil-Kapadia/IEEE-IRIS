@@ -5,7 +5,7 @@ module.exports = {
     const t = await queryInterface.sequelize.transaction();
     try {
       await queryInterface.addConstraint('ieee', {
-        fields: ['userId'],
+        fields: ['UserId'],
         type: 'foreign key',
         name: 'ieee_fk',
         references: {
@@ -17,7 +17,7 @@ module.exports = {
       }, {transaction:t});
 
       await queryInterface.addConstraint('propoints', {
-        fields: ['userId'],
+        fields: ['UserId'],
         type: 'foreign key',
         name: 'propoints-users_fk',
         references: {
@@ -29,7 +29,7 @@ module.exports = {
       },{transaction:t});
 
       await queryInterface.addConstraint('propoints', {
-        fields: ['eventId'],
+        fields: ['EventId'],
         type: 'foreign key',
         name: 'propoints-events_fk',
         references: {

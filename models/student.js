@@ -17,9 +17,10 @@ module.exports = (sequelize, DataTypes) => {
     alumni: DataTypes.BOOLEAN,
     classification: DataTypes.STRING,
     lab: DataTypes.INTEGER,
-    userId: DataTypes.INTEGER
+    UserId: DataTypes.INTEGER
   }, {
     sequelize,
+    tableName: 'students',
     modelName: 'Student',
   });
   return Student;

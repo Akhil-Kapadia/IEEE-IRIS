@@ -38,10 +38,10 @@ function PointsDialog(props) {
 
   const onSubmit = async (data) => {
     try {
-      let userId = pattern.exec(data.rNum)[0];
+      let UserId = pattern.exec(data.rNum)[0];
       let res = await api.post("/propoint/admin", qs.stringify({
-          userId: userId,
-          eventId: props.event,
+          UserId: UserId,
+          EventId: props.event,
           points: props.points,
           description: "Submitted by Officer",
         })
@@ -110,18 +110,18 @@ export default function AddProPoints() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      eventId: "",
+      EventId: "",
       points: 1,
     },
   });
 
   const onSubmit = async (data) => {
     try {
-      await api.get("/event", { params: { event: data.eventId } });
-      setPts({ points: data.points, event: data.eventId });
+      await api.get("/event", { params: { event: data.EventId } });
+      setPts({ points: data.points, event: data.EventId });
       setOpen(true);
     } catch (err) {
-      reset({ eventId: "", points: 1 });
+      reset({ EventId: "", points: 1 });
     }
   };
 
@@ -142,7 +142,7 @@ export default function AddProPoints() {
         >
           <Grid item>
             <Controller
-              name="eventId"
+              name="EventId"
               control={control}
               rules={{ required: true }}
               render={({ field }) => (
@@ -150,7 +150,7 @@ export default function AddProPoints() {
                   {...field}
                   label="Event ID"
                   type="number"
-                  error={Boolean(errors.eventId)}
+                  error={Boolean(errors.EventId)}
                   fullWidth
                   required
                 />

@@ -20,7 +20,8 @@ module.exports = (sequelize, DataTypes) => {
     ferpa: DataTypes.STRING
   }, {
     sequelize,
-    tableName: 'ieee'
+    tableName: 'ieee',
+    modelName: 'Ieee'
   });
   return Ieee;
 };

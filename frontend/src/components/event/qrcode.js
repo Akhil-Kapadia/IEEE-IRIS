@@ -17,7 +17,7 @@ export default function PointsCode() {
   const [event, setEvent] = React.useState({});
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
-      eventId: "",
+      EventId: "",
       points: 1,
     },
   });
@@ -31,7 +31,7 @@ export default function PointsCode() {
         console.log(`${URL}/propoints/?${qs.stringify({...data, event: event.event})}`);
         setOpen(true);
         setQR(<QRCode value={`${URL}/propoints/${qs.stringify(data)}`} />);
-        reset({eventId: "", points: 1});
+        reset({EventId: "", points: 1});
       }
     } catch (err) {
     }
@@ -63,7 +63,7 @@ export default function PointsCode() {
       >
         <Grid item xs={12}>
           <Controller
-            name="eventId"
+            name="EventId"
             control={control}
             rules={{
               validate: checkEvent

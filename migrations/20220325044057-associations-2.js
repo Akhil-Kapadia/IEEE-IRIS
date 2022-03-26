@@ -5,7 +5,7 @@ module.exports = {
     const t = await queryInterface.sequelize.transaction();
     try {
       await queryInterface.addConstraint('students', {
-        fields: ['userId'],
+        fields: ['UserId'],
         type: 'foreign key',
         name: 'students_fk',
         references: {
@@ -16,7 +16,7 @@ module.exports = {
         onDelete: 'cascade'
       }, {t});
       await queryInterface.addConstraint('propoints', {
-        fields: ['courseId'],
+        fields: ['CourseId'],
         type: 'foreign key',
         name: 'propoints-courses_fk',
         references: {
