@@ -7,7 +7,7 @@ Project IRIS was started in 2021 to provide a website for the IEEE student organ
 ## Table of Contents
 1. [Resource Stack](https://github.com/Akhil-Kapadia/IEEE-IRIS/tree/ttu-merger#website-stack)
 2. [Getting Started](https://github.com/Akhil-Kapadia/IEEE-IRIS/tree/ttu-merger#getting-started)
-3. [Members involved](https://github.com/Akhil-Kapadia/IEEE-IRIS/tree/ttu-merger#members)
+3. [Task List](https://github.com/Akhil-Kapadia/IEEE-IRIS/tree/ttu-merger#tasks)
 
 ---
 ## Website Stack
@@ -58,3 +58,15 @@ run this in console and visit http://localhost:3001 to see the website!
 To develop the frontend, run this command while the console is in the "frontend" folder.  
 `npm start`
 
+## Task List
+- [x] Update website with new database tables
+- [] Add Password reset through Email
+- [] Add profile page.
+- [] Implement PDF and png/jpeg file upload
+- [] Generate excel report for end of semester propoint reporting
+- [] Document backend using swagger
+- [] Add post functionality to annoucements page
+- [] Add NFC propoint verification
+- [] Fill out About Us page
+- [] Refactor authentication code.
+- [] Code discord bot to sync with web api

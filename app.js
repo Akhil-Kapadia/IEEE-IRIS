@@ -63,11 +63,7 @@ app.all('*', (req, res, next) => {
     const err = new Error(`Resource not found : ${req.originalUrl}`);
     err.status = 'fail';
     err.statusCode - 404;
-
-    if(process.env.NODE_ENV === 'production') { 
-  return next(err);
-}
-res.status(500).json(err);;
+    res.status(err.statusCode).json(err.message);;
 });
 
 

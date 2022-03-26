@@ -117,8 +117,8 @@ export default function AddProPoints() {
 
   const onSubmit = async (data) => {
     try {
-      let event = await api.get("/event/", { params: { id: data.EventId } });
-      setPts({ points: data.points, event: data.EventId, description: event.data.event});
+      let res = await api.get("/event", {params : {id : data.EventId}});
+      setPts({ points: data.points, event: data.EventId, description: res.data.event});
       setOpen(true);
     } catch (err) {
       reset({ EventId: "", points: 1 });
