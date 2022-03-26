@@ -67,7 +67,10 @@ router.post("/login", async (req, res, next) => {
       });
     }
   } catch (err) {
-    next(err);
+    if (process.env.NODE_ENV === "production") {
+      return next(err);
+    }
+    res.status(500).json(err);
   }
 });
 
@@ -115,17 +118,19 @@ router.post("/register", async (req, res, next) => {
           })
           .catch((err) => {
             if (err.name == "SequelizeUniqueConstraintError") {
-              return res.status(409)
-                .json({
-                  success: false,
-                  msg: "User already exists. Please log-in!",
-                });
+              return res.status(409).json({
+                success: false,
+                msg: "User already exists. Please log-in!",
+              });
             }
           });
       }
     });
   } catch (next) {
-    next(err);
+    if (process.env.NODE_ENV === "production") {
+      return next(err);
+    }
+    res.status(500).json(err);
   }
 });
 
@@ -136,7 +141,10 @@ router.get(
     try {
       res.status(200).json({ role: req.user.role });
     } catch (err) {
-      next(err);
+      if (process.env.NODE_ENV === "production") {
+        return next(err);
+      }
+      res.status(500).json(err);
     }
   }
 );
@@ -146,10 +154,13 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   async (req, res, next) => {
     try {
-      if(req.user.role) return res.status(200).json({ role: req.user.role });
-      res.status(401).json({msg: "Unauthorized. Not an IEEE Officer"})
+      if (req.user.role) return res.status(200).json({ role: req.user.role });
+      res.status(401).json({ msg: "Unauthorized. Not an IEEE Officer" });
     } catch (err) {
-      next(err);
+      if (process.env.NODE_ENV === "production") {
+        return next(err);
+      }
+      res.status(500).json(err);
     }
   }
 );

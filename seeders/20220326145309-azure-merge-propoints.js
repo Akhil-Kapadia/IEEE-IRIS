@@ -1,7 +1,6 @@
 "use strict";
 const points = [
   {
-    id: 2,
     points: 1,
     confirmed: false,
     CourseId: null,
@@ -12,7 +11,6 @@ const points = [
     EventId: 1,
   },
   {
-    id: 27,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -23,7 +21,6 @@ const points = [
     EventId: 2,
   },
   {
-    id: 3,
     points: 3,
     confirmed: false,
     CourseId: null,
@@ -34,7 +31,6 @@ const points = [
     EventId: 1,
   },
   {
-    id: 4,
     points: 1,
     confirmed: false,
     CourseId: null,
@@ -45,7 +41,6 @@ const points = [
     EventId: 1,
   },
   {
-    id: 44,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -56,7 +51,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 5,
     points: 1,
     confirmed: false,
     CourseId: null,
@@ -67,7 +61,6 @@ const points = [
     EventId: 1,
   },
   {
-    id: 28,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -78,7 +71,6 @@ const points = [
     EventId: 2,
   },
   {
-    id: 6,
     points: 5,
     confirmed: false,
     CourseId: null,
@@ -89,7 +81,6 @@ const points = [
     EventId: 1,
   },
   {
-    id: 7,
     points: 1,
     confirmed: false,
     CourseId: null,
@@ -100,7 +91,6 @@ const points = [
     EventId: 1,
   },
   {
-    id: 8,
     points: 1,
     confirmed: false,
     CourseId: null,
@@ -111,7 +101,6 @@ const points = [
     EventId: 1,
   },
   {
-    id: 29,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -122,7 +111,6 @@ const points = [
     EventId: 2,
   },
   {
-    id: 9,
     points: 1,
     confirmed: false,
     CourseId: null,
@@ -134,7 +122,6 @@ const points = [
     EventId: 1,
   },
   {
-    id: 10,
     points: 1,
     confirmed: false,
     CourseId: null,
@@ -145,7 +132,6 @@ const points = [
     EventId: 1,
   },
   {
-    id: 11,
     points: 1,
     confirmed: false,
     CourseId: null,
@@ -156,7 +142,6 @@ const points = [
     EventId: 1,
   },
   {
-    id: 30,
     points: 1,
     confirmed: false,
     CourseId: null,
@@ -167,7 +152,6 @@ const points = [
     EventId: 2,
   },
   {
-    id: 12,
     points: 1,
     confirmed: false,
     CourseId: null,
@@ -178,7 +162,6 @@ const points = [
     EventId: 1,
   },
   {
-    id: 13,
     points: 1,
     confirmed: false,
     CourseId: null,
@@ -189,7 +172,6 @@ const points = [
     EventId: 1,
   },
   {
-    id: 45,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -200,7 +182,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 14,
     points: 1,
     confirmed: false,
     CourseId: null,
@@ -211,7 +192,6 @@ const points = [
     EventId: 1,
   },
   {
-    id: 31,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -222,7 +202,6 @@ const points = [
     EventId: 2,
   },
   {
-    id: 15,
     points: 1,
     confirmed: false,
     CourseId: null,
@@ -233,7 +212,6 @@ const points = [
     EventId: 2,
   },
   {
-    id: 16,
     points: 1,
     confirmed: false,
     CourseId: null,
@@ -244,7 +222,6 @@ const points = [
     EventId: 2,
   },
   {
-    id: 17,
     points: 1,
     confirmed: false,
     CourseId: null,
@@ -255,7 +232,6 @@ const points = [
     EventId: 2,
   },
   {
-    id: 32,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -266,7 +242,6 @@ const points = [
     EventId: 2,
   },
   {
-    id: 18,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -277,7 +252,6 @@ const points = [
     EventId: 2,
   },
   {
-    id: 19,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -288,7 +262,6 @@ const points = [
     EventId: 2,
   },
   {
-    id: 55,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -299,7 +272,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 20,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -310,7 +282,6 @@ const points = [
     EventId: 2,
   },
   {
-    id: 33,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -321,7 +292,6 @@ const points = [
     EventId: 2,
   },
   {
-    id: 21,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -332,7 +302,6 @@ const points = [
     EventId: 2,
   },
   {
-    id: 22,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -343,7 +312,6 @@ const points = [
     EventId: 2,
   },
   {
-    id: 46,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -354,7 +322,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 23,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -365,7 +332,6 @@ const points = [
     EventId: 2,
   },
   {
-    id: 34,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -376,7 +342,6 @@ const points = [
     EventId: 2,
   },
   {
-    id: 24,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -387,7 +352,6 @@ const points = [
     EventId: 2,
   },
   {
-    id: 25,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -398,7 +362,6 @@ const points = [
     EventId: 2,
   },
   {
-    id: 26,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -409,7 +372,6 @@ const points = [
     EventId: 2,
   },
   {
-    id: 35,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -420,7 +382,6 @@ const points = [
     EventId: 2,
   },
   {
-    id: 36,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -431,7 +392,6 @@ const points = [
     EventId: 2,
   },
   {
-    id: 47,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -442,7 +402,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 37,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -453,7 +412,6 @@ const points = [
     EventId: 2,
   },
   {
-    id: 38,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -464,7 +422,6 @@ const points = [
     EventId: 2,
   },
   {
-    id: 63,
     points: 2,
     confirmed: false,
     CourseId: 4,
@@ -475,7 +432,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 39,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -486,7 +442,6 @@ const points = [
     EventId: 2,
   },
   {
-    id: 48,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -497,7 +452,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 40,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -508,7 +462,6 @@ const points = [
     EventId: 2,
   },
   {
-    id: 41,
     points: 1,
     confirmed: false,
     CourseId: null,
@@ -519,7 +472,6 @@ const points = [
     EventId: 2,
   },
   {
-    id: 56,
     points: 1,
     confirmed: false,
     CourseId: null,
@@ -530,7 +482,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 42,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -541,7 +492,6 @@ const points = [
     EventId: 2,
   },
   {
-    id: 49,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -552,7 +502,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 43,
     points: 1,
     confirmed: false,
     CourseId: null,
@@ -563,7 +512,6 @@ const points = [
     EventId: 2,
   },
   {
-    id: 50,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -574,7 +522,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 51,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -585,7 +532,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 57,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -596,7 +542,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 52,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -607,7 +552,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 53,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -618,7 +562,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 74,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -629,7 +572,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 54,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -640,7 +582,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 58,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -651,7 +592,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 64,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -662,7 +602,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 59,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -673,7 +612,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 60,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -684,7 +622,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 68,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -695,7 +632,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 61,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -706,7 +642,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 65,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -717,7 +652,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 62,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -728,7 +662,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 66,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -739,7 +672,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 71,
     points: 1,
     confirmed: false,
     CourseId: null,
@@ -750,7 +682,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 67,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -761,7 +692,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 69,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -772,7 +702,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 70,
     points: 1,
     confirmed: false,
     CourseId: null,
@@ -783,7 +712,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 73,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -794,7 +722,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 72,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -805,7 +732,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 75,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -816,7 +742,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 76,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -827,7 +752,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 77,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -838,7 +762,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 78,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -849,7 +772,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 79,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -860,7 +782,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 80,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -871,7 +792,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 81,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -882,7 +802,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 82,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -893,7 +812,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 83,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -904,7 +822,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 84,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -915,7 +832,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 1,
     points: 1,
     confirmed: true,
     CourseId: null,
@@ -926,7 +842,6 @@ const points = [
     EventId: 1,
   },
   {
-    id: 85,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -937,7 +852,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 86,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -948,7 +862,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 87,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -959,7 +872,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 112,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -970,7 +882,6 @@ const points = [
     EventId: 4,
   },
   {
-    id: 88,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -981,7 +892,6 @@ const points = [
     EventId: 3,
   },
   {
-    id: 89,
     points: 1,
     confirmed: false,
     CourseId: null,
@@ -992,7 +902,6 @@ const points = [
     EventId: 2,
   },
   {
-    id: 130,
     points: 4,
     confirmed: false,
     CourseId: null,
@@ -1003,7 +912,6 @@ const points = [
     EventId: 2,
   },
   {
-    id: 90,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -1014,7 +922,6 @@ const points = [
     EventId: 4,
   },
   {
-    id: 113,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -1025,7 +932,6 @@ const points = [
     EventId: 4,
   },
   {
-    id: 91,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -1036,7 +942,6 @@ const points = [
     EventId: 4,
   },
   {
-    id: 92,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -1047,7 +952,6 @@ const points = [
     EventId: 2,
   },
   {
-    id: 126,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -1058,7 +962,6 @@ const points = [
     EventId: 4,
   },
   {
-    id: 93,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -1069,7 +972,6 @@ const points = [
     EventId: 4,
   },
   {
-    id: 114,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -1080,7 +982,6 @@ const points = [
     EventId: 4,
   },
   {
-    id: 94,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -1091,7 +992,6 @@ const points = [
     EventId: 4,
   },
   {
-    id: 95,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -1102,7 +1002,6 @@ const points = [
     EventId: 4,
   },
   {
-    id: 96,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -1113,7 +1012,6 @@ const points = [
     EventId: 4,
   },
   {
-    id: 115,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -1124,7 +1022,6 @@ const points = [
     EventId: 4,
   },
   {
-    id: 97,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -1135,7 +1032,6 @@ const points = [
     EventId: 4,
   },
   {
-    id: 98,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -1146,7 +1042,6 @@ const points = [
     EventId: 4,
   },
   {
-    id: 99,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -1157,7 +1052,6 @@ const points = [
     EventId: 4,
   },
   {
-    id: 116,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -1168,7 +1062,6 @@ const points = [
     EventId: 4,
   },
   {
-    id: 100,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -1179,7 +1072,6 @@ const points = [
     EventId: 4,
   },
   {
-    id: 101,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -1190,7 +1082,6 @@ const points = [
     EventId: 4,
   },
   {
-    id: 131,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -1201,7 +1092,6 @@ const points = [
     EventId: 1,
   },
   {
-    id: 102,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -1212,7 +1102,6 @@ const points = [
     EventId: 4,
   },
   {
-    id: 117,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -1223,7 +1112,6 @@ const points = [
     EventId: 4,
   },
   {
-    id: 103,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -1234,7 +1122,6 @@ const points = [
     EventId: 4,
   },
   {
-    id: 104,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -1245,7 +1132,6 @@ const points = [
     EventId: 4,
   },
   {
-    id: 105,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -1256,7 +1142,6 @@ const points = [
     EventId: 4,
   },
   {
-    id: 118,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -1267,7 +1152,6 @@ const points = [
     EventId: 4,
   },
   {
-    id: 106,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -1278,7 +1162,6 @@ const points = [
     EventId: 4,
   },
   {
-    id: 107,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -1289,7 +1172,6 @@ const points = [
     EventId: 4,
   },
   {
-    id: 108,
     points: 1,
     confirmed: false,
     CourseId: null,
@@ -1300,7 +1182,6 @@ const points = [
     EventId: 4,
   },
   {
-    id: 119,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -1311,7 +1192,6 @@ const points = [
     EventId: 4,
   },
   {
-    id: 109,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -1322,7 +1202,6 @@ const points = [
     EventId: 4,
   },
   {
-    id: 110,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -1333,7 +1212,6 @@ const points = [
     EventId: 4,
   },
   {
-    id: 111,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -1344,7 +1222,6 @@ const points = [
     EventId: 4,
   },
   {
-    id: 120,
     points: 1,
     confirmed: false,
     CourseId: null,
@@ -1355,7 +1232,6 @@ const points = [
     EventId: 4,
   },
   {
-    id: 121,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -1366,7 +1242,6 @@ const points = [
     EventId: 4,
   },
   {
-    id: 122,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -1377,7 +1252,6 @@ const points = [
     EventId: 4,
   },
   {
-    id: 123,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -1388,7 +1262,6 @@ const points = [
     EventId: 4,
   },
   {
-    id: 124,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -1399,7 +1272,6 @@ const points = [
     EventId: 4,
   },
   {
-    id: 125,
     points: 1,
     confirmed: false,
     CourseId: null,
@@ -1410,7 +1282,6 @@ const points = [
     EventId: 4,
   },
   {
-    id: 127,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -1421,7 +1292,6 @@ const points = [
     EventId: 4,
   },
   {
-    id: 128,
     points: 2,
     confirmed: false,
     CourseId: null,
@@ -1432,7 +1302,6 @@ const points = [
     EventId: 4,
   },
   {
-    id: 129,
     points: 9,
     confirmed: false,
     CourseId: null,

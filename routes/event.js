@@ -62,7 +62,10 @@ router.post('/', passport.authenticate("jwt", { session: false }), async (req, r
       res.status(401).json({msg : 'Unauthorized'});
     }
   }catch(err) {
-    next(err);
+    if(process.env.NODE_ENV === 'production') { 
+  return next(err);
+}
+res.status(500).json(err);;
   }
 });
 
@@ -79,7 +82,10 @@ router.put("/:id", passport.authenticate("jwt", { session: false }), async (req,
         res.status(401).json({msg : 'Unauthorized'});
       }
     } catch (err) {
-      next(err);
+      if(process.env.NODE_ENV === 'production') { 
+  return next(err);
+}
+res.status(500).json(err);;
     }
   }
 );

@@ -30,13 +30,8 @@ app.use(passport.initialize());
 app.use( (err, req, res, next) => {
     err.statusCode = err.statusCode || 500;
     err.status = err.status || 'error';
-
-    res.status(err.statusCode).json({
-        status : err.status,
-        msg : err.message
-    });
-    
-
+    console.log(err)
+    res.status(err.statusCode).json(err);
 });
 
 // // Https stuff
@@ -69,7 +64,10 @@ app.all('*', (req, res, next) => {
     err.status = 'fail';
     err.statusCode - 404;
 
-    next(err);
+    if(process.env.NODE_ENV === 'production') { 
+  return next(err);
+}
+res.status(500).json(err);;
 });
 
 

@@ -20,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'TokenPasswords',
+    tableName: 'token_passwords'
   });
   return token_passwords;
 };

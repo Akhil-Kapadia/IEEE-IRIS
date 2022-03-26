@@ -1,7 +1,6 @@
 "use strict";
 const events = [
   {
-    id: 1,
     event: "Test Event",
     participants: 0,
     img: null,
@@ -11,7 +10,6 @@ const events = [
     updatedAt: "2022-01-25T21:56:53.307Z",
   },
   {
-    id: 2,
     event: "Soldering Tutorial 2 ",
     participants: 0,
     img: null,
@@ -21,7 +19,6 @@ const events = [
     updatedAt: "2022-01-28T00:09:16.495Z",
   },
   {
-    id: 3,
     event: "Grad Research Fair",
     participants: 0,
     img: null,
@@ -31,7 +28,6 @@ const events = [
     updatedAt: "2022-02-10T13:09:56.065Z",
   },
   {
-    id: 4,
     event: "Lab Walkthrough",
     participants: 0,
     img: null,
@@ -41,7 +37,6 @@ const events = [
     updatedAt: "2022-02-11T22:24:28.841Z",
   },
   {
-    id: 5,
     event: "Texas Instrument Career Meet",
     participants: 0,
     img: null,
