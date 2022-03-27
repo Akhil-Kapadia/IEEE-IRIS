@@ -26,9 +26,9 @@ export default function AddPoints() {
   const { control, handleSubmit, watch, reset, resetField, setError, clearErrors, formState : {errors} } = useForm({
     defaultValues: {
       points: urlParams.points || '',
-      courseId: '',
+      CourseId: '',
       description: urlParams.event || '',
-      EventId: urlParams.eventId || ''
+      EventId: urlParams.EventId || ''
     },
   });
 
@@ -39,7 +39,7 @@ export default function AddPoints() {
       enqueueSnackbar(`Successfully added ProPoint : ${res.data.points} - ${res.data.description}`, {variant: 'success'});
       reset({
         EventId: '',
-        courseId: '',
+        CourseId: '',
         description: '',
         points: 1
       });
@@ -55,7 +55,7 @@ export default function AddPoints() {
     setDisable(false);
     reset({
       EventId: '',
-      courseId: '',
+      CourseId: '',
       description: '',
       points: 1
     });
@@ -107,7 +107,7 @@ export default function AddPoints() {
             type="number"
             label="Event ID"
             error= {Boolean(fieldState.error)}
-            disabled={Boolean(urlParams.eventId)}
+            disabled={Boolean(urlParams.EventId)}
             helperText={errors?.EventId?.message}
             fullWidth
             required
@@ -116,7 +116,7 @@ export default function AddPoints() {
         </Grid>
         <Grid item xs={12}>
           <Controller
-          name = "courseId"
+          name = "CourseId"
           control={control}
           rules = {{
             required : true,

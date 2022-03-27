@@ -26,7 +26,7 @@ export default function PointsTable(props) {
     { field: "UserId", headerName: "R-Number", width: 95 },
     { field: "fullname", headerName: "Full Name", width: 200},
     { field: "EventId", headerName: "Event ID", width: 80},
-    { field: "courseId", headerName: "Course ID", width: 90, editable: true},
+    { field: "CourseId", headerName: "Course ID", width: 90, editable: true},
     { field: "description", headerName: "Event Title or Description", flex:1, editable: true},
     { field: 'createdAt', headerName : "Added On", width : 150, valueFormatter: ( {value} ) => {
       const date = moment(value, "YYYY-MM-DD hh:mm:22.SSS +Z");

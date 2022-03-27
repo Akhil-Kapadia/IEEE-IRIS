@@ -4,44 +4,42 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     const t = await queryInterface.sequelize.transaction();
     try {
-      await queryInterface.addConstraint('ieee', {
+      await queryInterface.addConstraint('students', {
         fields: ['UserId'],
         type: 'foreign key',
-        name: 'ieee_fk',
+        name: 'students_fk',
         references: {
           table: 'users',
           field: 'id'
         },
         onUpdate: 'cascade',
         onDelete: 'cascade'
-      }, {transaction:t});
-
-      await queryInterface.addConstraint('propoints', {
-        fields: ['UserId'],
+      }, {t});
+      await queryInterface.addConstraint('students', {
+        fields: ['lab'],
         type: 'foreign key',
-        name: 'propoints-users_fk',
+        name: 'students-courses_fk',
         references: {
-          table: 'users',
+          table: 'courses',
           field: 'id'
         },
         onUpdate: 'cascade',
         onDelete: 'cascade'
-      },{transaction:t});
-
+      }, {t});
       await queryInterface.addConstraint('propoints', {
-        fields: ['EventId'],
+        fields: ['CourseId'],
         type: 'foreign key',
-        name: 'propoints-events_fk',
+        name: 'propoints-courses_fk',
         references: {
-          table: 'events',
+          table: 'courses',
           field: 'id'
         },
         onUpdate: 'cascade',
         onDelete: 'cascade'
-      },{transaction:t});
+      }, {t});
+      
       await t.commit();
-
-    }catch(err){
+    } catch (err) {
       await t.rollback();
       throw err;
     }
@@ -50,14 +48,15 @@ module.exports = {
   async down (queryInterface, Sequelize) {
     const t = await queryInterface.sequelize.transaction();
     try {
-      await queryInterface.removeConstraint('ieee', 'ieee_fk',{t});
-      await queryInterface.removeConstraint('propoints', 'propoints-events_fk',{t});
-      await queryInterface.removeConstraint('propoints', 'propoints-users_fk',{t});
+      await queryInterface.removeConstraint('propoints', 'propoints-courses_fk', {t});
+      await queryInterface.removeConstraint('students', 'students_fk', {t});
+      await queryInterface.removeConstraint('students', 'students-courses_fk', {t});
+      
       await t.commit();
-    }catch(err){
+    } catch (err) {
       await t.rollback();
+      console.log(err);
       throw err;
     }
-
   }
 };

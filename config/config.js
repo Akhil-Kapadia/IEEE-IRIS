@@ -6,18 +6,19 @@ module.exports = {
     "storage" : "./database.sqlite"
   },
   "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
+    "username": process.env.DB_USER,
+    "password": process.env.DB_PASS,
+    "database": process.env.DB_NAME,
+    "host": process.env.DB_HOST,
+    "port" : process.env.DB_PORT,
+    "dialect": "postgres"
   },
   "production": {
-    "username": process.env.PG_DBUSER,
-    "password": process.env.PG_DBPASS,
-    "database": process.env.PG_DBNAME,
-    "host": process.env.PG_DBHOST,
-    "port" : process.env.PG_DBPORT,
+    "username": process.env.DB_USER,
+    "password": process.env.DB_PASS,
+    "database": process.env.DB_NAME,
+    "host": process.env.DB_HOST,
+    "port" : process.env.DB_PORT,
     "dialect": "postgres"
   }
 }

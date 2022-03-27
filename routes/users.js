@@ -21,7 +21,10 @@ router.get('/all', passport.authenticate('jwt', {session : false}),async(req, re
             res.status(401).json({msg : 'Unauthorized. You need to be an admin.'});
         }
     }catch(err){
-        next(err);
+        if(process.env.NODE_ENV === 'production') { 
+  return next(err);
+}
+res.status(500).json(err);;
     }
 });
 
@@ -35,7 +38,10 @@ router.get('/:id', passport.authenticate('jwt', {session : false}), async(req, r
             res.status(401).send('Unauthorized');
         }
     }catch(err){
-        next(err);
+        if(process.env.NODE_ENV === 'production') { 
+  return next(err);
+}
+res.status(500).json(err);;
     }
 });
 
@@ -57,7 +63,10 @@ router.put('/', passport.authenticate('jwt', {session : false}),async(req, res, 
         if(user[0] === 0) return res.status(404).json("User not found");
         return res.status(200).json(user);
     }catch(err){
-        next(err);
+        if(process.env.NODE_ENV === 'production') { 
+  return next(err);
+}
+res.status(500).json(err);;
     }
 
 });
@@ -74,7 +83,10 @@ router.delete('/:id', passport.authenticate('jwt', {session : false}), async (re
             res.status(401).send('Unauthorized');
         }
     }catch(err){
-        next(err);
+        if(process.env.NODE_ENV === 'production') { 
+  return next(err);
+}
+res.status(500).json(err);;
     }
 });
 

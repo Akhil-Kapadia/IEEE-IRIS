@@ -38,12 +38,12 @@ function PointsDialog(props) {
 
   const onSubmit = async (data) => {
     try {
-      let userId = pattern.exec(data.rNum)[0];
+      let UserId = pattern.exec(data.rNum)[0];
       let res = await api.post("/propoint/admin", qs.stringify({
-          userId: userId,
-          eventId: props.event,
+          UserId: UserId,
+          EventId: props.event,
           points: props.points,
-          description: "Submitted by Officer",
+          description: props.description,
         })
       );
       let msg = `Added ${props.points} for ${res.data.firstname} ${res.data.lastname}.`;
@@ -110,18 +110,18 @@ export default function AddProPoints() {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      eventId: "",
+      EventId: "",
       points: 1,
     },
   });
 
   const onSubmit = async (data) => {
     try {
-      await api.get("/event", { params: { event: data.eventId } });
-      setPts({ points: data.points, event: data.eventId });
+      let res = await api.get("/event", {params : {id : data.EventId}});
+      setPts({ points: data.points, event: data.EventId, description: res.data.event});
       setOpen(true);
     } catch (err) {
-      reset({ eventId: "", points: 1 });
+      reset({ EventId: "", points: 1 });
     }
   };
 
@@ -142,7 +142,7 @@ export default function AddProPoints() {
         >
           <Grid item>
             <Controller
-              name="eventId"
+              name="EventId"
               control={control}
               rules={{ required: true }}
               render={({ field }) => (
@@ -150,7 +150,7 @@ export default function AddProPoints() {
                   {...field}
                   label="Event ID"
                   type="number"
-                  error={Boolean(errors.eventId)}
+                  error={Boolean(errors.EventId)}
                   fullWidth
                   required
                 />
@@ -186,7 +186,7 @@ export default function AddProPoints() {
             </Button>
           </Grid>
         </Grid>
-        <PointsDialog open={open} points={pts.points} event={pts.event} />
+        <PointsDialog open={open} points={pts.points} event={pts.event} description={pts.description} />
       </Stack>
     </Paper>
   );

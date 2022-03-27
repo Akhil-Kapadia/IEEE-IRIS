@@ -24,7 +24,9 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: DataTypes.NOW
     }
   }, {
-    sequelize
+    sequelize,
+    modelName: 'Event',
+    tableName: 'events'
   });
   return Event;
 };
