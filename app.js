@@ -17,7 +17,7 @@ require('./config/auth')(passport);
 
 // express middleware
 const app = express();
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '/build')));
 app.use(express.json());
 app.use(express.urlencoded({extended : true}));
 app.use(cors());
@@ -30,13 +30,8 @@ app.use(passport.initialize());
 app.use( (err, req, res, next) => {
     err.statusCode = err.statusCode || 500;
     err.status = err.status || 'error';
-
-    res.status(err.statusCode).json({
-        status : err.status,
-        msg : err.message
-    });
-    
-
+    console.log(err)
+    res.status(err.statusCode).json(err);
 });
 
 // // Https stuff
@@ -60,7 +55,7 @@ app.use('/api/event', eventRouter);
 app.use('/api/propoint', propointRouter);
 
 app.use('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(__dirname, '/build', 'index.html'));
 })
 
 // Error routing page
@@ -68,8 +63,7 @@ app.all('*', (req, res, next) => {
     const err = new Error(`Resource not found : ${req.originalUrl}`);
     err.status = 'fail';
     err.statusCode - 404;
-
-    next(err);
+    res.status(err.statusCode).json(err.message);;
 });
 
 

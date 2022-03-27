@@ -1,26 +1,27 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    const t = await queryInterface.sequelize.transaction();
-    try{
-    await queryInterface.createTable('users', {
+    await queryInterface.createTable('courses', {
       id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      firstname: {
+      name: {
         type: Sequelize.STRING
       },
-      lastname: {
-        type: Sequelize.STRING
-      },
-      email: {
+      CourseId: {
         allowNull: false,
+        type: Sequelize.INTEGER
+      },
+      section: {
+        type: Sequelize.INTEGER
+      },
+      dept: {
+        defaultValue: 'ECE',
         type: Sequelize.STRING
       },
-      password: {
-        allowNull: false,
+      semester: {
         type: Sequelize.STRING
       },
       createdAt: {
@@ -31,15 +32,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    }, {transaction:t});
-    await t.commit();
-  }catch(err){
-    await t.rollback();
-    throw err;
-  }
+    });
   },
-
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('users');
+    await queryInterface.dropTable('courses');
   }
 };

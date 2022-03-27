@@ -3,7 +3,7 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     const t = await queryInterface.sequelize.transaction();
     try{
-    await queryInterface.createTable('ProPoints', {
+    await queryInterface.createTable('propoints', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -18,9 +18,8 @@ module.exports = {
         defaultValue: false,
         type: Sequelize.BOOLEAN
       },
-      courseId : {
-        allowNull : false,
-        type : Sequelize.INTEGER
+      confirmedBy : {
+        type: Sequelize.STRING
       },
       description : {
         type: Sequelize.STRING
@@ -36,6 +35,9 @@ module.exports = {
       UserId: {
         type: Sequelize.INTEGER,
       },
+      CourseId : {
+        type : Sequelize.INTEGER
+      },
       EventId: {
         type: Sequelize.INTEGER,
       }
@@ -48,6 +50,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('ProPoints');
+    await queryInterface.dropTable('propoints');
   }
 };

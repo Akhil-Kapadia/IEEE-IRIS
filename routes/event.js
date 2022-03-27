@@ -19,9 +19,8 @@ router.get("/", passport.authenticate("jwt", { session: false }), async (req, re
   try {
     let event = await Event.findOne({where : {
         id : req.query.id || null,
-    }}).catch( err => {
-      console.log(err);
-    });
+    }})
+    if(event === null) return res.status(404).json({msg: "Event not found."})
     res.status(200).json(event);
   } catch (err) {
     res.status(500).json(err);
@@ -62,7 +61,10 @@ router.post('/', passport.authenticate("jwt", { session: false }), async (req, r
       res.status(401).json({msg : 'Unauthorized'});
     }
   }catch(err) {
-    next(err);
+    if(process.env.NODE_ENV === 'production') { 
+  return next(err);
+}
+res.status(500).json(err);;
   }
 });
 
@@ -79,7 +81,10 @@ router.put("/:id", passport.authenticate("jwt", { session: false }), async (req,
         res.status(401).json({msg : 'Unauthorized'});
       }
     } catch (err) {
-      next(err);
+      if(process.env.NODE_ENV === 'production') { 
+  return next(err);
+}
+res.status(500).json(err);;
     }
   }
 );

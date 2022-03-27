@@ -17,7 +17,7 @@ export default function PointsCode() {
   const [event, setEvent] = React.useState({});
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
-      eventId: "",
+      EventId: "",
       points: 1,
     },
   });
@@ -26,12 +26,12 @@ export default function PointsCode() {
     try {
       let res = await api.get("/officer");
       if(res.data.role) {
-        let URL = "https://ttu-ieee.azurewebsites.net";
+        let URL = "tosmece0001.ttu.edu";
 
         console.log(`${URL}/propoints/?${qs.stringify({...data, event: event.event})}`);
         setOpen(true);
-        setQR(<QRCode value={`${URL}/propoints/?${qs.stringify({...data, event: `[QR] ${event.event}`})}`} />);
-        reset({eventId: "", points: 1});
+        setQR(<QRCode value={`${URL}/propoints/?${qs.stringify({...data, event: event.event})}`} />);
+        reset({EventId: "", points: 1});
       }
     } catch (err) {
     }
@@ -63,7 +63,7 @@ export default function PointsCode() {
       >
         <Grid item xs={12}>
           <Controller
-            name="eventId"
+            name="EventId"
             control={control}
             rules={{
               validate: checkEvent

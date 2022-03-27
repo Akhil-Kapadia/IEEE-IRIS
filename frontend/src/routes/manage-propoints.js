@@ -17,7 +17,7 @@ import {api} from "../config";
 export default function ManageProPoints() {
   const { control, reset, handleSubmit, formState: { errors }} = useForm({
     defaultValues: {
-      eventId: "",
+      EventId: "",
       fromDate: moment().subtract(4, "months").format(),
       toDate: moment().format(),
     }});
@@ -37,7 +37,7 @@ export default function ManageProPoints() {
       });
       setPoints(res.data);
       reset({
-        eventId: '',
+        EventId: '',
         fromDate: data.fromDate,
         toDate: moment().format(),
       });
@@ -66,7 +66,7 @@ export default function ManageProPoints() {
         >
           <Grid item xs={12}>
             <Controller
-              name="eventId"
+              name="EventId"
               control={control}
               render={({ field }) => (
                 <TextField {...field} label="Event ID" fullWidth />

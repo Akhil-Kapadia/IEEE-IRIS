@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
-const { User, Ieee } = require("../models/index");
+const { User, Ieee, Student} = require("../models/index");
 const bcrypt = require("bcryptjs");
 const validator = require("validator");
 
@@ -67,7 +67,10 @@ router.post("/login", async (req, res, next) => {
       });
     }
   } catch (err) {
-    next(err);
+    if (process.env.NODE_ENV === "production") {
+      return next(err);
+    }
+    res.status(500).json(err);
   }
 });
 
@@ -106,6 +109,7 @@ router.post("/register", async (req, res, next) => {
         await User.create(req.body)
           .then(async function (user) {
             await user.createIeee(); // Create an empty Ieee association to ref later in profile
+            await user.createStudent();
 
             res.status(200).json({
               success: true,
@@ -115,17 +119,19 @@ router.post("/register", async (req, res, next) => {
           })
           .catch((err) => {
             if (err.name == "SequelizeUniqueConstraintError") {
-              return res.status(409)
-                .json({
-                  success: false,
-                  msg: "User already exists. Please log-in!",
-                });
+              return res.status(409).json({
+                success: false,
+                msg: "User already exists. Please log-in!",
+              });
             }
           });
       }
     });
   } catch (next) {
-    next(err);
+    if (process.env.NODE_ENV === "production") {
+      return next(err);
+    }
+    res.status(500).json(err);
   }
 });
 
@@ -136,7 +142,10 @@ router.get(
     try {
       res.status(200).json({ role: req.user.role });
     } catch (err) {
-      next(err);
+      if (process.env.NODE_ENV === "production") {
+        return next(err);
+      }
+      res.status(500).json(err);
     }
   }
 );
@@ -146,10 +155,13 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   async (req, res, next) => {
     try {
-      if(req.user.role) return res.status(200).json({ role: req.user.role });
-      res.status(401).json({msg: "Unauthorized. Not an IEEE Officer"})
+      if (req.user.role) return res.status(200).json({ role: req.user.role });
+      res.status(401).json({ msg: "Unauthorized. Not an IEEE Officer" });
     } catch (err) {
-      next(err);
+      if (process.env.NODE_ENV === "production") {
+        return next(err);
+      }
+      res.status(500).json(err);
     }
   }
 );

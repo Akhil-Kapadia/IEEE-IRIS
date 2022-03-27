@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Ieee extends Model {
+  class token_passwords extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,17 +11,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Ieee.belongsTo(models.User);
     }
   }
-  Ieee.init({
-    memberId: DataTypes.INTEGER,
-    officer: DataTypes.STRING,
-    ferpa: DataTypes.STRING
+  token_passwords.init({
+    token: DataTypes.STRING,
+    expiration: DataTypes.DATE,
+    UserId: DataTypes.INTEGER
   }, {
     sequelize,
-    tableName: 'ieee',
-    modelName: 'Ieee'
+    modelName: 'TokenPasswords',
+    tableName: 'token_passwords'
   });
-  return Ieee;
+  return token_passwords;
 };

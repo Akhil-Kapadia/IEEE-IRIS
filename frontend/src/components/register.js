@@ -2,19 +2,15 @@ import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import Select from "@mui/material/Select";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link"
-import { Container, FormControlLabel, MenuItem } from "@mui/material";
+import { Container} from "@mui/material";
 import { useRef } from "react";
 import qs from "qs";
-import { Outlet, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
 
 import {api} from "../config";
@@ -37,10 +33,7 @@ function Copyright(props) {
 
 export default function Register() {
   // Select and box state
-  const [classification, setClassification] = React.useState("");
-  const [checked, setChecked] = React.useState(false);
   const [msg, setMsg] = React.useState("");
-  const [isValid, setValid] = React.useState([false, false, false]);
   const {
     control,
     handleSubmit,
@@ -60,9 +53,6 @@ export default function Register() {
   const password = useRef({});
   password.current = watch("password", "");
 
-  const handleBox = (event) => {
-    setChecked(event.target.checked);
-  };
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
@@ -74,9 +64,7 @@ export default function Register() {
           lastname: data.lastname,
           id: data.rNum,
           email: data.email,
-          password: data.password,
-          classification: classification,
-          alumni: checked,
+          password: data.password
         })
       )
       .then(function (res) {
@@ -250,36 +238,6 @@ export default function Register() {
                   <p>{errors.passwordconfirm.message}</p>
                 )}
               </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControl fullWidth>
-                <InputLabel id="classification">
-                  Classification/Major
-                </InputLabel>
-                <Select
-                  fullWidth
-                  name="Classification"
-                  id="classification"
-                  label="Class"
-                  labelId="classification"
-                  value={classification}
-                  onChange={(event) => {
-                    setClassification(event.target.value);
-                  }}
-                >
-                  <MenuItem value={"EE"}>Electrical Engineering</MenuItem>
-                  <MenuItem value={"CMPE"}>Computer Engineering</MenuItem>
-                  <MenuItem value={"PHYS"}>Physics</MenuItem>
-                  <MenuItem value={"CS"}>Computer Science</MenuItem>
-                  <MenuItem value={null}>Other</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox onChange={handleBox} />}
-                label="Alumni"
-              />
             </Grid>
           </Grid>
           <Typography
