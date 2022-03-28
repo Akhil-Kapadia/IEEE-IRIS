@@ -7,8 +7,11 @@ const helmet = require('helmet');
 const fs = require('fs');
 const https = require('https');
 const passport = require('passport');
+const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const nodemailer = require('nodemailer');
 const path = require('path');
+
 
 //config
 // require('./config/db');
@@ -46,6 +49,7 @@ const authRouter = require('./routes/auth');
 const ieeeRouter = require('./routes/ieee');
 const eventRouter = require('./routes/event');
 const propointRouter = require('./routes/propoint');
+const passwordResetRouter = require('./routes/password');
 
 // API calls
 app.use('/api/user', userRoute);
@@ -53,6 +57,7 @@ app.use('/api/', authRouter);
 app.use('/api/ieee', ieeeRouter);
 app.use('/api/event', eventRouter);
 app.use('/api/propoint', propointRouter);
+app.use('/api/password', passwordResetRouter);
 
 app.use('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/build', 'index.html'));
