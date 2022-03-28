@@ -10,8 +10,6 @@ const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const path = require('path');
 const bodyParser = require('body-parser');
-const nodemailer = require('nodemailer');
-const route = express.Router();
 
 //config
 // require('./config/db');
@@ -50,47 +48,13 @@ app.use( (err, req, res, next) => {
 // const server = https.createServer({key :key, cert: cert}, app);
 // const port = process.env.PORT || 3001;
 
-//Nodemailer Stuff
-const port = process.env.PORT || 3005;
-app.use('/v1', route);
-app.listen(port, ()=> {
-    console.log('Server listening on port ', port);
-});
-// create reusable transporter object using the default SMTP transport
-const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    secure: true,
-    port:465,               // true for 465, false for other ports
-    auth: {
-        user: 'ttuieee2022@gmail.com',
-        pass: 'ttuieee1923@!',
-    }
-});
-
-route.post('/text-mail', (req, res) => {
-    const {to, subject, text } = req.body;
-    const mailData = {
-        from: 'ttuieee2022@gmail.com',
-        to: 'melanie.mertzlufft@gmail.com',
-        subject: 'Email Test',
-        text: 'That was easy!',
-        html: '<b>Hey there! </b><br> This is our first message sent with Nodemailer<br/>',
-    };
-
-    transporter.sendMail(mailData, (error, info) => {
-        if (error) {
-            return console.log(error);
-        }
-        res.status(200).send({ message: "Mail send", message_id: info.messageId });
-    });
-});
-
 // Routes
 const userRoute = require('./routes/users');
 const authRouter = require('./routes/auth');
 const ieeeRouter = require('./routes/ieee');
 const eventRouter = require('./routes/event');
 const propointRouter = require('./routes/propoint');
+const passwordRouter = require('./routes/password');
 
 // API calls
 app.use('/api/user', userRoute);
@@ -98,6 +62,7 @@ app.use('/api/', authRouter);
 app.use('/api/ieee', ieeeRouter);
 app.use('/api/event', eventRouter);
 app.use('/api/propoint', propointRouter);
+app.use('/api/password', passwordRouter);
 
 app.use('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
