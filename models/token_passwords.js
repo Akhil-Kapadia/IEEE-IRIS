@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     UserId: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'TokenPasswords',
+    modelName: 'TokenPassword',
     tableName: 'token_passwords'
   });
   return token_passwords;

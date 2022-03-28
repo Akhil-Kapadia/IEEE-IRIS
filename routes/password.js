@@ -1,46 +1,67 @@
 //Nodemailer Stuff
-const route = require("express").Router();
-const bodyParser = require('body-parser');
-const nodemailer = require('nodemailer');
-
-// const app = express();
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: false }));
-// const port = process.env.PORT || 3005;
-
-// app.use('/v1', route);
-// app.listen(port, ()=> {
-//     console.log('Server listening on port ', port);
-// });
+const router = require("express").Router();
+const { User, TokenPassword, t, sequelize } = require("../models/index");
+const nodemailer = require("nodemailer");
+const crypto = require('crypto-js');
 
 // create reusable transporter object using the default SMTP transport
 const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    secure: true,
-    port:465,               // true for 465, false for other ports
-    auth: {
-        user: 'ttuieee2022@gmail.com',
-        pass: 'ttuieee1923@!',
+  host: "smtp.gmail.com",
+  secure: true,
+  port: 465, // true for 465, false for other ports
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
+
+/**
+ * @swagger
+ * /api/password/reset:
+ *  post:
+ *    summary:
+ *    parameters:
+ *      -in: formdata
+ *        
+ */
+router.post("/reset", (req, res, next) => {
+  try {
+    let user = await User.findByPk(req.body.rnum), {t};
+    if(!user){
+      return res.status(404).json({msg: "User/email incorrect"});
     }
-});
+    if(req.body.email != user.email){
+      return res.status(404).json({msg: "User/email incorrect"});
+    }
 
-// post request to send email
-route.post('/reset', (req, res) => {
-    const {to, subject, text } = req.body;
+    // Generate token here
+    const token = ""; // crypto shit NFTs 
+    let userToken = await TokenPassword.create({
+      token: token,
+      expiration: new Date(), // figure out how to add hours to date
+      userId: user.id
+    }, {t});
+
+
     const mailData = {
-        from: 'ttuieee2022@gmail.com',
-        to: 'melanie.mertzlufft@gmail.com',
-        subject: 'Email Test',
-        text: 'That was easy!',
-        html: '<b>Hey there! </b><br> This is our first message sent with Nodemailer<br/>',
+      from: process.env.EMAIL_USER,
+      to: user.email,
+      subject: "IEEE - Password Reset",
+      html: "Figure it out twat"  // make html and add token
     };
-
+  
     transporter.sendMail(mailData, (error, info) => {
-        if (error) {
-            return console.log(error);
-        }
-        res.status(200).send({ message: "Mail send", message_id: info.messageId });
+      if (error) {
+        return res.status(400).json({msg: "Failed to send email"});
+      }
+      
     });
+    await t.commit();
+    res.status(200).send({ message: "Mail sant", message_id: info.messageId });
+  } catch (err) {
+    await t.rollback();
+    next(err);
+  }
 });
 
-module.exports = route;
+module.exports = router;
