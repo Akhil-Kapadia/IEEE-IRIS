@@ -38,12 +38,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      resetPasswordToken: {
-        type: DataTypes.STRING,
-      },
-      resetPasswordExpires: {
-        type: DataTypes.STRING,
-      },
       role: DataTypes.VIRTUAL,
       fullname: {
         type: DataTypes.VIRTUAL,

@@ -1,9 +1,11 @@
 const router = require("express").Router();
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
-const { User, Ieee, PasswordTokens, Student, t } = require("../models/index");
+const { User, Ieee, TokenPassword, Student, t } = require("../models/index");
 const bcrypt = require("bcryptjs");
 const validator = require("validator");
+const {transporter} = require("../config/email");
+const crypto = require('crypto-js');
 
 // login route
 router.post("/login", async (req, res, next) => {
@@ -166,23 +168,142 @@ router.get(
   }
 );
 
-// Validate URL
-router.get("/password-reset/:token", async(req, res, next) => {
+/**
+ * @swagger
+ * /api/password-reset/{token}:
+ *  get:
+ *    summary: Verifies if the password reset token is valid before loading the reset form.
+ *    parameters:
+ *      - in: path
+ *        name: token
+ *        schema:
+ *          type: string
+ *        description: ~64 character randomly generated token embed in url for password reset.
+ *    responses:
+ *      200:
+ *        description: Token is valid
+ *      404:
+ *        description: Token is invalid (not in db/expired)
+ */
+router.get("/password-reset/:token", async (req, res, next) => {
   try {
-    let token = await PasswordTokens.findOne({where : {
-      token : req.params.token
-    }});
+    let token = await PasswordTokens.findOne({
+      where: {
+        token: req.params.token,
+      },
+    });
 
-    if(token){
+    if (token) {
       return res.status(200).json(token);
     }
 
-    res.status(404).json({msg: "Reset Token not found"});
-    
+    res.status(404).json({ msg: "Reset Token not found" });
   } catch (err) {
-    next(err);
+    if (process.env.NODE_ENV === "production") {
+      return next(err);
+    }
+    res.status(500).json(err);
   }
-})
+});
 
+/**
+ * /api/password-reset/:
+ *  put:
+ *    summary: Updates user password if token is valid and matches user R-Number/email. 
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/x-www-form-urlencoded:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              name: rNum
+ *                type: integer
+ *              name: password
+ *                type: string
+ *              name: token
+ *                type: string
+ *            required:
+ *              - rNum
+ *              - token
+ *              - password
+ *    responses:
+ *      200:
+ *        description: Successfully changed user password
+ *      403: 
+ *        description: Token is invalid. Failed to update password
+ */
+router.put("/password-reset", async (req, res, next) => {
+  try {
+
+  } catch (err) {
+    if (process.env.NODE_ENV === "production") {
+      return next(err);
+    }
+    res.status(500).json(err);
+  }
+});
+
+/**
+ * /api/password-reset/:
+ *  post:
+ *    summary: Sends the email to reset password. 
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/x-www-form-urlencoded:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              name: rnum
+ *                type: integer
+ *            required:
+ *              - rNum
+ *    responses:
+ *      200:
+ *        description: Successfully changed user password. Sends an reset email to listed email if it matches R-num.
+ *      404: 
+ *        description: User doesn't exist in the db.
+ */
+ router.post("/password-reset", async (req, res, next) => {
+  try {
+    let user = await User.findByPk(req.body.rnum);
+    if(!user){
+      return res.status(404).json({msg: "User not found"});
+    }
+
+    console.log("We good")
+
+    // Generate token here
+    const token = ""; // crypto shit NFTs 
+    let userToken = await TokenPassword.create({
+      token: token,
+      expiration: new Date(), // figure out how to add hours to date
+      userId: user.id
+    });
+
+    console.log("Still Good!")
+
+    const mailData = {
+      from: process.env.EMAIL_USER,
+      to: user.email,
+      subject: "IEEE - Password Reset",
+      html: "Figure it out twat"  // make html and add token
+    };
+  
+    transporter.sendMail(mailData, (error, info) => {
+      console.log("Sending email")
+      if (error) {
+        return res.status(400).json({msg: "Failed to send email"});
+      }
+      res.status(200).send({ msg: "Mail sant", message_id: info.messageId, email: user.email });
+    });
+  } catch (err) {
+    if (process.env.NODE_ENV === "production") {
+      return next(err);
+    }
+    res.status(500).json(err);
+  }
+});
 
 module.exports = router;

@@ -13,6 +13,7 @@ import {api} from "./config";
 //components
 import Login from "./components/login";
 import Bar from "./layouts/layout";
+import { ResetEmail } from "./components/password-reset";
 
 //layouts
 import HomeLayout from "./layouts/homeLayout";
@@ -27,6 +28,7 @@ import ManageProPoints from "./routes/manage-propoints";
 import AddProPoints from "./routes/add-propoints";
 import Events from "./routes/events";
 import Users from "./routes/users";
+
 
 
 export default function App() {
@@ -130,6 +132,7 @@ export default function App() {
 
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/password-reset/verify" element={<ResetEmail />} />
         <Route path="/password-reset/:token" element={<>TBI</>} />
       </Routes>
     </main>

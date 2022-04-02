@@ -54,7 +54,6 @@ const authRouter = require('./routes/auth');
 const ieeeRouter = require('./routes/ieee');
 const eventRouter = require('./routes/event');
 const propointRouter = require('./routes/propoint');
-const passwordRouter = require('./routes/password');
 
 // API calls
 app.use('/api/user', userRoute);
@@ -62,8 +61,6 @@ app.use('/api/', authRouter);
 app.use('/api/ieee', ieeeRouter);
 app.use('/api/event', eventRouter);
 app.use('/api/propoint', propointRouter);
-app.use('/api/password', passwordRouter);
-
 app.use('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 })

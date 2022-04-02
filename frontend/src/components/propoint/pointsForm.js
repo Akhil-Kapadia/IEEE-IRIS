@@ -4,9 +4,6 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Typography from "@mui/material/Typography";
-import Modal from '@mui/material/Modal';
-import Fade from '@mui/material/Fade';
-import Backdrop from '@mui/material/Backdrop';
 import { useLocation, useSearchParams, useNavigate } from "react-router-dom";
 import qs from "qs";
 import { useSnackbar } from "notistack";
@@ -26,7 +23,6 @@ export default function AddPoints() {
   const { control, handleSubmit, watch, reset, resetField, setError, clearErrors, formState : {errors} } = useForm({
     defaultValues: {
       points: urlParams.points || '',
-      CourseId: '',
       description: urlParams.event || '',
       EventId: urlParams.EventId || ''
     },
@@ -39,7 +35,6 @@ export default function AddPoints() {
       enqueueSnackbar(`Successfully added ProPoint : ${res.data.points} - ${res.data.description}`, {variant: 'success'});
       reset({
         EventId: '',
-        CourseId: '',
         description: '',
         points: 1
       });
@@ -55,7 +50,6 @@ export default function AddPoints() {
     setDisable(false);
     reset({
       EventId: '',
-      CourseId: '',
       description: '',
       points: 1
     });
@@ -113,29 +107,6 @@ export default function AddPoints() {
             required
             />
         }/>
-        </Grid>
-        <Grid item xs={12}>
-          <Controller
-          name = "CourseId"
-          control={control}
-          rules = {{
-            required : true,
-            minLength: 4,
-            pattern: /^\d+$/,
-            message: "I.e. Robotics Lab is ECE '3331'"
-          }}
-          render = { ({field, fieldState}) => 
-            <TextField
-            {...field}
-            type= "number"
-            label= "Course Number"  
-            placeholder="3331"
-            error= {Boolean(fieldState.error)}
-            helperText= "I.e. Robotics Lab is ECE '3331'"
-            fullWidth
-            required
-            />
-          }/>
         </Grid>
         <Grid item xs={12}>
           <Controller
