@@ -91,17 +91,17 @@ export default function Profile() {
   };
 
   function studentRole(){
-    if(true==false) return 'none';
+    if(true==true) return 'none';
     else return '';
   }
 
   function ieeeRole(){
-    if(true==false) return 'none';
+    if(true==true) return 'none';
     else return '';
   }
 
   function officerRole(){
-    if(true==false) return 'none';
+    if(true==true) return 'none';
     else return '';
   }
 
@@ -234,12 +234,6 @@ export default function Profile() {
               </Button>
           </Stack>
           {/* /////////////////////////Student Information///////////////////////// */}
-          <Divider
-            display= {studentRole()}
-            textAlign="left"
-            sx={{ mt: 4}}>
-              Student Info
-          </Divider>
           <Box
           component="form"
           display= {studentRole()}
@@ -247,9 +241,14 @@ export default function Profile() {
           onSubmit={handleSubmit(onSubmit)}
           sx={{ mt: 3 }}
           >
+            <Divider
+            textAlign="left"
+            sx={{ mt: 4}}>
+              Student Info
+            </Divider>
             <Grid container spacing={2}>
               {/*/////// Classification List ///////*/}
-              <Grid item xs={12}>
+              <Grid item sx={{ mt: 3 }} xs={12}>
                 <FormControl fullWidth>
                   <InputLabel id="classification">
                     Classification/Major
@@ -306,12 +305,6 @@ export default function Profile() {
             </Button>
           </Box>
           {/* /////////////////////////IEEE Information///////////////////////// */}
-          <Divider
-            display= {ieeeRole()}
-            textAlign="left"
-            sx={{ mt: 4}}>
-              <Typography variant="subtitle1" color="black"><a href="https://www.ieee.org/" target="_blank">IEEE Information</a></Typography>
-          </Divider>
           <Box
           component="form"
           display= {ieeeRole()}
@@ -319,8 +312,13 @@ export default function Profile() {
           onSubmit={handleSubmit(onSubmit)}
           sx={{ mt: 3 }}
           >
+            <Divider
+            textAlign="left"
+            sx={{ mt: 2}}>
+              <Typography variant="subtitle1" color="black"><a href="https://www.ieee.org/" target="_blank">IEEE Information</a></Typography>
+            </Divider>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={12}>
+              <Grid item sx={{ mt: 3 }} xs={12} sm={12}>
                 {/*/////// Member ID ///////*/}
                 <Controller
                   name="memberid"
