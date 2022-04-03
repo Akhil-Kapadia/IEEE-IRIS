@@ -5,7 +5,7 @@ const { User, Ieee, TokenPassword, Student, t } = require("../models/index");
 const bcrypt = require("bcryptjs");
 const validator = require("validator");
 const {transporter} = require("../config/email");
-const crypto = require('crypto-js');
+const crypto = require('crypto');
 
 // login route
 router.post("/login", async (req, res, next) => {
@@ -272,23 +272,23 @@ router.put("/password-reset", async (req, res, next) => {
       return res.status(404).json({msg: "User not found"});
     }
 
-    console.log("We good")
-
     // Generate token here
-    const token = ""; // crypto shit NFTs 
+    const token = crypto.randomBytes(20).toString('hex'); // crypto shit NFTs 
     let userToken = await TokenPassword.create({
       token: token,
-      expiration: new Date(), // figure out how to add hours to date
-      userId: user.id
+      expiration: new Date() + 7200000, // 2 hours (in milliseconds)
+      UserId: user.id
     });
-
-    console.log("Still Good!")
 
     const mailData = {
       from: process.env.EMAIL_USER,
       to: user.email,
       subject: "IEEE - Password Reset",
-      html: "Figure it out twat"  // make html and add token
+      text:  // make html and add token
+      'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n'
+      + 'Please click on the following link, or paste this into your browser to complete the process within one hour of receiving it:\n\n'
+      + `http://localhost:3001/password-reset/${token}\n\n`
+      + 'If you did not request this, please ignore this email and your password will remain unchanged.\n',
     };
   
     transporter.sendMail(mailData, (error, info) => {
