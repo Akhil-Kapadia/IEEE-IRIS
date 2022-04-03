@@ -207,6 +207,7 @@ router.get("/password-reset/:token", async (req, res, next) => {
 });
 
 /**
+ * @swagger
  * /api/password-reset/:
  *  put:
  *    summary: Updates user password if token is valid and matches user R-Number/email. 
@@ -217,14 +218,11 @@ router.get("/password-reset/:token", async (req, res, next) => {
  *          schema:
  *            type: object
  *            properties:
- *              name: rNum
- *                type: integer
  *              name: password
  *                type: string
  *              name: token
  *                type: string
  *            required:
- *              - rNum
  *              - token
  *              - password
  *    responses:
@@ -235,6 +233,9 @@ router.get("/password-reset/:token", async (req, res, next) => {
  */
 router.put("/password-reset", async (req, res, next) => {
   try {
+    // Search the tokens table by token to find the userID
+    
+    // Then update the users password with the userId from the tokens db.
 
   } catch (err) {
     if (process.env.NODE_ENV === "production") {
@@ -279,7 +280,7 @@ router.put("/password-reset", async (req, res, next) => {
     let userToken = await TokenPassword.create({
       token: token,
       expiration: new Date(), // figure out how to add hours to date
-      userId: user.id
+      UserId: user.id
     });
 
     console.log("Still Good!")
@@ -288,9 +289,8 @@ router.put("/password-reset", async (req, res, next) => {
       from: process.env.EMAIL_USER,
       to: user.email,
       subject: "IEEE - Password Reset",
-      html: "Figure it out twat"  // make html and add token
+      html: "Sorry for all the emails"  // make html and add token
     };
-  
     transporter.sendMail(mailData, (error, info) => {
       console.log("Sending email")
       if (error) {

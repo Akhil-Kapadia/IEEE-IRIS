@@ -13,7 +13,7 @@ import {api} from "./config";
 //components
 import Login from "./components/login";
 import Bar from "./layouts/layout";
-import { ResetEmail } from "./components/password-reset";
+import { ResetEmail, ResetPassword } from "./components/password-reset";
 
 //layouts
 import HomeLayout from "./layouts/homeLayout";
@@ -132,8 +132,8 @@ export default function App() {
 
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/password-reset/verify" element={<ResetEmail />} />
-        <Route path="/password-reset/:token" element={<>TBI</>} />
+        <Route path="/password-reset/email" element={<ResetEmail />} />
+        <Route path="/password-reset/:token" element={<ResetPassword />} />
       </Routes>
     </main>
   );
