@@ -21,14 +21,6 @@ import { Controller, useForm } from "react-hook-form";
 
 import {api} from "../config";
 
-const options = [
-  { value: "EE", label: 'Electrical Engineering' },
-  { value: "CMPE", label: 'Computer Engineering' },
-  { value: "PHYS", label: 'Physics' },
-  { value: "CS", label: 'Computer Science' },
-  { value: null, label: 'Other' }
-];
-
 function Copyright(props) {
   return (
     <Typography
@@ -47,6 +39,7 @@ function Copyright(props) {
 export default function Profile() {
   // Select and box state
   const [classification, setClassification] = React.useState("");
+  const [courseType, setCourseType] = React.useState("");
   const [checked, setChecked] = React.useState(false);
   const [msg, setMsg] = React.useState("");
   const [isValid, setValid] = React.useState([false, false, false]);
@@ -91,17 +84,17 @@ export default function Profile() {
   };
 
   function studentRole(){
-    if(true==true) return 'none';
+    if(true==false) return 'none';
     else return '';
   }
 
   function ieeeRole(){
-    if(true==true) return 'none';
+    if(true==false) return 'none';
     else return '';
   }
 
   function officerRole(){
-    if(true==true) return 'none';
+    if(true==false) return 'none';
     else return '';
   }
 
@@ -268,23 +261,61 @@ export default function Profile() {
                     <MenuItem value={"PHYS"}>Physics</MenuItem>
                     <MenuItem value={"CS"}>Computer Science</MenuItem>
                     <MenuItem value={null}>Other</MenuItem>
-                    </Select>
+                  </Select>
                 </FormControl>
               </Grid>
               <Grid item xs={12} sm={12}>
               {/*/////// Course Info ///////*/}
-                <Controller
-                  name="course"
+                  <Stack
+                  spacing={2}
+                  direction="row"
+                  sx={{ mt: 3, mb: 2 }}>
+                    <FormControl fullWidth>
+                      <InputLabel id="classification">
+                        Course Type
+                      </InputLabel>
+                      <Select
+                      fullWidth
+                      required
+                      name="Course Type"
+                      id="courseType"
+                      label="courseType"
+                      labelId="courseType"
+                      value={courseType}
+                      onChange={(event) => {
+                        setCourseType(event.target.value);
+                      }}>
+                      <MenuItem value={"ECE"}>ECE</MenuItem>
+                      <MenuItem value={"PHYS"}>PHYS</MenuItem>
+                      <MenuItem value={"CS"}>CS</MenuItem> 
+                      <MenuItem value={null}>Other</MenuItem>
+                    </Select>
+                  </FormControl>
+                  <Controller
+                  name="courseID"
                   control={control}
                   render={({ field }) => (
                     <TextField 
-                      label="Course" 
+                      label="Course ID" 
                       defaultValue = "TBA"
-                      helperText = "Example: ECE3334"
+                      helperText = "E.X. 3334"
                       fullWidth 
                       required />
                   )}
-                />
+                  />
+                  <Controller
+                  name="courseSec"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField 
+                      label="Course Section" 
+                      defaultValue = "TBA"
+                      helperText = "E.X. 101"
+                      fullWidth 
+                      required />
+                  )}
+                  />
+                </Stack>
               </Grid>
               <Grid item xs={12}>
                 {/*/////// Alumni Status ///////*/}
