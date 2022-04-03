@@ -6,6 +6,7 @@ const bcrypt = require("bcryptjs");
 const validator = require("validator");
 const {transporter} = require("../config/email");
 const crypto = require('crypto');
+const { Op } = require("sequelize");
 
 // login route
 router.post("/login", async (req, res, next) => {
@@ -218,11 +219,14 @@ router.get("/password-reset/:token", async (req, res, next) => {
  *          schema:
  *            type: object
  *            properties:
+ *              name: rNum
+ *                type: integer
  *              name: password
  *                type: string
  *              name: token
  *                type: string
  *            required:
+ *              - rNum
  *              - token
  *              - password
  *    responses:
@@ -233,10 +237,30 @@ router.get("/password-reset/:token", async (req, res, next) => {
  */
 router.put("/password-reset", async (req, res, next) => {
   try {
-    // Search the tokens table by token to find the userID
-    
-    // Then update the users password with the userId from the tokens db.
+      // 1. finds valid token in database
+      //let pwdtoken = null;
+      let pwdtoken = await TokenPassword.findOne({
+        where: {
+          token: req.body.token,
+          expiration: {
+            [Op.lt]: new Date()
+          }
+        }
+      });
+      if(!pwdtoken){
+        return res.status(404).json({msg: "User not found"});
+      }
+      console.log(pwdtoken.UserId);
 
+      // 2. update user table with new password
+      let pwd = await bcrypt.hash(req.body.password, 10);
+      console.log(pwd);
+      User.update({ password: pwd}, {
+        where: {
+          id: pwdtoken.UserId
+        }
+      });
+      res.status(200).json({msg: "Password change successful!"});
   } catch (err) {
     if (process.env.NODE_ENV === "production") {
       return next(err);
@@ -288,9 +312,10 @@ router.put("/password-reset", async (req, res, next) => {
       text:  // make html and add token
       'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n'
       + 'Please click on the following link, or paste this into your browser to complete the process within one hour of receiving it:\n\n'
-      + `http://localhost:3001/password-reset/${token}\n\n`
+      + `http://localhost:3000/password-reset/${token}\n\n`
       + 'If you did not request this, please ignore this email and your password will remain unchanged.\n',
     };
+  
     transporter.sendMail(mailData, (error, info) => {
       console.log("Sending email")
       if (error) {

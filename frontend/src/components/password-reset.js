@@ -128,6 +128,7 @@ function ResetPassword() {
   const [msg, setMsg] = React.useState("");
   const password = useRef({});
   password.current = watch("password", "");
+  const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     try {
@@ -138,7 +139,7 @@ function ResetPassword() {
           token: token,
         })
       );
-
+      navigate("/login", {replace: true});
       setMsg("Sucessfully reset password!");
     } catch (err) {
       setMsg("Failed to reset. Try resending the reset email!");
@@ -194,7 +195,7 @@ function ResetPassword() {
                   <TextField
                     {...field}
                     type="password"
-                    label="Password"
+                    label="New Password"
                     error={errors.password}
                     fullWidth
                     required
@@ -221,8 +222,9 @@ function ResetPassword() {
                     {...field}
                     type="password"
                     error={errors.passwordconfi}
-                    label="Confirm Password"
+                    label="Confirm New Password"
                     fullWidth
+                    required
                   />
                 )}
               />
