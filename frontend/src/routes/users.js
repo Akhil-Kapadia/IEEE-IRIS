@@ -5,7 +5,6 @@ import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 
 import OfficerForm from "../components/user/officerForm";
-import ResetPassword from "../components/user/resetPassword";
 
 
 export default function Users() {
@@ -20,8 +19,7 @@ export default function Users() {
         <Divider />
         <Typography>
           
-        </Typography>
-        <ResetPassword />
+        </Typography>\
       </Stack>
     </Paper>
   );
