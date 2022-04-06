@@ -250,7 +250,6 @@ router.put("/password-reset", async (req, res, next) => {
       if(!pwdtoken){
         return res.status(404).json({msg: "User not found"});
       }
-      console.log(pwdtoken.UserId);
 
       // 2. update user table with new password
       let pwd = await bcrypt.hash(req.body.password, 10);
@@ -312,7 +311,7 @@ router.put("/password-reset", async (req, res, next) => {
       text:  // make html and add token
       'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n'
       + 'Please click on the following link, or paste this into your browser to complete the process within one hour of receiving it:\n\n'
-      + `http://localhost:3000/password-reset/${token}\n\n`
+      + `http://localhost:3000/password-reset/token/${token}\n\n`
       + 'If you did not request this, please ignore this email and your password will remain unchanged.\n',
     };
   

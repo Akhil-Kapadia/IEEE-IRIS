@@ -8,6 +8,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
+import { Snackbar, IconButton, HomeIcon } from "@mui/material";
 import qs from "qs";
 import { Controller, useForm } from "react-hook-form";
 import {useNavigate } from "react-router-dom";
@@ -15,6 +16,7 @@ import {useNavigate } from "react-router-dom";
 import {api} from "../config";
 
 function Copyright(props) {
+  const navigate = useNavigate();
   return (
     <Typography
       variant="body2"
@@ -23,7 +25,7 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link to="/">TTU ECE IEEE Student Branch (HomePage)</Link> {new Date().getFullYear()}
+      <Link component={"button"} onClick={()=>navigate("/")}>TTU ECE IEEE Student Branch (HomePage)</Link> {new Date().getFullYear()}
       {"."}
     </Typography>
   );
@@ -48,6 +50,7 @@ export default function Login() {
         }));
       localStorage.setItem("user", JSON.stringify(res.data.user));
       reset({ rNum: "", password: "" });
+      setMsg("Successfully logged in! Click below (HomePage) to go home.")
       navigate(-1, {replace: true});
     } catch (err) {
       setMsg(err.response.data.msg);
@@ -117,7 +120,7 @@ export default function Login() {
             variant="body1"
             gutterBottom
             component="h5"
-            sx={{ textAlign: "center", color: "error.main" }}
+            sx={{ textAlign: "center" }}
           >
             {msg}
           </Typography>
@@ -134,10 +137,10 @@ export default function Login() {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link to="">Forgot password?</Link>
+              <Link component="button" onClick={() => {navigate("/password-reset/email")}}><Typography>Forgot Password?</Typography></Link>
             </Grid>
             <Grid item>
-              <Link component="button" onClick={()=>{navigate("/register", {replace:true})}} >Don't have an account? Sign Up</Link>
+              <Link component="button" onClick={()=>{navigate("/register", {replace:true})}} ><Typography>Don't have an account? Sign Up</Typography></Link>
             </Grid>
           </Grid>
         </Box>

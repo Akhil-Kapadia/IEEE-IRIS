@@ -133,7 +133,7 @@ export default function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/password-reset/email" element={<ResetEmail />} />
-        <Route path="/password-reset/:token" element={<ResetPassword />} />
+        <Route path="/password-reset/token/:token" element={<ResetPassword />} />
       </Routes>
     </main>
   );
