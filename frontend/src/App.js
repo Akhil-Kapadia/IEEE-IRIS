@@ -54,7 +54,6 @@ export default function App() {
     try {
       if(JSON.parse(localStorage.getItem("user")).officer){
         setTabs({text: ["My Profile", "Admin Panel"], rout: ["profile", "admin"]})
-        console.log(tabs)
       }
     } catch (error) {}
   },[localStorage.getItem("user")]);

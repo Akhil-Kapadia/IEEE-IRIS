@@ -55,7 +55,6 @@ module.exports = {
       await t.commit();
     } catch (err) {
       await t.rollback();
-      console.log(err);
       throw err;
     }
   }

@@ -51,7 +51,7 @@ export default function Login() {
       localStorage.setItem("user", JSON.stringify(res.data.user));
       reset({ rNum: "", password: "" });
       setMsg("Successfully logged in! Click below (HomePage) to go home.")
-      navigate(-1, {replace: true});
+      navigate("/", {replace: true});
     } catch (err) {
       setMsg(err.response.data.msg);
     }
@@ -137,7 +137,7 @@ export default function Login() {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link component="button" onClick={() => {navigate("/password-reset/email")}}><Typography>Forgot Password?</Typography></Link>
+              <Link component="button" onClick={() => {navigate("/password-reset/email", {replace:true})}}><Typography>Forgot Password?</Typography></Link>
             </Grid>
             <Grid item>
               <Link component="button" onClick={()=>{navigate("/register", {replace:true})}} ><Typography>Don't have an account? Sign Up</Typography></Link>

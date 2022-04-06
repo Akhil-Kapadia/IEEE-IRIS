@@ -82,7 +82,6 @@ router.put("/admin", passport.authenticate("jwt", { session: false }), async (re
       console.log(req.user.role)
       return res.status(401).json({msg: "Unauthorized: Not an IEEE officer"})
     };
-    console.log(req.user)
     // update a user IEEE information, ferpa access or officer position
     let id = req.body.rNum;
     delete req.body.rNum;
